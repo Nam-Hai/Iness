@@ -1,6 +1,8 @@
 <template>
   <main ref="wrapperRef">
-    info
+    <div class="test-scroll">
+
+    </div>
   </main>
 </template>
 
@@ -25,5 +27,10 @@ usePageFlow({
 
 main {
   @include mainGrid();
+
+  .test-scroll {
+    height: 150rem;
+    background-color: red;
+  }
 }
 </style>

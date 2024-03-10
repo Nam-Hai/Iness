@@ -67,6 +67,7 @@ export function usePageFlow<T>({
     // swap buffer
     provider.unMountBufferPage()
 
+    provider.scrollFlow.resize()
     provider.scrollFlow.resume()
     provider.scrollFlow.scrollToTop()
 

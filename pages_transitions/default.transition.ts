@@ -5,9 +5,20 @@ export type defaultTransitionProps = {
 }
 
 export const defaultFlowOut: FlowFunction<defaultTransitionProps> = (props, resolve, provider) => {
-    // const tl = useTL()
+    const tl = useTL()
 
-    resolve()
+    tl.from({
+        el: props.wrapperRef.value,
+        d: 1000,
+        e: "io3",
+        p: {
+            x: [0, 20, 'rem']
+        },
+        cb() {
+            resolve()
+        },
+    }).play()
+    // resolve()
 }
 
 export const defaultFlowIn: FlowFunction<defaultTransitionProps> = ({ wrapperRef }, resolve,) => {

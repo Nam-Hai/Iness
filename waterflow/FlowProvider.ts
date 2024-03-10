@@ -36,6 +36,9 @@ export class FlowProvider {
     scrollToTop: () => {
       document.body.scrollTop = 0; // For Safari
       document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+    },
+    resize: () => {
+
     }
   }
   swapWrapper!: () => void;
@@ -53,7 +56,7 @@ export class FlowProvider {
     this.routerMap.set(path, pageComponent)
   }
 
-  registerScrollInterface(api: { stop: () => void, resume: () => void, scrollToTop: () => void } | undefined) {
+  registerScrollInterface(api: { stop: () => void, resume: () => void, scrollToTop: () => void, resize: () => void } | undefined) {
     if (!api) return
     this.scrollFlow = api
   }
