@@ -1,5 +1,6 @@
 <template>
   <div class="app__wrapper">
+    <Menu />
     <div class="page__wrapper">
       <BufferPage />
     </div>
