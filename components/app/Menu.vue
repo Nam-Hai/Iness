@@ -73,7 +73,10 @@ const wrapperRef = ref() as Ref<HTMLElement>
     color: $primary;
     line-height: 100%;
 
+    pointer-events: none;
+
     a {
+        pointer-events: all;
         font-size: 1.2rem;
         font-weight: 500;
         height: fit-content;
