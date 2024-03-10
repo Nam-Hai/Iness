@@ -79,7 +79,7 @@ export default defineNuxtConfig({
                     content: "summary_large_image",
                 }
             ],
-            title: "Oscar Pico — Digital Designer",
+            title: "Iness - Portfolio",
             link: [
 
                 // {
