@@ -1,5 +1,5 @@
 <template>
-    <div ref="wrapperRef">
+    <div class="vvs" ref="wrapperRef">
 
     </div>
 </template>
@@ -17,4 +17,7 @@ const wrapperRef = ref() as Ref<HTMLElement>
 <style lang="scss" scoped>
 @use "@/styles/shared.scss" as *;
 
+.vvs {
+
+}
 </style>

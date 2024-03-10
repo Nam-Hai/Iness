@@ -40,17 +40,23 @@
   $desktopWidth: map-get(map-get(($breakpoints), desktop), design-width);
   $desktopMaxScale: map-get(map-get(($breakpoints), desktop), scale-max);
   width: var(--grid-width, 100%);
-  max-width: #{$desktopWidth * $desktopMaxScale * 1px}; // css var doesn't work here for some reason
   margin-left: auto;
   margin-right: auto;
 }
 
-@mixin mainGrid() {
+@mixin gridColumn() {
   @include mainContainer;
   display: grid;
-  grid-template-columns: repeat(var(--grid-columns), var(--grid-column-width));
+  grid-template-columns: repeat(var(--grid-columns), 1fr);
   grid-column-gap: var(--grid-column-gap);
   justify-content: center;
+}
+
+@mixin mainGrid() {
+  @include gridColumn();
+  height: var(--100vh);
+  padding: 1.6rem 0;
+  grid-template-rows: repeat(4, 1fr);
 }
 
 @mixin hide-cursor() {

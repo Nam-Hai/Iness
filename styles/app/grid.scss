@@ -7,15 +7,14 @@
   // note all values need px unit for calc() to work. 
   // ie: 0 should be 0px 
 
-  --grid-columns: 12;
-  --grid-column-gap: 1.2rem;
-  --grid-side-margin: 2.4rem;
+  --grid-columns: 9;
+  --grid-column-gap: 0px;
+  --grid-side-margin: 1.6rem;
   --scrollbar-width: 0px;
 
-  --grid-max-width: #{$desktopGridWidth * $desktopMaxScale * 1px};
   --grid-width-input: calc(100vw - var(--scrollbar-width) - var(--grid-side-margin) * 2);
 
-  --grid-width: min(var(--grid-width-input), var(--grid-max-width));
+  --grid-width: var(--grid-width-input);
   --grid-column-width: calc((var(--grid-width) - (var(--grid-columns) - 1) * var(--grid-column-gap)) / var(--grid-columns));
 
   &.windows {
@@ -28,9 +27,9 @@
 
   @include breakpoint(mobile) {
     --scrollbar-width: 0px;
-    --grid-columns: 4;
-    --grid-column-gap: 1.6rem;
-    --grid-side-margin: 0;
+    --grid-columns: 9;
+    --grid-column-gap: 0;
+    --grid-side-margin: 1.6rem;
   }
 
 }
