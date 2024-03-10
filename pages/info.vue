@@ -7,6 +7,19 @@
       </div>
     </div>
 
+    <div class="contact__grid-item__wrapper">
+      <div class="contact__wrapper">
+        <span>
+          You can contact me on
+        </span>
+        <span>
+          Contact@in.e.studio
+        </span>
+        <span>
+          + 33 7 88 25 6707
+        </span>
+      </div>
+    </div>
   </main>
 </template>
 
@@ -55,6 +68,27 @@ main {
 
     >div {
       height: calc((100vh - #{$main-margin * 2})* 0.25);
+    }
+  }
+
+  .contact__grid-item__wrapper {
+    grid-column: 1 / 2;
+    position: fixed;
+    font-size: 5.2rem;
+
+    @include gridRow();
+
+    .contact__wrapper {
+      grid-row: 3/4;
+      margin-top: -0.5rem;
+      line-height: 100%;
+
+      display: flex;
+      flex-direction: column;
+
+      span {
+        width: max-content;
+      }
     }
   }
 
