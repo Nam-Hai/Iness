@@ -51,7 +51,10 @@ flowProvider.registerScrollInterface({
 <style lang="scss" scoped>
 @use "@/styles/shared.scss" as *;
 
-.app__wrapper.hover {
-  cursor: pointer;
+.app__wrapper {
+  font-size: 1.2rem;
+  &.hover {
+    cursor: pointer;
+  }
 }
 </style>
