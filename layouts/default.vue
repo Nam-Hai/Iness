@@ -14,30 +14,12 @@ import BufferPage from "~/waterflow/components/BufferPage.vue";
 
 const flowProvider = useFlowProvider();
 
-const { lenis, scrollLenisOn } = useStoreView();
-const { isMobile } = useStore()
-
 useRaf(
   (e) => {
     // !flowProvider.flowIsHijacked.value && 
-    lenis.value.raf(e.elapsed);
   },
   RafPriority.FIRST
 );
-
-flowProvider.registerScrollInterface({
-  resume: () => {
-    scrollLenisOn.value = true
-    lenis.value.start();
-  },
-  stop: () => {
-    scrollLenisOn.value = false
-    lenis.value.stop();
-  },
-  scrollToTop: () => {
-    lenis.value.scrollTo("top", { immediate: true, force: true });
-  },
-});
 </script>
 
 <style lang="scss" scoped>

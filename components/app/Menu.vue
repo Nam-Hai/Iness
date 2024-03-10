@@ -1,7 +1,7 @@
 <template>
     <div class="menu__wrapper" ref="wrapperRef">
         <NuxtLink to="/" :class="{ 'menu__active': $route.path === '/' }">Overview</NuxtLink>
-        <NuxtLink to="/index" :class="{ 'menu__active': $route.path === '/index' }">Index</NuxtLink>
+        <NuxtLink to="/" :class="{ 'menu__active': $route.path === '/index' }">Index</NuxtLink>
         <NuxtLink to="/info">Info</NuxtLink>
 
         <NuxtLink to="#">
@@ -63,6 +63,11 @@ const wrapperRef = ref() as Ref<HTMLElement>
 @use "@/styles/shared.scss" as *;
 
 .menu__wrapper {
+    position: fixed;
+    left: 50%;
+    transform: translate(-50%);
+    z-index: $z-menu;
+
     @include mainGrid();
 
     color: $primary;

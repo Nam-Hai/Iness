@@ -1,6 +1,6 @@
 <template>
   <main ref="wrapperRef">
-    index
+    info
   </main>
 </template>
 
@@ -25,7 +25,5 @@ usePageFlow({
 
 main {
   @include mainGrid();
-
-  font-size: 5rem;
 }
 </style>

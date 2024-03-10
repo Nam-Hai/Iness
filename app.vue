@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <NuxtLayout>
-      <!-- <NuxtPage></NuxtPage> -->
+      <NuxtPage></NuxtPage>
     </NuxtLayout>
 
   </div>
@@ -10,11 +10,13 @@
 <script setup lang="ts">
 import { FlowProvider, provideFlowProvider, useFlowProvider } from './waterflow/FlowProvider';
 import Index from './pages/index.vue';
+import info from './pages/info.vue';
 
 provideFlowProvider()
 const flowProvider = useFlowProvider()
 
 flowProvider.registerPage('index', Index)
+flowProvider.registerPage('info', info)
 
 const { flowIsHijacked } = useStore()
 watch(flowProvider.flowIsHijacked, (flow) => {
@@ -44,12 +46,4 @@ onBeforeMount(() => {
   const { isMobile } = useStore()
   isMobile.value = m
 })
-
-// useRO(() => {
-//   if (!process.client) return
-//   const m = window.matchMedia('(pointer: coarse)').matches
-//   const { isMobile, firstRedirect } = useStore()
-//   isMobile.value = m
-// })
-
 </script>
