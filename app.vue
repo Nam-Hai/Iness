@@ -41,7 +41,9 @@ onBeforeMount(() => {
       el.remove()
     }
   }
+})
 
+useRO(() => {
   const m = window.matchMedia('(pointer: coarse)').matches
   const { isMobile } = useStore()
   isMobile.value = m

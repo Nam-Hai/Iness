@@ -6,13 +6,10 @@ const useStore = createStore(() => {
 
   const preventScroll = ref(false);
 
-  const fromPreloader = ref(true)
-
-  const preloaderComplete = ref(false);
   const flowIsHijacked = ref(false)
   const firstRedirect = ref(false)
 
-  return { isMobile, pageLoaded, preventScroll, fromPreloader, preloaderComplete, flowIsHijacked, firstRedirect }
+  return { isMobile, pageLoaded, preventScroll,  flowIsHijacked, firstRedirect }
 })
 export default useStore
 

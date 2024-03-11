@@ -59,12 +59,17 @@ usePageFlow({
 main {
   @include gridColumn();
 
-  padding-top: $main-margin;
+  position: relative;
+  margin-top: $main-margin;
 
   font-weight: 500;
 
   .info-text__wrapper {
     grid-column: 7 / 8;
+
+    @include breakpoint(mobile) {
+      grid-column: 7 / 10;
+    }
 
     >div {
       height: calc((100vh - #{$main-margin * 2})* 0.25);
@@ -74,14 +79,24 @@ main {
   .contact__grid-item__wrapper {
     grid-column: 1 / 2;
     position: fixed;
+    top: 0;
     font-size: 5.2rem;
+
+    @include breakpoint(mobile) {
+      font-size: 2.8rem;
+    }
 
     @include gridRow();
 
     .contact__wrapper {
       grid-row: 3/4;
-      margin-top: -0.5rem;
-      line-height: 100%;
+      margin-top: -1rem;
+      line-height: 120%;
+
+      @include breakpoint(mobile) {
+        margin-top: -0.4rem;
+        width: 27.4rem;
+      }
 
       display: flex;
       flex-direction: column;

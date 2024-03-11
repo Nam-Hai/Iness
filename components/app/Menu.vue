@@ -65,6 +65,7 @@ const wrapperRef = ref() as Ref<HTMLElement>
 .menu__wrapper {
     position: fixed;
     left: 50%;
+    top: 0;
     transform: translate(-50%);
     z-index: $z-menu;
 

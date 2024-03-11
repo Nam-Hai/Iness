@@ -8,12 +8,25 @@ export default defineNuxtConfig({
     // },
 
     css: ["@/styles/core.scss", "@/styles/app/index.scss"],
-
+    modules: [
+        '@nuxt/image',
+        "@nuxtjs/prismic"
+    ],
+    prismic: {
+        endpoint: 'https://inessportfolio.cdn.prismic.io/api/v2'
+    },
+    image: {
+        prismic: {}
+    },
+    // image: {
+    //     format: ['webp']
+    // },
     components: {
         global: true,
         dirs: [
             "~/components/lib/",
             "~/components/app/",
+            "~/components/index/",
         ],
     },
 

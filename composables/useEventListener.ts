@@ -10,4 +10,6 @@ export function useEventListeneer<K extends keyof WindowEventMap>(target: Ref<El
     onBeforeUnmount(() => {
         t.value.removeEventListener(event, callback)
     })
+
+    return { removeListener: () => t.value.removeEventListener(event, callback) }
 }

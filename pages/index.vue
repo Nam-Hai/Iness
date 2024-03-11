@@ -1,13 +1,13 @@
 <template>
-  <main ref="wrapperRef">
-    index
-  </main>
+  <IndexDesktop />
+  <!-- <IndexMobile v-else /> -->
 </template>
 
 <script lang="ts" setup>
 import { usePageFlow } from '~/waterflow/composables/usePageFlow';
 import { defaultFlowIn, defaultFlowOut } from '~/pages_transitions/default.transition';
 
+const { isMobile } = useStore()
 const wrapperRef = ref() as Ref<HTMLElement>
 
 usePageFlow({
@@ -22,10 +22,4 @@ usePageFlow({
 
 <style lang="scss" scoped>
 @use "@/styles/shared.scss" as *;
-
-main {
-  @include mainGrid();
-
-  font-size: 5rem;
-}
 </style>

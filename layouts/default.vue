@@ -3,7 +3,9 @@
     <Menu />
     <!-- <LenisWrapper /> -->
     <div class="page__wrapper">
-      <BufferPage />
+      <Preloader>
+        <BufferPage />
+      </Preloader>
     </div>
   </div>
 </template>
@@ -53,6 +55,7 @@ flowProvider.registerScrollInterface({
 
 .app__wrapper {
   font-size: 1.2rem;
+
   &.hover {
     cursor: pointer;
   }
