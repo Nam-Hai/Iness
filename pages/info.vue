@@ -2,7 +2,7 @@
   <main ref="wrapperRef">
     <div class="info-text__wrapper">
 
-      <div class="info-text" v-for="text in data">
+      <div class="info-text" v-for="text in copy">
         {{ text }}
       </div>
     </div>
@@ -28,19 +28,6 @@ import { usePageFlow } from '~/waterflow/composables/usePageFlow';
 import { defaultFlowIn, defaultFlowOut } from '~/pages_transitions/default.transition';
 
 const { copy } = useStoreInfo()
-const { data, pending, error, refresh } = useAsyncData(
-  'info',
-  () => {
-    return new Promise<string[]>(res => {
-      useDelay(500, () => {
-        res([...copy, ...copy])
-      })
-    })
-
-    // return $fetch('https://api.nuxtjs.dev/mountains')
-  }
-)
-
 const wrapperRef = ref() as Ref<HTMLElement>
 
 usePageFlow({

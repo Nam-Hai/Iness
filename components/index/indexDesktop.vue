@@ -1,28 +1,42 @@
 <template>
-    <main ref="wrapperRef">
-        <div class="placeholder" ref="placeholderRef">
-        </div>
+    <div class="placeholder" ref="placeholderRef">
+    </div>
 
-        <div class="project__wrapper">
-            <img :src="img.image" v-for="(img, index) in prismicData" :key="img.alt + '_' + index"
-                :class="{ show: currentImageShow === index }" />
-        </div>
-    </main>
+    <div class="project__wrapper">
+        <img :src="img.src" v-for="(img, index) in data" :key="img.alt + '_' + index"
+            :class="{ show: currentImageShow === index, loaded: img.load }" onload="() => {
+            console.log('load');
+            img.load.value = true
+        }" />
+    </div>
 </template>
 
 <script lang="ts" setup>
+import { useFlowProvider } from '~/waterflow/FlowProvider';
+import { onLeave } from '~/waterflow/composables/onFlow';
+
 const wrapperRef = ref() as Ref<HTMLElement>
 
 const { prismicData } = usePreloader()
+const data = prismicData.value.map(el => {
+    return {
+        src: el.image,
+        dimensions: el.dimensions,
+        alt: el.alt,
+        load: ref(false)
+    }
+})
 const { vh, vw } = useStoreView()
 const { isMobile } = useStore()
+const flowProvider = useFlowProvider()
 
 const currentImage = ref(0)
 
 const D = 30
 let i = 0
+
 useEventListeneer(document, "mousemove", (e) => {
-    if (isMobile.value) return
+    if (isMobile.value || flowProvider.flowIsHijacked.value) return motion.pause()
     i++
     if (i > D) {
         currentImage.value = (currentImage.value + 1) % prismicData.value.length
@@ -30,8 +44,7 @@ useEventListeneer(document, "mousemove", (e) => {
     }
 })
 useEventListeneer(document, "click", (e) => {
-    console.log('click');
-    if (!isMobile.value) return
+    if (!isMobile.value || flowProvider.flowIsHijacked.value) return motion.pause()
     currentImage.value = (currentImage.value + 1) % prismicData.value.length
 })
 
@@ -61,7 +74,7 @@ watch(currentImage, index => {
 
     currentImageShow.value = -1
     motion = useMotion({
-        delay: 150,
+        delay: 100,
         d: 500,
         e: 'io3',
         update({ prog, progE }) {
@@ -123,45 +136,43 @@ const placeholderDim = computed(() => computeDim())
 <style lang="scss" scoped>
 @use "@/styles/shared.scss" as *;
 
-main {
-    $showDuration: 150ms;
-    $showTransition: 200ms;
-    $showSum: $showDuration + $showTransition;
+$showDuration: 150ms;
+$showTransition: 200ms;
+$showSum: $showDuration + $showTransition;
 
-    .placeholder {
+.placeholder {
+    position: absolute;
+    height: 10px;
+    width: 10px;
+    background-color: $primary;
+
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+
+    // transition: transform $showTransition $showDuration;
+}
+
+.project__wrapper {
+    position: absolute;
+    inset: 0;
+
+    img {
         position: absolute;
-        height: 10px;
-        width: 10px;
-        background-color: $primary;
-
         left: 50%;
         top: 50%;
         transform: translate(-50%, -50%);
+        object-fit: cover;
+        max-width: 80vw;
+        max-height: 95vh;
 
-        // transition: transform $showTransition $showDuration;
-    }
+        opacity: 0;
+        // transition: opacity $showDuration 0ms;
+        transition: opacity $showDuration;
 
-    .project__wrapper {
-        position: absolute;
-        inset: 0;
-
-        img {
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            object-fit: cover;
-            max-width: 80vw;
-            max-height: 95vh;
-
-            opacity: 0;
-            // transition: opacity $showDuration 0ms;
-            transition: opacity $showDuration;
-
-            &.show {
-                // transition: opacity $showDuration $showSum;
-                opacity: 1;
-            }
+        &.loaded.show {
+            // transition: opacity $showDuration $showSum;
+            opacity: 1;
         }
     }
 }

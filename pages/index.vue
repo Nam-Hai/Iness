@@ -1,6 +1,7 @@
 <template>
-  <IndexDesktop />
-  <!-- <IndexMobile v-else /> -->
+  <main ref="wrapperRef">
+    <IndexDesktop />
+  </main>
 </template>
 
 <script lang="ts" setup>

@@ -8,11 +8,10 @@ export const defaultFlowOut: FlowFunction<defaultTransitionProps> = (props, reso
     const tl = useTL()
 
     tl.from({
-        el: props.wrapperRef.value,
         d: 1000,
         e: "io3",
-        p: {
-            x: [0, 20, 'rem']
+        update: (t) => {
+
         },
         cb() {
             resolve()
@@ -22,7 +21,9 @@ export const defaultFlowOut: FlowFunction<defaultTransitionProps> = (props, reso
 }
 
 export const defaultFlowIn: FlowFunction<defaultTransitionProps> = ({ wrapperRef }, resolve,) => {
-    resolve()
+    useDelay(1000, () => {
+        resolve()
+    })
 }
 
 export const flowOutMap = new Map([
