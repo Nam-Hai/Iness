@@ -17,9 +17,18 @@ export const useStoreFilter = createStore(() => {
         }
         return true
     })
+
     const filterOpen = shallowRef(false)
+
+    function resetFilter() {
+        for (const [type, active] of Object.entries(filterActive)) {
+            filterActive[type] = false
+        }
+    }
+
     return {
         filterActive,
+        resetFilter,
         isEmpty,
         filterOpen
     }

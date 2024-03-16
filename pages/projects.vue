@@ -25,7 +25,8 @@ import { defaultFlowIn, defaultFlowOut } from '~/pages_transitions/default.trans
 
 const { prismicData } = usePreloader()
 const projects = prismicData.value.projects
-const { } = useStoreProject()
+const { resetFilter } = useStoreFilter()
+resetFilter()
 
 const wrapperRef = ref() as Ref<HTMLElement>
 
