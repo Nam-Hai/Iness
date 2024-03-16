@@ -5,7 +5,7 @@
             Filter {{ filterOpen ? "-" : "+" }}
         </span>
 
-        <button v-for="filter in types" v-if="filterOpen" :class="{ active: filterActive[filter] || isEmpty }"
+        <button v-for="filter in prismicData.filters" v-if="filterOpen" :class="{ active: filterActive[filter] || isEmpty }"
             @click="toggleFilter(filter)">
             {{ filter }}
         </button>
@@ -14,13 +14,12 @@
 
 <script lang="ts" setup>
 
-const { types } = useStoreIndex()
-
 const wrapperRef = ref() as Ref<HTMLElement>
 
+const { prismicData } = usePreloader()
 const { filterOpen, filterActive, isEmpty } = useStoreFilter()
 
-function toggleFilter(filter: ProjectType) {
+function toggleFilter(filter: string) {
     filterActive[filter] = !filterActive[filter]
 }
 

@@ -18,8 +18,7 @@ const placeholderRef = ref() as Ref<HTMLElement>
 
 const { prismicData } = usePreloader()
 const { vh, breakpoint } = useStoreView()
-const p = [...prismicData.value, ...prismicData.value]
-const data = p.map(el => {
+const data = prismicData.value.overview.map(el => {
     return {
         src: el.image,
         dimensionsNative: el.dimensions,

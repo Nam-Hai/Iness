@@ -7,14 +7,14 @@
         <span>{{ props.date }}</span>
 
         <div class="project-preview">
-            {{ props.title }}
+            <img :src="props.preview_image.url" :alt="props.preview_image.alt" >
         </div>
     </div>
 
 </template>
 
 <script lang="ts" setup>
-const { props } = defineProps<{ props: Project }>()
+const { props } = defineProps<{ props: ProjectData }>()
 
 const wrapperRef = ref() as Ref<HTMLElement>
 
@@ -69,5 +69,9 @@ const { filterOpen, filterActive, isEmpty } = useStoreFilter()
     opacity: 0;
 
     pointer-events: none;
+    width: $grid-cell-width;
+    img {
+        width: 100%;
+    }
 }
 </style>

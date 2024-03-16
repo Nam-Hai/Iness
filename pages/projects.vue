@@ -23,7 +23,10 @@
 import { usePageFlow } from '~/waterflow/composables/usePageFlow';
 import { defaultFlowIn, defaultFlowOut } from '~/pages_transitions/default.transition';
 
-const { projects } = useStoreIndex()
+const { prismicData } = usePreloader()
+const projects = prismicData.value.projects
+const { } = useStoreProject()
+
 const wrapperRef = ref() as Ref<HTMLElement>
 
 usePageFlow({
