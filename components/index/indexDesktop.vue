@@ -7,7 +7,7 @@
             @mouseenter="() => (currentImage = index)">
             <img :src="img.src" :class="{ show: currentImageShow === index, loaded: img.load }" @load="() => {
             img.load.value = true
-        }" ref="imageRef" />
+        }" ref="imageRef" :style="{ aspectRatio: img.dimensionsNative.width / img.dimensionsNative.height }" />
         </div>
     </div>
 </template>
@@ -39,7 +39,7 @@ const imageRef = ref() as Ref<HTMLElement[]>
 const currentImageShow = ref(0)
 const placeholderRef = ref() as Ref<HTMLElement>
 
-onMounted(() => {
+onMounted(async () => {
     computeImgPosition()
     const dim = getImageDOMRect(currentImageShow.value)
     placeholderRef.value.style.transform = `translate(${dim.x}px, ${dim.y}px)  scale(${dim.w / 100}, ${dim.h / 100}) `
@@ -62,8 +62,6 @@ watch(currentImage, index => {
     const fromX = placeholderPos.x
     const fromY = placeholderPos.y
     const { w: toW, h: toH, x: toX, y: toY } = getImageDOMRect(index)
-    console.log(index, toX);
-
     const el = placeholderRef.value
 
     motion.pause()
@@ -97,6 +95,10 @@ useRO(() => {
     if (!placeholderRef.value) return
     computeImgPosition()
     const dim = getImageDOMRect(currentImageShow.value)
+    placeholderPos.w = dim.w
+    placeholderPos.h = dim.h
+    placeholderPos.x = dim.x
+    placeholderPos.y = dim.y
 
     placeholderRef.value.style.transform = `translate(${dim.x}px, ${dim.y}px)  scale(${dim.w / 100}, ${dim.h / 100}) `
 })
@@ -112,8 +114,7 @@ function computeImgPosition() {
         data[index].domRect.h = domRec.width * ratio
         data[index].domRect.w = domRec.width
         data[index].domRect.x = domRec.x
-        data[index].domRect.y = Math.round(domRec.y)
-        console.log(domRec.x);
+        data[index].domRect.y = domRec.y
     }
 }
 </script>
@@ -141,9 +142,29 @@ $showSum: $showDuration + $showTransition;
 .project__wrapper {
     position: absolute;
     inset: 0;
-    @include gridColumn();
+
+    @include breakpoint(desktop) {
+        @include gridColumn();
+    }
+
     padding-top: $main-margin;
     grid-auto-flow: row dense;
+
+    @include breakpoint(mobile) {
+        display: flex;
+        flex-direction: column;
+
+        .column__wrapper {
+            height: calc((100vh - 2 * $main-margin) * 0.25 * 0.5) !important;
+            padding-right: $main-margin;
+            display: flex;
+            justify-content: flex-end;
+
+            img {
+                height: 100%;
+            }
+        }
+    }
 
     .column__wrapper {
         width: 100%;
@@ -151,11 +172,11 @@ $showSum: $showDuration + $showTransition;
     }
 
     img {
-        width: 100%;
-        object-fit: cover;
-        max-width: 80vw;
-        max-height: 95vh;
+        @include breakpoint(desktop) {
+            width: 100%;
+        }
 
+        object-fit: cover;
         opacity: 0;
         // transition: opacity $showDuration 0ms;
         transition: opacity $showDuration;
