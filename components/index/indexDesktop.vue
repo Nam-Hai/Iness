@@ -14,9 +14,10 @@
 
 <script lang="ts" setup>
 const wrapperRef = ref() as Ref<HTMLElement>
+const placeholderRef = ref() as Ref<HTMLElement>
 
 const { prismicData } = usePreloader()
-const { vh } = useStoreView()
+const { vh, breakpoint } = useStoreView()
 const p = [...prismicData.value, ...prismicData.value]
 const data = p.map(el => {
     return {
@@ -34,15 +35,19 @@ const data = p.map(el => {
 })
 
 const dragAPI = useDrag({ wrapper: wrapperRef }, (e) => {
-    placeholderRef.value.style.transform = `translate(${placeholderPos.x}px, ${placeholderPos.y + e.y}px)  scale(${placeholderPos.w / 100}, ${placeholderPos.h / 100}) `
+    if (breakpoint.value === "desktop") return
+    let y = N.Clamp(placeholderPos.y + e.y, 16, vh.value - 16 - (vh.value - 32) * 0.5 * 0.25)
+    placeholderRef.value.style.transform = `translate(${placeholderPos.x}px, ${y}px)  scale(${placeholderPos.w / 100}, ${placeholderPos.h / 100}) `
 
 })
 watch(dragAPI.on, (b) => {
+    if (breakpoint.value === "desktop") return
     if (b) {
         currentImageShow.value = -1
         currentImage.value = -1
     } else {
         placeholderPos.y += dragAPI.distance.y
+        placeholderPos.y = N.Clamp(placeholderPos.y, 16, vh.value - 16 - (vh.value - 32) * 0.5 * 0.25)
         currentImage.value = N.Clamp(Math.round(placeholderPos.y / vh.value * 8), 0, data.length - 1)
     }
 })
@@ -52,7 +57,6 @@ const imageRef = ref() as Ref<HTMLElement[]>
 
 
 const currentImageShow = ref(0)
-const placeholderRef = ref() as Ref<HTMLElement>
 
 onMounted(async () => {
     computeImgPosition()
@@ -86,7 +90,7 @@ watch(currentImage, index => {
     motion = useMotion({
         delay: 100,
         d: 500,
-        e: 'o2',
+        e: 'io2',
         update({ prog, progE }) {
             if (!el) return
 
