@@ -1,4 +1,4 @@
-export const useDrag = ({ wrapper, limit }: { wrapper: Ref<HTMLElement>, limit?: { min: number, max: number } }) => {
+export const useDrag = ({ wrapper, limit }: { wrapper: Ref<HTMLElement>, limit?: { min: number, max: number } }, callback?: (e: { x: number, y: number, mouse: { x: number, y: number } }) => void) => {
     limit = limit ? limit : { min: -Infinity, max: Infinity }
     const on = ref(false)
 
@@ -58,12 +58,15 @@ export const useDrag = ({ wrapper, limit }: { wrapper: Ref<HTMLElement>, limit?:
             x: event.clientX,
             y: event.clientY
         })
+        callback && callback({ x: distance.x, y: distance.y, mouse: { x: event.clientX, y: event.clientY } })
     }
     function onTouchMove(event: TouchEvent) {
         dragMove({
             x: event.touches[0].clientX,
             y: event.touches[0].clientY
         })
+
+        callback && callback({ x: distance.x, y: distance.y, mouse: { x: event.touches[0].clientX, y: event.touches[0].clientY } })
     }
     function onMouseUp() {
         dragEnd()
@@ -78,6 +81,8 @@ export const useDrag = ({ wrapper, limit }: { wrapper: Ref<HTMLElement>, limit?:
         start.x = x
         start.y = y
 
+        distance.y = 0
+        distance.x = 0
         distanceOnStart.x = distance.x
         distanceOnStart.y = distance.y
     }

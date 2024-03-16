@@ -2,9 +2,9 @@
     <div class="placeholder" ref="placeholderRef">
     </div>
 
-    <div class="project__wrapper">
+    <div class="project__wrapper" ref="wrapperRef">
         <div class="column__wrapper" v-for="(img, index) in data" :key="img.alt + '_' + index"
-            @mouseenter="() => (currentImage = index)">
+            @mouseenter="() => { currentImage = index }">
             <img :src="img.src" :class="{ show: currentImageShow === index, loaded: img.load }" @load="() => {
             img.load.value = true
         }" ref="imageRef" :style="{ aspectRatio: img.dimensionsNative.width / img.dimensionsNative.height }" />
@@ -16,6 +16,7 @@
 const wrapperRef = ref() as Ref<HTMLElement>
 
 const { prismicData } = usePreloader()
+const { vh } = useStoreView()
 const p = [...prismicData.value, ...prismicData.value]
 const data = p.map(el => {
     return {
@@ -29,6 +30,20 @@ const data = p.map(el => {
         },
         alt: el.alt,
         load: ref(false)
+    }
+})
+
+const dragAPI = useDrag({ wrapper: wrapperRef }, (e) => {
+    placeholderRef.value.style.transform = `translate(${placeholderPos.x}px, ${placeholderPos.y + e.y}px)  scale(${placeholderPos.w / 100}, ${placeholderPos.h / 100}) `
+
+})
+watch(dragAPI.on, (b) => {
+    if (b) {
+        currentImageShow.value = -1
+        currentImage.value = -1
+    } else {
+        placeholderPos.y += dragAPI.distance.y
+        currentImage.value = N.Clamp(Math.round(placeholderPos.y / vh.value * 8), 0, data.length - 1)
     }
 })
 
@@ -57,6 +72,7 @@ const placeholderPos = {
 }
 let motion = useMotion({})
 watch(currentImage, index => {
+    if (index === -1) return
     const fromW = placeholderPos.w
     const fromH = placeholderPos.h
     const fromX = placeholderPos.x
