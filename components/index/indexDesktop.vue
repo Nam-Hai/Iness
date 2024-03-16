@@ -3,22 +3,21 @@
     </div>
 
     <div class="project__wrapper">
-        <img :src="img.src" v-for="(img, index) in data" :key="img.alt + '_' + index"
-            :class="{ show: currentImageShow === index, loaded: img.load }" @load="() => {
-            console.log('load');
+        <div class="column__wrapper" v-for="(img, index) in data" :key="img.alt + '_' + index"
+            @mouseenter="() => (currentImage = index)">
+            <img :src="img.src" :class="{ show: currentImageShow === index, loaded: img.load }" @load="() => {
             img.load.value = true
         }" ref="imageRef" />
+        </div>
     </div>
 </template>
 
 <script lang="ts" setup>
-import { useFlowProvider } from '~/waterflow/FlowProvider';
-import { onLeave } from '~/waterflow/composables/onFlow';
-
 const wrapperRef = ref() as Ref<HTMLElement>
 
 const { prismicData } = usePreloader()
-const data = prismicData.value.map(el => {
+const p = [...prismicData.value, ...prismicData.value]
+const data = p.map(el => {
     return {
         src: el.image,
         dimensionsNative: el.dimensions,
@@ -32,49 +31,38 @@ const data = prismicData.value.map(el => {
         load: ref(false)
     }
 })
-const { isMobile } = useStore()
-const flowProvider = useFlowProvider()
 
 const currentImage = ref(0)
 const imageRef = ref() as Ref<HTMLElement[]>
 
-const D = 30
-let i = 0
-
-useEventListeneer(document, "mousemove", (e) => {
-    if (isMobile.value || flowProvider.flowIsHijacked.value) return motion.pause()
-    i++
-    if (i > D) {
-        currentImage.value = (currentImage.value + 1) % prismicData.value.length
-        i = 0
-    }
-})
-useEventListeneer(document, "click", (e) => {
-    if (!isMobile.value || flowProvider.flowIsHijacked.value) return motion.pause()
-    currentImage.value = (currentImage.value + 1) % prismicData.value.length
-})
 
 const currentImageShow = ref(0)
 const placeholderRef = ref() as Ref<HTMLElement>
 
 onMounted(() => {
+    computeImgPosition()
     const dim = getImageDOMRect(currentImageShow.value)
-    placeholderRef.value.style.transform = `translate(-50%, -50%) scale(${dim.w / 100}, ${dim.h / 100})`
+    placeholderRef.value.style.transform = `translate(${dim.x}px, ${dim.y}px)  scale(${dim.w / 100}, ${dim.h / 100}) `
     placeholderPos.w = dim.w
     placeholderPos.h = dim.h
+    placeholderPos.x = dim.x
+    placeholderPos.y = dim.y
 })
 
 const placeholderPos = {
     w: 1,
-    h: 1
+    h: 1,
+    x: 0,
+    y: 0
 }
 let motion = useMotion({})
 watch(currentImage, index => {
     const fromW = placeholderPos.w
     const fromH = placeholderPos.h
-    // const toW = placeholderDim.value.width / 10
-    // const toH = placeholderDim.value.height / 10
+    const fromX = placeholderPos.x
+    const fromY = placeholderPos.y
     const { w: toW, h: toH, x: toX, y: toY } = getImageDOMRect(index)
+    console.log(index, toX);
 
     const el = placeholderRef.value
 
@@ -84,15 +72,19 @@ watch(currentImage, index => {
     motion = useMotion({
         delay: 100,
         d: 500,
-        e: 'io3',
+        e: 'o2',
         update({ prog, progE }) {
             if (!el) return
 
             const w = N.Lerp(fromW, toW, progE)
             const h = N.Lerp(fromH, toH, progE)
+            const x = N.Lerp(fromX, toX, progE)
+            const y = N.Lerp(fromY, toY, progE)
             placeholderPos.w = w
             placeholderPos.h = h
-            el.style.transform = `translate(-50%, -50%) scale(${w / 100}, ${h / 100})`
+            placeholderPos.x = x
+            placeholderPos.y = y
+            placeholderRef.value.style.transform = `translate(${x}px, ${y}px) scale(${w / 100}, ${h / 100})`
         },
         cb() {
             currentImageShow.value = index
@@ -104,7 +96,9 @@ watch(currentImage, index => {
 useRO(() => {
     if (!placeholderRef.value) return
     computeImgPosition()
-    // placeholderRef.value.style.transform = `translate(-50%, -50%) scale(${placeholderDim.value.width / 10}, ${placeholderDim.value.height / 10})`
+    const dim = getImageDOMRect(currentImageShow.value)
+
+    placeholderRef.value.style.transform = `translate(${dim.x}px, ${dim.y}px)  scale(${dim.w / 100}, ${dim.h / 100}) `
 })
 
 function getImageDOMRect(index: number) {
@@ -118,16 +112,16 @@ function computeImgPosition() {
         data[index].domRect.h = domRec.width * ratio
         data[index].domRect.w = domRec.width
         data[index].domRect.x = domRec.x
-        data[index].domRect.y = domRec.y
+        data[index].domRect.y = Math.round(domRec.y)
+        console.log(domRec.x);
     }
-    console.log(data);
 }
 </script>
 
 <style lang="scss" scoped>
 @use "@/styles/shared.scss" as *;
 
-$showDuration: 150ms;
+$showDuration: 140ms;
 $showTransition: 200ms;
 $showSum: $showDuration + $showTransition;
 
@@ -137,9 +131,9 @@ $showSum: $showDuration + $showTransition;
     width: 100px;
     background-color: $primary;
 
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+    left: 0;
+    top: 0;
+    transform-origin: left top;
 
     // transition: transform $showTransition $showDuration;
 }
@@ -147,8 +141,14 @@ $showSum: $showDuration + $showTransition;
 .project__wrapper {
     position: absolute;
     inset: 0;
-    @include mainGrid();
+    @include gridColumn();
+    padding-top: $main-margin;
     grid-auto-flow: row dense;
+
+    .column__wrapper {
+        width: 100%;
+        height: calc(100% - $main-margin);
+    }
 
     img {
         width: 100%;
@@ -161,6 +161,7 @@ $showSum: $showDuration + $showTransition;
         transition: opacity $showDuration;
 
         &.loaded.show {
+            transition: opacity 300ms;
             // transition: opacity $showDuration $showSum;
             opacity: 1;
         }
