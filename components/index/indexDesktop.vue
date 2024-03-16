@@ -4,10 +4,10 @@
 
     <div class="project__wrapper">
         <img :src="img.src" v-for="(img, index) in data" :key="img.alt + '_' + index"
-            :class="{ show: currentImageShow === index, loaded: img.load }" onload="() => {
+            :class="{ show: currentImageShow === index, loaded: img.load }" @load="() => {
             console.log('load');
             img.load.value = true
-        }" />
+        }" ref="imageRef" />
     </div>
 </template>
 
@@ -21,16 +21,22 @@ const { prismicData } = usePreloader()
 const data = prismicData.value.map(el => {
     return {
         src: el.image,
-        dimensions: el.dimensions,
+        dimensionsNative: el.dimensions,
+        domRect: {
+            h: 1,
+            w: 1,
+            x: 0,
+            y: 0,
+        },
         alt: el.alt,
         load: ref(false)
     }
 })
-const { vh, vw } = useStoreView()
 const { isMobile } = useStore()
 const flowProvider = useFlowProvider()
 
 const currentImage = ref(0)
+const imageRef = ref() as Ref<HTMLElement[]>
 
 const D = 30
 let i = 0
@@ -52,9 +58,10 @@ const currentImageShow = ref(0)
 const placeholderRef = ref() as Ref<HTMLElement>
 
 onMounted(() => {
-    placeholderRef.value.style.transform = `translate(-50%, -50%) scale(${placeholderDim.value.width / 10}, ${placeholderDim.value.height / 10})`
-    placeholderPos.w = placeholderDim.value.width / 10
-    placeholderPos.h = placeholderDim.value.height / 10
+    const dim = getImageDOMRect(currentImageShow.value)
+    placeholderRef.value.style.transform = `translate(-50%, -50%) scale(${dim.w / 100}, ${dim.h / 100})`
+    placeholderPos.w = dim.w
+    placeholderPos.h = dim.h
 })
 
 const placeholderPos = {
@@ -65,8 +72,9 @@ let motion = useMotion({})
 watch(currentImage, index => {
     const fromW = placeholderPos.w
     const fromH = placeholderPos.h
-    const toW = placeholderDim.value.width / 10
-    const toH = placeholderDim.value.height / 10
+    // const toW = placeholderDim.value.width / 10
+    // const toH = placeholderDim.value.height / 10
+    const { w: toW, h: toH, x: toX, y: toY } = getImageDOMRect(index)
 
     const el = placeholderRef.value
 
@@ -84,7 +92,7 @@ watch(currentImage, index => {
             const h = N.Lerp(fromH, toH, progE)
             placeholderPos.w = w
             placeholderPos.h = h
-            el.style.transform = `translate(-50%, -50%) scale(${w}, ${h})`
+            el.style.transform = `translate(-50%, -50%) scale(${w / 100}, ${h / 100})`
         },
         cb() {
             currentImageShow.value = index
@@ -95,42 +103,25 @@ watch(currentImage, index => {
 
 useRO(() => {
     if (!placeholderRef.value) return
-    computeDim()
-    placeholderPos.w = placeholderDim.value.width / 10
-    placeholderPos.h = placeholderDim.value.height / 10
-    placeholderRef.value.style.transform = `translate(-50%, -50%) scale(${placeholderDim.value.width / 10}, ${placeholderDim.value.height / 10})`
+    computeImgPosition()
+    // placeholderRef.value.style.transform = `translate(-50%, -50%) scale(${placeholderDim.value.width / 10}, ${placeholderDim.value.height / 10})`
 })
 
-function computeDim() {
-    const width = prismicData.value[currentImage.value].dimensions.width
-    const height = prismicData.value[currentImage.value].dimensions.height
-
-    const a = width / (vw.value * 0.8)
-    const b = height / (vh.value * 0.95)
-
-    const w = Math.min(width, vw.value * 0.8)
-    const h = Math.min(height, vh.value * 0.95)
-
-    if (a < 1 && b < 1) {
-        return {
-            width: w,
-            height: h
-        }
-    }
-    else if (a < b) {
-        return {
-            width: w / b,
-            height: h
-        }
-    } else {
-        return {
-            width: w,
-            height: h / a
-        }
-    }
+function getImageDOMRect(index: number) {
+    return data[index].domRect
 }
-const placeholderDim = computed(() => computeDim())
-
+function computeImgPosition() {
+    for (let index = 0; index < data.length; index++) {
+        const el = imageRef.value[index]
+        const domRec = el.getBoundingClientRect()
+        const ratio = data[index].dimensionsNative.height / data[index].dimensionsNative.width
+        data[index].domRect.h = domRec.width * ratio
+        data[index].domRect.w = domRec.width
+        data[index].domRect.x = domRec.x
+        data[index].domRect.y = domRec.y
+    }
+    console.log(data);
+}
 </script>
 
 <style lang="scss" scoped>
@@ -142,8 +133,8 @@ $showSum: $showDuration + $showTransition;
 
 .placeholder {
     position: absolute;
-    height: 10px;
-    width: 10px;
+    height: 100px;
+    width: 100px;
     background-color: $primary;
 
     left: 50%;
@@ -156,12 +147,11 @@ $showSum: $showDuration + $showTransition;
 .project__wrapper {
     position: absolute;
     inset: 0;
+    @include mainGrid();
+    grid-auto-flow: row dense;
 
     img {
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
+        width: 100%;
         object-fit: cover;
         max-width: 80vw;
         max-height: 95vh;
