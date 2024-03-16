@@ -1,3 +1,5 @@
+import type { ShallowReactive } from "nuxt/dist/app/compat/capi"
+
 export type ProjectType = "Graphic Design" | "type 2" | "type 3"
 
 export type Project = {
@@ -8,6 +10,7 @@ export type Project = {
 }
 
 export const useStoreIndex = createStore(() => {
+    const types: ProjectType[] = ["Graphic Design", "type 2", "type 3"]
     const projects: Project[] = [
         {
             title: "Gallery Identity",
@@ -34,5 +37,26 @@ export const useStoreIndex = createStore(() => {
             date: "date 4"
         },
     ]
-    return { projects }
+
+    return { projects, types }
+})
+
+export const useStoreFilter = createStore(() => {
+    const filterActive: ShallowReactive<{ [key in ProjectType]: boolean }> = shallowReactive({
+        "Graphic Design": true,
+        "type 2": false,
+        "type 3": false,
+    })
+    const isEmpty = computed(() => {
+        for (const [type, active] of Object.entries(filterActive)) {
+            if (active) return false
+        }
+        return true
+    })
+    const filterOpen = shallowRef(false)
+    return {
+        filterActive,
+        isEmpty,
+        filterOpen
+    }
 })

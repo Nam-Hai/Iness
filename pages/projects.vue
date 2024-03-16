@@ -1,5 +1,6 @@
 <template>
     <main ref="wrapperRef">
+
         <div class="menu__project__wrapper">
             <div class="project__wrapper">
                 <ProjectItem :props="projects[0]" />
@@ -9,6 +10,11 @@
             <div class="project__wrapper" v-for="project in projects">
                 <ProjectItem :props="project" />
             </div>
+        </div>
+
+
+        <div class="filter-c__wrapper">
+            <Filter />
         </div>
     </main>
 </template>
@@ -35,11 +41,13 @@ usePageFlow({
 
 main {
     line-height: 100%;
+    // position: relative;
+    padding-top: $main-margin;
 }
 
 .menu__project__wrapper {
     position: absolute;
-    top: calc($grid-cell-height);
+    top: calc($grid-cell-height + $main-margin);
     left: $main-margin;
 
     .project__wrapper {
@@ -51,7 +59,6 @@ main {
 .projects__wrapper {
     display: grid;
 
-    margin-top: $main-margin;
     height: calc(var(--100vh) - #{$main-margin * 2});
     width: 100%;
 
@@ -65,5 +72,17 @@ main {
     .project__wrapper {
         height: $grid-cell-height;
     }
+}
+
+.filter-c__wrapper {
+    position: absolute;
+    left: calc($main-margin + var(--grid-column-width) * 5);
+    top: $main-margin;
+}
+
+#project-preview {
+    position: absolute;
+    right: $main-margin;
+    top: $main-margin;
 }
 </style>
