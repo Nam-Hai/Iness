@@ -1,7 +1,7 @@
 <template>
     <div class="menu__wrapper" ref="wrapperRef">
         <NuxtLink to="/" :class="{ 'menu__active': $route.path === '/' }">Overview</NuxtLink>
-        <NuxtLink to="/" :class="{ 'menu__active': $route.path === '/index' }">Index</NuxtLink>
+        <NuxtLink to="/projects" :class="{ 'menu__active': $route.path === '/index' }">Index</NuxtLink>
         <NuxtLink to="/info">Info</NuxtLink>
 
         <NuxtLink to="#">

@@ -42,11 +42,14 @@ $z-cursor: 500;
 $z-rotation-message: 600;
 
 
+
 // ****************************
 // LAYOUT
 // ****************************
 
 $main-margin: 1.6rem;
+$grid-cell-height: calc((100vh - $main-margin * 2) * 0.25);
+$grid-cell-width: calc((100vw - $main-margin * 2) /9);
 
 
 // EXPORTS

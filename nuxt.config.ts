@@ -27,6 +27,8 @@ export default defineNuxtConfig({
             "~/components/lib/",
             "~/components/app/",
             "~/components/index/",
+            "~/components/projects/",
+
         ],
     },
 
