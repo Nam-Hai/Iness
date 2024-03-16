@@ -52,7 +52,7 @@ main {
   font-weight: 500;
 
   .info-text__wrapper {
-    grid-column: 7 / 8;
+    grid-column: 6 / 7;
 
     @include breakpoint(mobile) {
       grid-column: 7 / 10;

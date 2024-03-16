@@ -1,6 +1,5 @@
 <template>
   <main ref="wrapperRef">
-    index page
   </main>
 </template>
 
@@ -8,7 +7,6 @@
 import { usePageFlow } from '~/waterflow/composables/usePageFlow';
 import { defaultFlowIn, defaultFlowOut } from '~/pages_transitions/default.transition';
 
-const { isMobile } = useStore()
 const wrapperRef = ref() as Ref<HTMLElement>
 
 usePageFlow({
@@ -24,3 +22,4 @@ usePageFlow({
 <style lang="scss" scoped>
 @use "@/styles/shared.scss" as *;
 </style>
+

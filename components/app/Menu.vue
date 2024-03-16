@@ -118,7 +118,7 @@ const wrapperRef = ref() as Ref<HTMLElement>
         }
 
         &:nth-child(6) {
-            grid-column: 7 / 8;
+            grid-column: 6 / 7;
             grid-row: 4 / 5;
             align-self: end;
 
