@@ -50,9 +50,9 @@ export function usePageFlow<T>({
     // await transitionExecption(provider, to, from)
     // scrollLenis.value = 0
 
-    if (disablePointerEvent) {
-      N.Class.add(document.body, 'flowIsHijacked')
-    }
+    // if (disablePointerEvent) {
+    N.Class.add(document.body, 'flowIsHijacked')
+    // }
 
     provider.onChangeRoute(to)
 

@@ -20,14 +20,25 @@ export const indexFlowOut: FlowFunction<defaultTransitionProps> = (props, resolv
     // resolve()
 }
 export const defaultFlowOut: FlowFunction<defaultTransitionProps> = (props, resolve, provider) => {
-    resolve()
+    const tl = useTL()
+
+    tl.from({
+        d: 1000,
+        e: "io3",
+        update: (t) => {
+
+        },
+        cb() {
+            resolve()
+        },
+    }).play()
 }
 
 export const defaultFlowIn: FlowFunction<defaultTransitionProps> = ({ wrapperRef }, resolve,) => {
     useDelay(1000, () => {
-        // resolve()
+        resolve()
     })
-    resolve()
+    // resolve()
 }
 
 export const flowOutMap = new Map([

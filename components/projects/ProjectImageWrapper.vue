@@ -1,22 +1,55 @@
 <template>
-    <div class="image__wrapper noselect" ref="wrapperRef" @click="currentImage = N.mod(currentImage + 1, props.length)"
-        :data-column="project.column" v-for="(project, index) in props" :class="{ active: index === currentImage }">
-        <img :src="project.url" :alt="project.alt">
-        <span>{{ index + 1 }} / {{ props.length }}</span>
+    <div class="wrapper" ref="wrapperRef">
+        <div class="image__wrapper noselect" @click="currentImage = N.mod(currentImage + 1, props.length)"
+            :data-column="project.column" v-for="(project, index) in props" :class="{ active: index === currentImage }">
+            <img :src="project.url" :alt="project.alt">
+            <span>{{ index + 1 }} / {{ props.length }}</span>
+        </div>
     </div>
 </template>
 
 <script lang="ts" setup>
+import { onFlow, onLeave } from '~/waterflow/composables/onFlow';
+
 const { props } = defineProps<{ props: ProjectImage[] }>()
 const wrapperRef = ref() as Ref<HTMLElement>
 
 const currentImage = ref(0)
+onMounted(async () => {
+    await nextTick()
+    N.T(wrapperRef.value, 100, 0)
+    useTL().from({
+        el: wrapperRef.value,
+        d: 1000,
+        e: 'o5',
+        delay: 100,
+        p: {
+            x: [100, 0]
+        }
+    }).play()
+})
+onLeave(() => {
+    useTL().from({
+        el: wrapperRef.value,
+        d: 200,
+        e: 'o2',
+        p: {
+            o: [1, 0]
+        }
+    }).play()
+})
 </script>
 
 <style lang="scss" scoped>
 @use "@/styles/shared.scss" as *;
 
+.wrapper {
+    @include full();
+    pointer-events: none;
+}
+
 .image__wrapper {
+    pointer-events: all;
     position: absolute;
     margin: $main-margin;
     right: 0;
