@@ -1,11 +1,11 @@
 <template>
-    <div class="placeholder" ref="placeholderRef">
+    <div id="project-image__placeholder" :class="{ onflow: flow }" ref="placeholderRef">
 
     </div>
     <div class="wrapper" ref="wrapperRef">
         <div class="image__wrapper noselect" @click="currentImage = N.mod(currentImage + 1, props.length)"
             :data-column="project.column" v-for="(project, index) in props"
-            :class="{ show: index === currentImageShow }">
+            :class="{ show: index === currentImageShow, onflow: flow }">
             <img :src="project.url" :alt="project.alt" ref="imageRefs"
                 :style="{ aspectRatio: project.dimensions.width / project.dimensions.height }">
 
@@ -25,13 +25,22 @@ const { props } = defineProps<{ props: ProjectImage[] }>()
 const wrapperRef = ref() as Ref<HTMLElement>
 const indexRef = ref() as Ref<HTMLElement[]>
 const imageRefs = ref() as Ref<HTMLElement[]>
-const bounds = ref() as Ref<DOMRect[]>
 const placeholderRef = ref() as Ref<HTMLElement>
+const { placeholderPos, placeholderPosFrom, bounds } = useStoreProjectImage()
+onMounted(() => {
+    bounds.value = imageRefs.value.map(el => {
+        return el.getBoundingClientRect()
+    })
+})
+const flow = onFlow(() => {
+
+})
 
 useRO(() => {
     bounds.value = imageRefs.value.map(el => {
         return el.getBoundingClientRect()
     })
+    if (!flow.value) return
     placeholderRef.value.style.transform = `translate(${bounds.value[currentImage.value].x}px, ${bounds.value[currentImage.value].y}px)  scale(${bounds.value[currentImage.value].width / 100}, ${bounds.value[currentImage.value].height / 100}) `
     placeholderPos.w = bounds.value[currentImage.value].width
     placeholderPos.h = bounds.value[currentImage.value].height
@@ -42,7 +51,7 @@ useRO(() => {
 const currentImage = ref(0)
 const currentImageShow = ref(0)
 let motion = useMotion({})
-let placeholderPos = { x: 0, y: 0, w: 0, h: 0 }
+
 watch(currentImage, (to) => {
     motion.pause();
 
@@ -74,13 +83,17 @@ watch(currentImage, (to) => {
 })
 
 onLeave(() => {
+    placeholderPosFrom.value = bounds.value[currentImage.value]
     useTL().from({
         el: wrapperRef.value,
         d: 200,
         e: 'o2',
         p: {
             o: [1, 0]
-        }
+        },
+        cb() {
+            N.O(placeholderRef.value, 0)
+        },
     }).play()
 })
 </script>
@@ -92,7 +105,7 @@ $showDuration: 200ms;
 $showTransition: 200ms;
 $showSum: $showDuration + $showTransition;
 
-.placeholder {
+#project-image__placeholder {
     position: absolute;
     height: 100px;
     width: 100px;
@@ -101,9 +114,17 @@ $showSum: $showDuration + $showTransition;
     left: 0;
     top: 0;
     transform-origin: left top;
+
+    opacity: 0;
+
+    &.flow {
+        opacity: 1;
+    }
 }
 
 .wrapper {
+
+
     @include full();
     pointer-events: none;
 }
@@ -125,7 +146,7 @@ $showSum: $showDuration + $showTransition;
 
     cursor: e-resize;
 
-    &.show {
+    &.show.onflow {
         opacity: 1;
 
         .overflow-content {

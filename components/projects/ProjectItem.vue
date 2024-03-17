@@ -41,6 +41,11 @@ onLeave(() => {
 <style lang="scss" scoped>
 @use "@/styles/shared.scss" as *;
 
+a {
+    padding: 0;
+    margin: 0;
+}
+
 .project__item__wrapper {
     display: block;
     text-transform: capitalize;
@@ -72,6 +77,7 @@ onLeave(() => {
 
     &.disable-route {
         color: $discard-text;
+        height: 100%;
     }
 
 
