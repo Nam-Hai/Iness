@@ -5,8 +5,8 @@
             Filter {{ filterOpen ? "-" : "+" }}
         </span>
 
-        <button v-for="filter in prismicData.filters" v-if="filterOpen" :class="{ active: filterActive[filter] || isEmpty }"
-            @click="toggleFilter(filter)">
+        <button v-for="filter in prismicData.filters"
+            :class="{ active: filterActive[filter] || isEmpty, hide: !filterOpen }" @click="toggleFilter(filter)">
             {{ filter }}
         </button>
     </div>
@@ -33,11 +33,12 @@ function toggleFilter(filter: string) {
 
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-
+    row-gap: 5rem;
+    height: 2rem;
     &.open {
-        height: $grid-cell-height;
+        height: auto;
     }
+
 
     button {
         text-align: start;
@@ -46,10 +47,17 @@ function toggleFilter(filter: string) {
 
         color: $discard-text;
 
+        transition: opacity 200ms;
+        &.hide {
+            pointer-events: none;
+            opacity: 0;
+        }
+
         &.active {
             // color: $primary;
             color: $neutral-text;
         }
     }
 }
+
 </style>

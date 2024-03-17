@@ -1,5 +1,5 @@
 <template>
-    <div class="project__item__wrapper" ref="wrapperRef"
+    <NuxtLink :to="/projects/ + props.title" class="project__item__wrapper" ref="wrapperRef"
         :class="{ filterOpen: filterOpen, highlight: filterActive[props.type], empty: isEmpty }">
         <span>{{ props.title }}</span>
         <span>{{ props.client }}</span>
@@ -9,10 +9,9 @@
         <div class="project-preview">
             <img :src="props.preview_image.url" :alt="props.preview_image.alt" >
         </div>
-    </div>
+    </NuxtLink>
 
 </template>
-
 <script lang="ts" setup>
 const { props } = defineProps<{ props: ProjectData }>()
 
@@ -70,6 +69,8 @@ const { filterOpen, filterActive, isEmpty } = useStoreFilter()
 
     pointer-events: none;
     width: $grid-cell-width;
+
+    transition: opacity 200ms;
     img {
         width: 100%;
     }

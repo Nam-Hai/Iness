@@ -1,6 +1,5 @@
 <template>
-    <main ref="wrapperRef">
-
+    <div class="projects-item__wrapper" ref="wrapperRef">
         <div class="menu__project__wrapper">
             <div class="project__wrapper">
                 <ProjectItem :props="projects[0]" />
@@ -11,43 +10,23 @@
                 <ProjectItem :props="project" />
             </div>
         </div>
-
-
-        <div class="filter-c__wrapper">
-            <Filter />
-        </div>
-    </main>
+    </div>
 </template>
 
 <script lang="ts" setup>
-import { usePageFlow } from '~/waterflow/composables/usePageFlow';
-import { defaultFlowIn, defaultFlowOut } from '~/pages_transitions/default.transition';
-
 const { prismicData } = usePreloader()
 const projects = prismicData.value.projects
-const { resetFilter } = useStoreFilter()
-resetFilter()
+
+const store = useStore()
 
 const wrapperRef = ref() as Ref<HTMLElement>
 
-usePageFlow({
-    props: {
-        wrapperRef,
-    },
-    flowOut: defaultFlowOut,
-    flowInCrossfade: defaultFlowIn,
-    enableCrossfade: 'TOP'
-})
 </script>
 
 <style lang="scss" scoped>
 @use "@/styles/shared.scss" as *;
 
-main {
-    line-height: 100%;
-    // position: relative;
-    padding-top: $main-margin;
-}
+.projects-item__wrapper {}
 
 .menu__project__wrapper {
     position: absolute;
@@ -76,17 +55,5 @@ main {
     .project__wrapper {
         height: $grid-cell-height;
     }
-}
-
-.filter-c__wrapper {
-    position: absolute;
-    left: calc($main-margin + var(--grid-column-width) * 5);
-    top: $main-margin;
-}
-
-#project-preview {
-    position: absolute;
-    right: $main-margin;
-    top: $main-margin;
 }
 </style>

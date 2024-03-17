@@ -38,7 +38,7 @@ export const usePreloader = createStore(() => {
     const loadPrismic = async () => {
         const { client } = usePrismic()
         const { data } = await useAsyncData('prismic', async () => {
-            const overviewData = await client.getAllByType('overviewitem', {
+            const overviewPromise = client.getAllByType('overviewitem', {
                 graphQuery: `{
                     overviewitem {
                         overview_image
@@ -46,15 +46,7 @@ export const usePreloader = createStore(() => {
                 }`
             })
 
-            const overview: OverviewData[] = overviewData.map(d => {
-                return {
-                    image: d.data.overview_image.url,
-                    dimensions: d.data.overview_image.dimensions,
-                    alt: d.data.overview_image.alt
-                }
-            })
-
-            const projectData = await client.getAllByType('project', {
+            const projectPromise = client.getAllByType('project', {
                 graphQuery: `{
                     project {
                         title
@@ -70,6 +62,24 @@ export const usePreloader = createStore(() => {
                     }
                 }`
             })
+
+            const filterPromise = client.getAllByType('filter', {
+                graphQuery: `{
+                    filter {
+                        filter
+                    }
+                }`
+            })
+
+            const [overviewData, projectData, filterData] = await Promise.all([overviewPromise, projectPromise, filterPromise])
+            const overview: OverviewData[] = overviewData.map(d => {
+                return {
+                    image: d.data.overview_image.url,
+                    dimensions: d.data.overview_image.dimensions,
+                    alt: d.data.overview_image.alt
+                }
+            })
+
             const projects: ProjectData[] = projectData.map(d => {
                 return {
                     title: d.data.title,
@@ -84,13 +94,6 @@ export const usePreloader = createStore(() => {
                 }
             })
 
-            const filterData = await client.getAllByType('filter', {
-                graphQuery: `{
-                    filter {
-                        filter
-                    }
-                }`
-            })
             const filters: FilterData = filterData.map(d => {
                 return d.data.filter
             })
