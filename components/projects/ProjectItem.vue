@@ -1,13 +1,14 @@
 <template>
-    <NuxtLink :to="/projects/ + props.title" class="project__item__wrapper" ref="wrapperRef"
-        :class="{ filterOpen: filterOpen, highlight: filterActive[props.type], empty: isEmpty }">
+    <NuxtLink :to="/projects/ + props.route" class="project__item__wrapper" ref="wrapperRef" :class="{
+        filterOpen: filterOpen, highlight: filterActive[props.type], empty: isEmpty, 'disable-route': disableRoute
+    }">
         <span>{{ props.title }}</span>
         <span>{{ props.client }}</span>
         <span>{{ props.type }}</span>
         <span>{{ props.date }}</span>
 
-        <div class="project-preview">
-            <img :src="props.preview_image.url" :alt="props.preview_image.alt" >
+        <div class="project-preview" v-if="!(router.currentRoute.value.name === 'projects-id' && router.currentRoute.value.fullPath === '/projects/' + props.route)">
+            <img :src="props.preview_image.url" :alt="props.preview_image.alt">
         </div>
     </NuxtLink>
 
@@ -18,6 +19,11 @@ const { props } = defineProps<{ props: ProjectData }>()
 const wrapperRef = ref() as Ref<HTMLElement>
 
 const { filterOpen, filterActive, isEmpty } = useStoreFilter()
+
+const router = useRouter()
+const disableRoute = computed(() => {
+    return router.currentRoute.value.name === 'projects-id' && router.currentRoute.value.fullPath !== '/projects/' + props.route
+})
 
 </script>
 
@@ -48,6 +54,18 @@ const { filterOpen, filterActive, isEmpty } = useStoreFilter()
         }
     }
 
+    &.disable-route {
+        color: $discard-text;
+        position: relative;
+
+        .project-preview {
+            top: 0;
+            left: 0;
+            position: absolute;
+        }
+    }
+
+
     color: $discard-text;
 
     &.filterOpen {
@@ -71,6 +89,7 @@ const { filterOpen, filterActive, isEmpty } = useStoreFilter()
     width: $grid-cell-width;
 
     transition: opacity 200ms;
+
     img {
         width: 100%;
     }

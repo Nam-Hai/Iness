@@ -14,16 +14,17 @@ export const defaultFlowOut: FlowFunction<defaultTransitionProps> = (props, reso
 
         },
         cb() {
-            resolve()
+            // resolve()
         },
     }).play()
-    // resolve()
+    resolve()
 }
 
 export const defaultFlowIn: FlowFunction<defaultTransitionProps> = ({ wrapperRef }, resolve,) => {
     useDelay(1000, () => {
-        resolve()
+        // resolve()
     })
+    resolve()
 }
 
 export const flowOutMap = new Map([

@@ -8,6 +8,7 @@ export type OverviewData = {
 }
 export type ProjectData = {
     title: string,
+    route: string,
     client: string,
     type: string,
     date: string,
@@ -83,6 +84,7 @@ export const usePreloader = createStore(() => {
             const projects: ProjectData[] = projectData.map(d => {
                 return {
                     title: d.data.title,
+                    route: d.data.title.replace(/\s/g, '-'),
                     client: d.data.client,
                     type: d.data.type.data.filter,
                     date: d.data.date,
@@ -93,6 +95,7 @@ export const usePreloader = createStore(() => {
                     }
                 }
             })
+            console.log(projects);
 
             const filters: FilterData = filterData.map(d => {
                 return d.data.filter

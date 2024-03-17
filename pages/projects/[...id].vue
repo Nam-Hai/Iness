@@ -2,9 +2,9 @@
     <main ref="wrapperRef">
         <ProjectsItemWrapper />
 
-        <span style="font-size: 10rem;">
+        <!-- <span style="font-size: 10rem; position: absolute; top: 0;">
             AAAAAAAA
-        </span>
+        </span> -->
     </main>
 </template>
 
