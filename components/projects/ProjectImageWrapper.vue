@@ -1,9 +1,19 @@
 <template>
+    <div class="placeholder" ref="placeholderRef">
+
+    </div>
     <div class="wrapper" ref="wrapperRef">
         <div class="image__wrapper noselect" @click="currentImage = N.mod(currentImage + 1, props.length)"
-            :data-column="project.column" v-for="(project, index) in props" :class="{ active: index === currentImage }">
-            <img :src="project.url" :alt="project.alt">
-            <span>{{ index + 1 }} / {{ props.length }}</span>
+            :data-column="project.column" v-for="(project, index) in props"
+            :class="{ show: index === currentImageShow }">
+            <img :src="project.url" :alt="project.alt" ref="imageRefs"
+                :style="{ aspectRatio: project.dimensions.width / project.dimensions.height }">
+
+            <span class="overflow">
+                <span class="overflow-content" ref="indexRef">
+                    {{ index + 1 }} / {{ props.length }}
+                </span>
+            </span>
         </div>
     </div>
 </template>
@@ -13,21 +23,56 @@ import { onFlow, onLeave } from '~/waterflow/composables/onFlow';
 
 const { props } = defineProps<{ props: ProjectImage[] }>()
 const wrapperRef = ref() as Ref<HTMLElement>
+const indexRef = ref() as Ref<HTMLElement[]>
+const imageRefs = ref() as Ref<HTMLElement[]>
+const bounds = ref() as Ref<DOMRect[]>
+const placeholderRef = ref() as Ref<HTMLElement>
+
+useRO(() => {
+    bounds.value = imageRefs.value.map(el => {
+        return el.getBoundingClientRect()
+    })
+    placeholderRef.value.style.transform = `translate(${bounds.value[currentImage.value].x}px, ${bounds.value[currentImage.value].y}px)  scale(${bounds.value[currentImage.value].width / 100}, ${bounds.value[currentImage.value].height / 100}) `
+    placeholderPos.w = bounds.value[currentImage.value].width
+    placeholderPos.h = bounds.value[currentImage.value].height
+    placeholderPos.x = bounds.value[currentImage.value].x
+    placeholderPos.y = bounds.value[currentImage.value].y
+})
 
 const currentImage = ref(0)
-onMounted(async () => {
-    await nextTick()
-    N.T(wrapperRef.value, 100, 0)
-    useTL().from({
-        el: wrapperRef.value,
+const currentImageShow = ref(0)
+let motion = useMotion({})
+let placeholderPos = { x: 0, y: 0, w: 0, h: 0 }
+watch(currentImage, (to) => {
+    motion.pause();
+
+    const boundsTo = bounds.value[to]
+    const from = placeholderPos
+
+    currentImageShow.value = -1
+    motion = useMotion({
         d: 1000,
-        e: 'o5',
-        delay: 100,
-        p: {
-            x: [100, 0]
-        }
-    }).play()
+        e: 'i3',
+        delay: 180,
+        update({ prog, progE }) {
+            const x = N.Lerp(from.x, boundsTo.x, progE)
+            const y = N.Lerp(from.y, boundsTo.y, progE)
+            const w = N.Lerp(from.w, boundsTo.width, progE)
+            const h = N.Lerp(from.h, boundsTo.height, progE)
+            placeholderPos.x = x
+            placeholderPos.y = y
+            placeholderPos.w = w
+            placeholderPos.h = h
+            placeholderRef.value.style.transform = `translate(${x}px, ${y}px) scale(${w / 100}, ${h / 100})`
+
+        },
+        cb() {
+            currentImageShow.value = to
+        },
+    });
+    motion.play()
 })
+
 onLeave(() => {
     useTL().from({
         el: wrapperRef.value,
@@ -42,6 +87,21 @@ onLeave(() => {
 
 <style lang="scss" scoped>
 @use "@/styles/shared.scss" as *;
+
+$showDuration: 200ms;
+$showTransition: 200ms;
+$showSum: $showDuration + $showTransition;
+
+.placeholder {
+    position: absolute;
+    height: 100px;
+    width: 100px;
+    background-color: $primary;
+
+    left: 0;
+    top: 0;
+    transform-origin: left top;
+}
 
 .wrapper {
     @include full();
@@ -58,11 +118,19 @@ onLeave(() => {
     // cursor: pointer;
     opacity: 0;
     height: calc(100% - $main-margin * 2);
-    transition: opacity 200ms;
+    // transition: opacity 200ms;
+
+    transition: opacity $showDuration;
+
+
     cursor: e-resize;
 
-    &.active {
+    &.show {
         opacity: 1;
+
+        .overflow-content {
+            transform: translateY(0%);
+        }
     }
 
     &[data-column="1"] {
@@ -91,6 +159,8 @@ onLeave(() => {
 
     }
 
-    span {}
+    .overflow-content {
+        transition: transform 500ms ease-in-out;
+    }
 }
 </style>

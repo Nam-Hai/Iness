@@ -42,6 +42,7 @@ onLeave(() => {
 @use "@/styles/shared.scss" as *;
 
 .project__item__wrapper {
+    display: block;
     text-transform: capitalize;
     transition: color 200ms, opacity 200ms;
     pointer-events: none;
