@@ -1,7 +1,6 @@
 <template>
     <div class="image__wrapper noselect" ref="wrapperRef" @click="currentImage = N.mod(currentImage + 1, props.length)"
-        :data-column="project.column" v-for="(project, index) in props"
-        :class="{ active: index === currentImage }">
+        :data-column="project.column" v-for="(project, index) in props" :class="{ active: index === currentImage }">
         <img :src="project.url" :alt="project.alt">
         <span>{{ index + 1 }} / {{ props.length }}</span>
     </div>
@@ -23,8 +22,11 @@ const currentImage = ref(0)
     right: 0;
     top: 0;
     // width: calc($grid-cell-width * 4);
-    cursor: pointer;
+    // cursor: pointer;
     opacity: 0;
+    height: calc(100% - $main-margin * 2);
+    transition: opacity 200ms;
+    cursor: e-resize;
 
     &.active {
         opacity: 1;
