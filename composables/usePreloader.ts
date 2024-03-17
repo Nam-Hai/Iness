@@ -21,7 +21,8 @@ export type ProjectImage = {
         height: number
     },
     alt: string,
-    description: string
+    description: string,
+    column: number
 }
 
 export type FilterData = string[]
@@ -58,6 +59,7 @@ export const usePreloader = createStore(() => {
                         project_images {
                             project_image
                             description
+                            width_column
                         }
                         type {
                             ...on filter {
@@ -97,7 +99,8 @@ export const usePreloader = createStore(() => {
                             url: el.project_image.url,
                             dimensions: el.project_image.dimensions,
                             alt: el.project_image.alt,
-                            description: el.description
+                            description: el.description,
+                            column: el.width_column
                         }
                     })
                 }
