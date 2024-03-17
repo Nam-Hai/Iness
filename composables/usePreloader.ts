@@ -12,14 +12,16 @@ export type ProjectData = {
     client: string,
     type: string,
     date: string,
-    preview_image: {
-        url: string,
-        dimensions: {
-            width: number,
-            height: number
-        },
-        alt: string
-    }
+    project_images: ProjectImage[]
+}
+export type ProjectImage = {
+    url: string,
+    dimensions: {
+        width: number,
+        height: number
+    },
+    alt: string,
+    description: string
 }
 
 export type FilterData = string[]
@@ -53,13 +55,15 @@ export const usePreloader = createStore(() => {
                         title
                         client
                         date
-                        image
+                        project_images {
+                            project_image
+                            description
+                        }
                         type {
                             ...on filter {
                                 filter
                             }
                         }
-
                     }
                 }`
             })
@@ -88,21 +92,22 @@ export const usePreloader = createStore(() => {
                     client: d.data.client,
                     type: d.data.type.data.filter,
                     date: d.data.date,
-                    preview_image: {
-                        url: d.data.image.url,
-                        dimensions: d.data.image.dimensions,
-                        alt: d.data.image.alt
-                    }
+                    project_images: d.data.project_images.map((el: any) => {
+                        return {
+                            url: el.project_image.url,
+                            dimensions: el.project_image.dimensions,
+                            alt: el.project_image.alt,
+                            description: el.description
+                        }
+                    })
                 }
             })
-            console.log(projects);
-
             const filters: FilterData = filterData.map(d => {
                 return d.data.filter
             })
             return {
                 overview,
-                projects: projects,
+                projects,
                 filters
             }
         })

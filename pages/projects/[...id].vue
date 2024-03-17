@@ -2,20 +2,25 @@
     <main ref="wrapperRef">
         <ProjectsItemWrapper />
 
-        <!-- <span style="font-size: 10rem; position: absolute; top: 0;">
-            AAAAAAAA
-        </span> -->
+        <ProjectImageWrapper :props="currentProject.project_images" />
     </main>
 </template>
 
 <script lang="ts" setup>
 import { usePageFlow } from '~/waterflow/composables/usePageFlow';
 import { defaultFlowIn, defaultFlowOut } from '~/pages_transitions/default.transition';
-
-const { resetFilter } = useStoreFilter()
-resetFilter()
+import { useFlowProvider } from '~/waterflow/FlowProvider';
 
 const wrapperRef = ref() as Ref<HTMLElement>
+
+const { prismicData } = usePreloader()
+const projects = prismicData.value.projects
+
+const flowProvider = useFlowProvider()
+
+const currentProject = projects.filter(el => {
+    return "/projects/" + el.route === flowProvider.getRouteTo().fullPath
+})[0]
 
 usePageFlow({
     props: {

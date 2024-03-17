@@ -4,7 +4,7 @@ export type defaultTransitionProps = {
     wrapperRef: Ref<HTMLElement>
 }
 
-export const defaultFlowOut: FlowFunction<defaultTransitionProps> = (props, resolve, provider) => {
+export const indexFlowOut: FlowFunction<defaultTransitionProps> = (props, resolve, provider) => {
     const tl = useTL()
 
     tl.from({
@@ -14,9 +14,12 @@ export const defaultFlowOut: FlowFunction<defaultTransitionProps> = (props, reso
 
         },
         cb() {
-            // resolve()
+            resolve()
         },
     }).play()
+    // resolve()
+}
+export const defaultFlowOut: FlowFunction<defaultTransitionProps> = (props, resolve, provider) => {
     resolve()
 }
 

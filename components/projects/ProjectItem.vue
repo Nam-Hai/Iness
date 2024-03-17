@@ -7,22 +7,26 @@
         <span>{{ props.type }}</span>
         <span>{{ props.date }}</span>
 
-        <div class="project-preview" v-if="!(router.currentRoute.value.name === 'projects-id' && router.currentRoute.value.fullPath === '/projects/' + props.route)">
-            <img :src="props.preview_image.url" :alt="props.preview_image.alt">
+        <div class="project-preview"
+            v-if="!(routeTo.name === 'projects-id' && routeTo.fullPath === '/projects/' + props.route)">
+            <img :src="props.project_images[0].url" :alt="props.project_images[0].alt">
         </div>
     </NuxtLink>
 
 </template>
 <script lang="ts" setup>
+import { useFlowProvider } from '~/waterflow/FlowProvider';
+
 const { props } = defineProps<{ props: ProjectData }>()
 
 const wrapperRef = ref() as Ref<HTMLElement>
 
 const { filterOpen, filterActive, isEmpty } = useStoreFilter()
+const flowProvider = useFlowProvider()
+const routeTo = flowProvider.getRouteTo()
 
-const router = useRouter()
 const disableRoute = computed(() => {
-    return router.currentRoute.value.name === 'projects-id' && router.currentRoute.value.fullPath !== '/projects/' + props.route
+    return routeTo.name === 'projects-id' && routeTo.fullPath !== '/projects/' + props.route
 })
 
 </script>
