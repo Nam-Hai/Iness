@@ -50,6 +50,7 @@ const currentImage = ref(0)
 
     img {
         width: 100%;
+        max-height: calc(100% - 3rem);
         // height: calc($grid-cell-height * 2);
         margin-bottom: 1.6rem;
 
