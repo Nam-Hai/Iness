@@ -2,7 +2,9 @@
     <main ref="wrapperRef">
         <ProjectsItemWrapper />
 
-        <ProjectImageWrapper :props="currentProject.project_images" />
+        <div class="fade-id">
+            <ProjectImageWrapper :props="currentProject.project_images" />
+        </div>
     </main>
 </template>
 
@@ -41,6 +43,21 @@ main {
     padding-top: $main-margin;
 }
 
+.fade-id {
+    animation: fade-id linear 200ms forwards;
+}
+
+
+
+@keyframes fade-id {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
 
 .filter-c__wrapper {
     position: absolute;
