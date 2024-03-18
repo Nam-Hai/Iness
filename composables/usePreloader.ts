@@ -21,8 +21,8 @@ export type ProjectImage = {
         height: number
     },
     alt: string,
-    description: string,
-    column: number
+    description?: string,
+    column?: number
 }
 
 export type FilterData = string[]

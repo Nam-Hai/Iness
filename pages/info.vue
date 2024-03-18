@@ -12,7 +12,7 @@
         <span>
           You can contact me on
         </span>
-        <span>
+        <span @click="clipMail" class="contact__mail" :class="{ copied }">
           Contact@in.e.studio
         </span>
         <span>
@@ -30,6 +30,19 @@ import { defaultFlowIn, defaultFlowOut } from '~/pages_transitions/default.trans
 const { copy } = useStoreInfo()
 const wrapperRef = ref() as Ref<HTMLElement>
 
+onMounted(() => {
+  console.log(navigator);
+})
+
+const copied = ref(false)
+let timer = useTimer(() => {
+  copied.value = false
+}, 900)
+function clipMail() {
+  copied.value = true
+  navigator.clipboard.writeText("Contact@in.e.studio");
+  timer.tick()
+}
 usePageFlow({
   props: {
     wrapperRef,
@@ -87,6 +100,33 @@ main {
 
       display: flex;
       flex-direction: column;
+
+      .contact__mail {
+        &.copied::after {
+          color: $primary;
+        }
+
+        &::after {
+          content: "copy the mail";
+          pointer-events: none;
+          color: $neutral-text;
+          opacity: 0;
+          position: absolute;
+          left: 0;
+        }
+
+        transition: color 250ms;
+        cursor: pointer;
+
+        &:hover {
+          color: $discard-text;
+
+          &::after {
+            opacity: 1;
+          }
+        }
+
+      }
 
       span {
         width: max-content;
