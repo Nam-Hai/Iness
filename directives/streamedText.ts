@@ -8,6 +8,7 @@ export const vStreamedText = {
         // console.log(flowProvider.getRouteTo().name);
         if (flowProvider.getRouteTo().name === "projects-id") return
         const text = el.innerText
+        console.log(text);
         const char = text.split('')
         el.innerHTML = ""
         const spans: HTMLElement[] = []
@@ -22,7 +23,7 @@ export const vStreamedText = {
         const tl = useTL()
         for (let index = 0; index < spans.length; index++) {
             const span = spans[index]
-            const letter = span.innerText
+            const letter = char[index]
             let i = 0
             tl.from({
                 el: span,

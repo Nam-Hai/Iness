@@ -22,6 +22,7 @@ import { useFlowProvider } from '~/waterflow/FlowProvider';
 import { onLeave } from '~/waterflow/composables/onFlow';
 
 const { props } = defineProps<{ props: ProjectData }>()
+console.log(props.title);
 
 const wrapperRef = ref() as Ref<HTMLElement>
 const textRef = ref() as Ref<HTMLElement>
@@ -36,11 +37,15 @@ const disableRoute = computed(() => {
 
 const { placeholderPos, placeholderPosFrom, bounds } = useStoreProjectImage()
 const imageRef = ref()
+
+const click = ref(false)
 function onClick() {
+    click.value = true
 }
 onLeave(() => {
     N.O(textRef.value, 0)
 
+    if (click.value === false) return
     const fromRoute = flowProvider.getRouteFrom()
     if (fromRoute.name !== 'projects') return
 
@@ -70,6 +75,7 @@ a {
         display: flex;
         flex-direction: column;
         row-gap: 0.3rem;
+        text-transform: capitalize;
     }
 
     cursor: pointer;
