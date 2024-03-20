@@ -44,6 +44,7 @@ export const projectProjectFlowIn: FlowFunction<defaultTransitionProps> = async 
     const { placeholderPos, placeholderPosFrom, bounds } = useStoreProjectImage()
     const from = placeholderPosFrom.value
     const placeholderDOM = N.get("#project-image__placeholder", wrapperRef.value) as HTMLElement | null
+    console.log(from);
     if (!placeholderDOM) return resolve()
 
     const boundsTo = bounds.value[0]
@@ -81,5 +82,6 @@ export const flowOutMap = new Map([
 ])
 export const flowInMap = new Map([
     ['default', defaultFlowIn],
-    ['projects-id => projects-id', projectProjectFlowIn]
+    ['projects-id => projects-id', projectProjectFlowIn],
+    ['projects => projects-id', projectProjectFlowIn]
 ])

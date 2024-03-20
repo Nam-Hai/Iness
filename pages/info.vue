@@ -1,23 +1,24 @@
 <template>
   <main ref="wrapperRef">
-    <div class="info-text__wrapper">
-
-      <div class="info-text" v-for="text in copy">
-        {{ text }}
-      </div>
-    </div>
 
     <div class="contact__grid-item__wrapper">
       <div class="contact__wrapper">
-        <span>
+        <span v-streamed-text>
           You can contact me on
         </span>
-        <span @click="clipMail" class="contact__mail" :class="{ copied }">
+        <span v-streamed-text="true" @click="clipMail" class="contact__mail" :class="{ copied }">
           Contact@in.e.studio
         </span>
-        <span>
+        <span v-streamed-text="true">
           + 33 7 88 25 6707
         </span>
+      </div>
+    </div>
+
+    <div class="info-text__wrapper">
+
+      <div class="info-text" v-for="text in [...copy, ...copy, ...copy, ...copy]" v-streamed-text="true">
+        {{ text }}
       </div>
     </div>
   </main>
@@ -26,6 +27,7 @@
 <script lang="ts" setup>
 import { usePageFlow } from '~/waterflow/composables/usePageFlow';
 import { defaultFlowIn, defaultFlowOut } from '~/pages_transitions/default.transition';
+import { vStreamedText } from '~/directives/streamedText';
 
 const { copy } = useStoreInfo()
 const wrapperRef = ref() as Ref<HTMLElement>
@@ -72,6 +74,7 @@ main {
     }
 
     >div {
+      width: 100%;
       height: calc((100vh - #{$main-margin * 2})* 0.25);
     }
   }

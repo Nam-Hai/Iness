@@ -27,6 +27,11 @@ watch(flowProvider.flowIsHijacked, (flow) => {
   flowIsHijacked.value = flow
 })
 
+const { resetCount } = useStoreTransition()
+const routeTo = flowProvider.getRouteTo()
+watch(routeTo, () => {
+  resetCount()
+})
 
 onBeforeMount(() => {
   useStoreView().init()

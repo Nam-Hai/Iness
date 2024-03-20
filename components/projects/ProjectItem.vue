@@ -1,22 +1,23 @@
 <template>
     <NuxtLink :to="/projects/ + props.route" class="project__item__wrapper" ref="wrapperRef" :class="{
         filterOpen: filterOpen, highlight: filterActive[props.type], empty: isEmpty, 'disable-route': disableRoute
-    }">
+    }" @click="onClick">
         <div class="container" ref="textRef">
-            <span>{{ props.title }}</span>
-            <span>{{ props.client }}</span>
-            <span>{{ props.type }}</span>
-            <span>{{ props.date }}</span>
+            <span v-streamed-text>{{ props.title }}</span>
+            <span v-streamed-text>{{ props.client }}</span>
+            <span v-streamed-text>{{ props.type }}</span>
+            <span v-streamed-text>{{ props.date }}</span>
         </div>
 
         <div class="project-preview"
             :class="{ relative: routeTo.name === 'projects-id', hide: routeTo.name === 'projects-id' && routeTo.fullPath === '/projects/' + props.route }">
-            <img :src="props.project_images[0].url" :alt="props.project_images[0].alt">
+            <img :src="props.project_images[0].url" :alt="props.project_images[0].alt" ref="imageRef">
         </div>
     </NuxtLink>
 
 </template>
 <script lang="ts" setup>
+import { vStreamedText } from '~/directives/streamedText';
 import { useFlowProvider } from '~/waterflow/FlowProvider';
 import { onLeave } from '~/waterflow/composables/onFlow';
 
@@ -33,9 +34,21 @@ const disableRoute = computed(() => {
     return routeTo.name === 'projects-id' && routeTo.fullPath !== '/projects/' + props.route
 })
 
+const { placeholderPos, placeholderPosFrom, bounds } = useStoreProjectImage()
+const imageRef = ref()
+function onClick() {
+}
 onLeave(() => {
     N.O(textRef.value, 0)
+
+    const fromRoute = flowProvider.getRouteFrom()
+    if (fromRoute.name !== 'projects') return
+
+    const domRect = imageRef.value.getBoundingClientRect()
+    placeholderPosFrom.value = domRect
+    console.log(fromRoute.name, placeholderPosFrom.value);
 })
+
 </script>
 
 <style lang="scss" scoped>

@@ -1,7 +1,7 @@
-export function useStreamingText(text: string, speedInt: number = 3) {
+export function useStreamingText(text: string, speedInt: number = 1, speed = 20) {
 
     const streamedText = ref('')
-    const delay = useDelay(20, streamText)
+    const delay = useDelay(speed, streamText)
     const percentage = ref(0)
 
     function streamText() {

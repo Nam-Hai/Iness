@@ -60,8 +60,8 @@ watch(currentImage, (to) => {
 
     currentImageShow.value = -1
     motion = useMotion({
-        d: 1000,
-        e: 'i3',
+        d: 600,
+        e: 'io3',
         delay: 180,
         update({ prog, progE }) {
             const x = N.Lerp(from.x, boundsTo.x, progE)
@@ -109,7 +109,8 @@ $showSum: $showDuration + $showTransition;
     position: absolute;
     height: 100px;
     width: 100px;
-    background-color: $primary;
+    // background-color: $primary;
+    background-color: $placeholder-rect-secondary;
 
     left: 0;
     top: 0;
