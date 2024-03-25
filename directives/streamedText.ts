@@ -35,7 +35,7 @@ export const vStreamedText = {
                 p: {
                     o: [0, 1]
                 },
-                d: 50,
+                d: 100,
                 delay: N.Ease.o2(Math.min(index, test) / test) * test * SPEED_MS + count.value * STAGGER_MS,
             }).from({
                 update: (t) => {
