@@ -40,11 +40,14 @@ export const defaultFlowIn: FlowFunction<defaultTransitionProps> = ({ wrapperRef
     })
     // resolve()
 }
-export const projectProjectFlowIn: FlowFunction<defaultTransitionProps> = async ({ wrapperRef }, resolve,) => {
+export const projectProjectFlowIn: FlowFunction<defaultTransitionProps> = async ({ wrapperRef }, resolve, provider) => {
     const { placeholderPos, placeholderPosFrom, bounds } = useStoreProjectImage()
     const from = placeholderPosFrom.value
     const placeholderDOM = N.get("#project-image__placeholder", wrapperRef.value) as HTMLElement | null
-    console.log(from);
+    const { breakpoint } = useStoreView()
+    if (breakpoint.value == "mobile") {
+        return defaultFlowIn({ wrapperRef }, resolve, provider)
+    }
     if (!placeholderDOM) return resolve()
 
     const boundsTo = bounds.value[0]

@@ -1,14 +1,18 @@
 import { useFlowProvider } from "~/waterflow/FlowProvider";
 
 
+const STAGGER_MS = 25
+const SPEED_MS = 5
+const test = 150
+
 export const vStreamedText = {
     mounted: (el: HTMLElement) => {
         const { count } = useStoreTransition()
         const flowProvider = useFlowProvider()
-        // console.log(flowProvider.getRouteTo().name);
-        if (flowProvider.getRouteTo().name === "projects-id") return
+        // console.log(flowProvider.getRouteTo().name); 
+        console.log(flowProvider.flowIsHijacked.value);
+        if (flowProvider.getRouteTo().name === "projects-id" || !flowProvider.flowIsHijacked.value) return
         const text = el.innerText
-        console.log(text);
         const char = text.split('')
         el.innerHTML = ""
         const spans: HTMLElement[] = []
@@ -31,7 +35,7 @@ export const vStreamedText = {
                     o: [0, 1]
                 },
                 d: 50,
-                delay: index * 15 + count.value * 40
+                delay: N.Ease.o2(Math.min(index, test) / test) * test * SPEED_MS + count.value * STAGGER_MS,
             }).from({
                 update: (t) => {
                     if (letter === " ") {
@@ -43,7 +47,7 @@ export const vStreamedText = {
                     span.innerText = map[Math.floor(N.Rand.range(0, map.length - 1, 1))]
                 },
                 d: 200,
-                delay: index * 15 + count.value * 40,
+                delay: N.Ease.o2(Math.min(index, test) / test) * test * SPEED_MS + count.value * STAGGER_MS,
                 cb() {
                     span.innerText = letter
                 },

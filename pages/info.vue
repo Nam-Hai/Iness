@@ -66,7 +66,7 @@ main {
     grid-column: 6 / 7;
 
     @include breakpoint(mobile) {
-      grid-column: 7 / 10;
+      grid-column: 6 / 10;
     }
 
     >div {

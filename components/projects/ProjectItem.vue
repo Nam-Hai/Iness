@@ -1,6 +1,6 @@
 <template>
     <NuxtLink :to="/projects/ + props.route" class="project__item__wrapper" ref="wrapperRef" :class="{
-        filterOpen: filterOpen, highlight: filterActive[props.type], empty: isEmpty, 'disable-route': disableRoute
+        filterOpen: filterOpen, highlight: filterActive[props.type], empty: isEmpty, 'disable-route': disableRoute, 'scroll-out': !previewShow
     }" @click="onClick">
         <div class="container" ref="textRef">
             <span v-streamed-text>{{ props.title }}</span>
@@ -10,11 +10,10 @@
         </div>
 
         <div class="project-preview"
-            :class="{ relative: routeTo.name === 'projects-id', hide: routeTo.name === 'projects-id' && routeTo.fullPath === '/projects/' + props.route }">
+            :class="{ relative: routeTo.name === 'projects-id', 'scroll-show': previewShow, hide: routeTo.name === 'projects-id' && routeTo.fullPath === '/projects/' + props.route }">
             <img :src="props.project_images[0].url" :alt="props.project_images[0].alt" ref="imageRef">
         </div>
     </NuxtLink>
-
 </template>
 <script lang="ts" setup>
 import { vStreamedText } from '~/directives/streamedText';
@@ -22,17 +21,26 @@ import { useFlowProvider } from '~/waterflow/FlowProvider';
 import { onLeave } from '~/waterflow/composables/onFlow';
 
 const { props } = defineProps<{ props: ProjectData }>()
-console.log(props.title);
 
 const wrapperRef = ref() as Ref<HTMLElement>
 const textRef = ref() as Ref<HTMLElement>
 
 const { filterOpen, filterActive, isEmpty } = useStoreFilter()
+const { breakpoint } = useStoreView()
 const flowProvider = useFlowProvider()
 const routeTo = flowProvider.getRouteTo()
 
 const disableRoute = computed(() => {
     return routeTo.name === 'projects-id' && routeTo.fullPath !== '/projects/' + props.route
+    // return false
+})
+
+
+const previewShow = onEnter({
+    el: textRef,
+    vStart: 20,
+    vEnd: 5,
+    both: true
 })
 
 const { placeholderPos, placeholderPosFrom, bounds } = useStoreProjectImage()
@@ -43,15 +51,18 @@ function onClick() {
     click.value = true
 }
 onLeave(() => {
-    N.O(textRef.value, 0)
+
+    const fromRoute = flowProvider.getRouteFrom()
+    const routeTo = flowProvider.getRouteTo()
+    if (routeTo.name === 'projects' || (routeTo.name === "projects-id" && breakpoint.value === "desktop")) {
+        N.O(textRef.value, 0)
+    }
 
     if (click.value === false) return
-    const fromRoute = flowProvider.getRouteFrom()
     if (fromRoute.name !== 'projects') return
 
     const domRect = imageRef.value.getBoundingClientRect()
     placeholderPosFrom.value = domRect
-    console.log(fromRoute.name, placeholderPosFrom.value);
 })
 
 </script>
@@ -94,6 +105,12 @@ a {
         }
     }
 
+    @include breakpoint(mobile) {
+        &.scroll-out {
+            color: $neutral-text;
+        }
+    }
+
     &.disable-route {
         color: $discard-text;
         height: 100%;
@@ -123,6 +140,15 @@ a {
     width: $grid-cell-width;
 
     transition: opacity 200ms;
+
+    @include breakpoint(mobile) {
+        width: calc($grid-cell-width * 2);
+        left: calc($grid-cell-width * 2 + $main-margin);
+
+        &.scroll-show {
+            opacity: 1;
+        }
+    }
 
 
     &.relative {

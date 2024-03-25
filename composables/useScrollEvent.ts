@@ -80,7 +80,6 @@ export const onEnter = ({
   eStart = 0,
   vEnd = 0,
   eEnd = 100,
-  leave = 100,
   enterCb,
   leaveCb,
   once = false,
@@ -111,9 +110,11 @@ export const onEnter = ({
 
   onFlow(async () => {
     await nextTick()
+    await nextTick()
     computeBounds()
 
     flow.value = true
+    console.log(lenis.emit);
     lenis.run();
     lenis.emit()
   });
@@ -126,11 +127,9 @@ export const onEnter = ({
 
   const { lenis } = useLenisScroll((e) => {
     const dist = window.scrollY - boundY + (vh.value * vStart) / 100 - (bounds.height * eStart) / 100;
-    const distLeave = window.scrollY - boundY + (vh.value * leave) / 100 - (bounds.height * eStart) / 100;
     const max = (bounds.height * (eEnd - eStart)) / 100 + (vh.value * (vStart - vEnd)) / 100;
     const offset = N.Clamp(dist, 0, max);
     const t = offset / max;
-    const tLeave = N.Clamp(distLeave, 0, max) / max;
     if (both && t == 1) {
       hasEnter.value && (hasEnter.value = false)
     } else if (t > 0 && (!hasEnter.value && flow.value)) {
@@ -138,7 +137,7 @@ export const onEnter = ({
       enterCb && enterCb();
       // intersectionObserver.value.disconnect();
       // lenis.off()
-    } else if (tLeave <= 0 && hasEnter.value && !once) {
+    } else if (t <= 0 && hasEnter.value && !once) {
       leaveCb && leaveCb()
       hasEnter.value = false
     }

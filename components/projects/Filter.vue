@@ -1,7 +1,7 @@
 <template>
     <div class="filter__wrapper" ref="wrapperRef" @mouseenter="filterOpen = true" @mouseleave="filterOpen = false"
         :class="{ open: filterOpen }">
-        <span :style="{ cursor: 'default' }">
+        <span :style="{ cursor: 'default' }" v-streamed-text>
             Filter {{ filterOpen ? "-" : "+" }}
         </span>
 
@@ -13,6 +13,7 @@
 </template>
 
 <script lang="ts" setup>
+import { vStreamedText } from '~/directives/streamedText';
 
 const wrapperRef = ref() as Ref<HTMLElement>
 
@@ -35,6 +36,7 @@ function toggleFilter(filter: string) {
     flex-direction: column;
     row-gap: 5rem;
     height: 2rem;
+
     &.open {
         height: auto;
     }
@@ -48,6 +50,7 @@ function toggleFilter(filter: string) {
         color: $discard-text;
 
         transition: opacity 200ms;
+
         &.hide {
             pointer-events: none;
             opacity: 0;
@@ -59,5 +62,4 @@ function toggleFilter(filter: string) {
         }
     }
 }
-
 </style>

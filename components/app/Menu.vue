@@ -1,8 +1,8 @@
 <template>
     <div class="menu__wrapper" ref="wrapperRef">
-        <NuxtLink to="/" :class="{ 'menu__active': $route.path === '/' }">Overview</NuxtLink>
-        <NuxtLink to="/projects" :class="{ 'menu__active': $route.path === '/index' }">Index</NuxtLink>
-        <NuxtLink to="/info">Info</NuxtLink>
+        <NuxtLink to="/" :class="{ 'menu__active': $route.path === '/', hideMenu }">Overview</NuxtLink>
+        <NuxtLink to="/projects" :class="{ 'menu__active': $route.path === '/index', hideMenu }">Index</NuxtLink>
+        <NuxtLink to="/info" :class="{ hideMenu }">Info</NuxtLink>
 
         <NuxtLink to="#">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
@@ -56,7 +56,11 @@
 // const {propName = fallbackValue} = defineProps<{propName: type}>()
 // const emits = defineEmits([])
 const wrapperRef = ref() as Ref<HTMLElement>
-
+const { breakpoint } = useStoreView()
+const router = useRouter()
+const hideMenu = computed(() => {
+    return breakpoint.value === 'mobile' && router.currentRoute.value.name === 'projects-id'
+})
 </script>
 
 <style lang="scss" scoped>
@@ -77,25 +81,34 @@ const wrapperRef = ref() as Ref<HTMLElement>
     pointer-events: none;
 
     a {
+        &.hideMenu {
+            display: none;
+        }
+
         pointer-events: all;
         font-size: 1.2rem;
         font-weight: 500;
         height: fit-content;
         width: fit-content;
 
+        &:nth-child(1) {
+            grid-column: 1 / 3;
+            grid-row: 1/2;
+        }
+
         &:nth-child(2) {
-            grid-column: 1 / 2;
+            grid-column: 1 / 3;
             grid-row: 2/3;
         }
 
         &:nth-child(3) {
-            grid-column: 1 / 2;
+            grid-column: 1 / 3;
             grid-row: 3/4;
         }
 
         // linkedin
         &:nth-child(4) {
-            grid-column: 1 / 2;
+            grid-column: 1 / 3;
             grid-row: 4 / 5;
             align-self: end;
 
@@ -118,7 +131,7 @@ const wrapperRef = ref() as Ref<HTMLElement>
         }
 
         &:nth-child(6) {
-            grid-column: 6 / 7;
+            grid-column: 6 / 9;
             grid-row: 4 / 5;
             align-self: end;
 

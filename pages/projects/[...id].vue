@@ -1,8 +1,8 @@
 <template>
     <main ref="wrapperRef">
-        <ProjectsItemWrapper />
+        <ProjectsItemWrapper v-if="breakpoint == 'desktop'" />
 
-        <ProjectImageWrapper :props="currentProject.project_images" />
+        <ProjectImageWrapper :props="currentProject" />
     </main>
 </template>
 
@@ -14,6 +14,7 @@ import { useFlowProvider } from '~/waterflow/FlowProvider';
 const wrapperRef = ref() as Ref<HTMLElement>
 
 const { prismicData } = usePreloader()
+const { breakpoint } = useStoreView()
 const projects = prismicData.value.projects
 
 const flowProvider = useFlowProvider()
@@ -39,6 +40,7 @@ main {
     line-height: 100%;
     // position: relative;
     padding-top: $main-margin;
+
 }
 
 

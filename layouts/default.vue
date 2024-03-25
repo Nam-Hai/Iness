@@ -21,31 +21,25 @@ const flowProvider = useFlowProvider();
 useRaf(
   (e) => {
     // !flowProvider.flowIsHijacked.value && 
-    lenis.raf(e.elapsed);
+    lenis.value.raf(e.elapsed);
   },
   RafPriority.FIRST
 );
 
-const lenis = new Lenis({
-  normalizeWheel: true,
-  smoothTouch: false,
-  syncTouch: true,
-  wheelMultiplier: 0.82,
-  touchMultiplier: 1.7,
-})
+const { lenis } = useStoreView()
 
 flowProvider.registerScrollInterface({
   resume: () => {
-    lenis.start();
+    lenis.value.start();
   },
   stop: () => {
-    lenis.stop();
+    lenis.value.stop();
   },
   resize: () => {
-    lenis.resize();
+    lenis.value.resize();
   },
   scrollToTop: () => {
-    lenis.scrollTo("top", { immediate: true, force: true });
+    lenis.value.scrollTo("top", { immediate: true, force: true });
   },
 });
 </script>

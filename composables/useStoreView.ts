@@ -1,9 +1,12 @@
+import Lenis from "@studio-freight/lenis";
+
 export const useStoreView = createStore(() => {
 	const vh = ref(0);
 	const vw = ref(0);
 	const scale = ref(0);
 	const breakpoint = ref("");
 
+	const lenis = ref() as Ref<Lenis>
 
 	function init() {
 
@@ -15,6 +18,14 @@ export const useStoreView = createStore(() => {
 		});
 		ro.on();
 		ro.trigger();
+
+		lenis.value = new Lenis({
+			normalizeWheel: true,
+			smoothTouch: false,
+			syncTouch: true,
+			wheelMultiplier: 0.82,
+			touchMultiplier: 1.7,
+		})
 	}
 
 
@@ -24,5 +35,6 @@ export const useStoreView = createStore(() => {
 		scale,
 		breakpoint,
 		init,
+		lenis
 	};
 });

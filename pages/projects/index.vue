@@ -38,8 +38,12 @@ main {
 
 
 .filter-c__wrapper {
-    position: absolute;
+    position: fixed;
     left: calc($main-margin + var(--grid-column-width) * 5);
     top: $main-margin;
+
+    @include breakpoint(mobile) {
+        left: calc($grid-cell-width * 5 + $main-margin); 
+    }
 }
 </style>
