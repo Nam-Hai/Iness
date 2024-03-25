@@ -43,11 +43,13 @@ export function onSwap(callback: () => void) {
 }
 
 
-export function onLeave(callback: () => void) {
+export function onLeave(callback: () => void, { once } = { once: false }) {
   const { flowIsHijacked } = useFlowProvider()
-  watch(flowIsHijacked, flow => {
+
+  const unwatch = watch(flowIsHijacked, flow => {
     if (flow) {
       callback()
+      once && unwatch()
     }
   })
 }

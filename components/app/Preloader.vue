@@ -1,20 +1,18 @@
 <template>
     <div ref="wrapperRef" class="preloader__wrapper" v-if="!killPreloader">
-        <div class="logo">
-            <div>
-                Preloader
-            </div>
-        </div>
     </div>
     <slot v-if="preloaderComplete" />
 </template>
 
 <script lang="ts" setup>
+import { useFlowProvider } from '~/waterflow/FlowProvider';
+
 const wrapperRef = ref()
 
 const killPreloader = ref(false)
 
 const { preloaderComplete, fromPreloader, loadPrismic } = usePreloader()
+const flowProvider = useFlowProvider()
 
 
 watch(preloaderComplete, async () => {
@@ -30,9 +28,12 @@ onMounted(() => {
     loadPrismic().then(endPreloader)
 })
 
-function endPreloader() {
+async function endPreloader() {
     preloaderComplete.value = true
     N.Class.add(wrapperRef.value, 'hide')
+
+    await nextTick()
+    flowProvider.flowIsHijacked.value = false
 }
 
 </script>

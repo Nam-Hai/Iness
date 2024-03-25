@@ -42,7 +42,7 @@ export class FlowProvider {
     }
   }
   swapWrapper!: () => void;
-  flowIsHijacked = ref(false)
+  flowIsHijacked = ref(true)
 
   constructor() {
     const route = useRoute()

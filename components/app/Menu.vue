@@ -1,8 +1,10 @@
 <template>
     <div class="menu__wrapper" ref="wrapperRef">
-        <NuxtLink to="/" :class="{ 'menu__active': $route.path === '/', hideMenu }">Overview</NuxtLink>
-        <NuxtLink to="/projects" :class="{ 'menu__active': $route.path === '/index', hideMenu }">Index</NuxtLink>
-        <NuxtLink to="/info" :class="{ hideMenu }">Info</NuxtLink>
+        <NuxtLink to="/" :class="{ 'menu__active': $route.path === '/', hideMenu }" v-streamed-text-menu>Overview
+        </NuxtLink>
+        <NuxtLink to="/projects" :class="{ 'menu__active': $route.path === '/index', hideMenu }" v-streamed-text-menu>
+            Index</NuxtLink>
+        <NuxtLink to="/info" :class="{ hideMenu }" v-streamed-text-menu>Info</NuxtLink>
 
         <NuxtLink to="#">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
@@ -53,6 +55,7 @@
 </template>
 
 <script lang="ts" setup>
+import { vStreamedText, vStreamedTextMenu } from '~/directives/streamedText';
 // const {propName = fallbackValue} = defineProps<{propName: type}>()
 // const emits = defineEmits([])
 const wrapperRef = ref() as Ref<HTMLElement>
@@ -108,15 +111,44 @@ const hideMenu = computed(() => {
 
         // linkedin
         &:nth-child(4) {
-            grid-column: 1 / 3;
+            grid-column: 1 / 9;
             grid-row: 4 / 5;
             align-self: end;
+            font-size: 2.6rem;
+
+            max-width: 10rem;
+            position: relative;
+            top: -0.1rem;
+
+            &:hover {
+                svg {
+                    // display: none;
+                }
+
+                // line-height: 80%;
+
+
+                @include breakpoint(mobile) {
+                    &::after {
+                        content: "independent creative  "
+                    }
+                }
+
+                &::after {
+                    content: "dependant creative, working in every type of studio and collaboration, as long as the project is cool";
+                    color: $neutral-text;
+                    position: absolute;
+                    width: max-content;
+                    top: 0.8rem;
+                }
+            }
 
             svg {
                 width: 1.9388rem;
                 height: 1.8927rem;
                 flex-shrink: 0;
             }
+
         }
 
         &:nth-child(5) {
