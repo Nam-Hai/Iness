@@ -2,11 +2,6 @@ import type { MotionArg } from "~/plugins/core/motion"
 import { RafPriority, type rafEvent } from "~/plugins/core/raf"
 import type { ResizeEvent } from "~/plugins/core/resize"
 
-export function useLenis() {
-    const { lenis } = useStoreView()
-    return lenis.value
-}
-
 export function useTL() {
     const { $TL } = useNuxtApp()
     return new $TL()

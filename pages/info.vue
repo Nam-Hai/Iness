@@ -6,12 +6,8 @@
         <span v-streamed-text>
           You can contact me on
         </span>
-        <span v-streamed-text="true" @click="clipMail" class="contact__mail" :class="{ copied }">
-          Contact@in.e.studio
-        </span>
-        <span v-streamed-text="true">
-          + 33 7 88 25 6707
-        </span>
+        <ILink copy="copy the email" text="Contact@in.e.studio" />
+        <ILink copy="copy the phone number" text="+ 33 7 88 25 67 07" />
       </div>
     </div>
 
