@@ -46,7 +46,7 @@ export const projectProjectFlowIn: FlowFunction<defaultTransitionProps> = async 
     const placeholderDOM = N.get("#project-image__placeholder", wrapperRef.value) as HTMLElement | null
     const { breakpoint } = useStoreView()
     if (breakpoint.value == "mobile") {
-        return defaultFlowIn({ wrapperRef }, resolve, provider)
+        // return defaultFlowIn({ wrapperRef }, resolve, provider)
     }
     if (!placeholderDOM) return resolve()
 

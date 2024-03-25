@@ -7,6 +7,11 @@
             <span v-streamed-text>{{ props.client }}</span>
             <span v-streamed-text>{{ props.type }}</span>
             <span v-streamed-text>{{ props.date }}</span>
+
+            <div class="description" v-if="routeTo.fullPath === '/projects/' + props.route && currentImageShow !== -1"
+                v-streamed-text2>
+                {{ props.project_images[currentImage].description }}
+            </div>
         </div>
 
         <div class="project-preview"
@@ -16,7 +21,7 @@
     </NuxtLink>
 </template>
 <script lang="ts" setup>
-import { vStreamedText } from '~/directives/streamedText';
+import { vStreamedText, vStreamedText2 } from '~/directives/streamedText';
 import { useFlowProvider } from '~/waterflow/FlowProvider';
 import { onLeave } from '~/waterflow/composables/onFlow';
 
@@ -29,6 +34,7 @@ const { filterOpen, filterActive, isEmpty } = useStoreFilter()
 const { breakpoint } = useStoreView()
 const flowProvider = useFlowProvider()
 const routeTo = flowProvider.getRouteTo()
+const { currentImage, currentImageShow } = useStoreProjectImage()
 
 const disableRoute = computed(() => {
     return routeTo.name === 'projects-id' && routeTo.fullPath !== '/projects/' + props.route
@@ -77,7 +83,7 @@ a {
 
 .project__item__wrapper {
     display: block;
-    text-transform: capitalize;
+    // text-transform: capitalize;
     transition: color 200ms, opacity 200ms;
     pointer-events: none;
     opacity: 0;
@@ -86,7 +92,7 @@ a {
         display: flex;
         flex-direction: column;
         row-gap: 0.3rem;
-        text-transform: capitalize;
+        // text-transform: capitalize;
     }
 
     cursor: pointer;
@@ -107,6 +113,7 @@ a {
 
     @include breakpoint(mobile) {
         &.scroll-out {
+            pointer-events: none;
             color: $neutral-text;
         }
     }

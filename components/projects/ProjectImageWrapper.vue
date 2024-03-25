@@ -5,21 +5,19 @@
     <div class="wrapper" ref="wrapperRef">
         <div class="image__wrapper noselect"
             @click="currentImage = N.mod(currentImage + 1, props.project_images.length)" :data-column="project.column"
-            v-for="(project, index) in props.project_images"
-            :class="{ show: index === currentImageShow, onflow: flow }">
+            v-for="(project, index) in props.project_images" :class="{ show: index === currentImageShow, onflow: flow }"
+            :key="project.url + index">
             <img :src="project.url" :alt="project.alt" ref="imageRefs"
                 :style="{ aspectRatio: project.dimensions.width / project.dimensions.height }">
 
-            <span class="overflow">
-                <span class="overflow-content" ref="indexRef">
-                    {{ index + 1 }} / {{ props.project_images.length }}
-                </span>
+            <span class="overflow" v-streamed-text v-if="currentImageShow !== -1">
+                {{ index + 1 }} / {{ props.project_images.length }}
             </span>
         </div>
     </div>
 
     <div class="project-info" v-if="breakpoint === 'mobile'">
-        <NuxtLink to="/projects" class="back">Back to index</NuxtLink>
+        <NuxtLink to="/projects" class="back" v-streamed-text>Back to index</NuxtLink>
 
         <div class="info__wrapper">
             <span v-streamed-text>{{ props.title }}</span>
@@ -27,11 +25,8 @@
             <span v-streamed-text>{{ props.type }}</span>
             <span v-streamed-text>{{ props.date }}</span>
         </div>
-        <div class="description">
-            Je crée des systems identitaire a travers le design, des systems scalable et logique, qui permettent au
-            design de s’exprimer, en creeant des accidents ou pas, tout depend de la perfection du system. Je crée
-            des systems identitaire a travers le design, des systems scalable et logique, qui permettent au design
-            de s’exprimer, en creeant des accidents ou pas, tout depend de la perfection du system.
+        <div class="description" v-streamed-text v-if="currentImageShow !== -1">
+            {{ props.project_images[currentImage].description }}
         </div>
     </div>
 </template>
@@ -45,7 +40,7 @@ const wrapperRef = ref() as Ref<HTMLElement>
 const indexRef = ref() as Ref<HTMLElement[]>
 const imageRefs = ref() as Ref<HTMLElement[]>
 const placeholderRef = ref() as Ref<HTMLElement>
-const { placeholderPos, placeholderPosFrom, bounds } = useStoreProjectImage()
+const { placeholderPos, placeholderPosFrom, bounds, currentImage, currentImageShow } = useStoreProjectImage()
 const { breakpoint } = useStoreView()
 onMounted(() => {
     bounds.value = imageRefs.value.map(el => {
@@ -68,8 +63,8 @@ useRO(() => {
     placeholderPos.y = bounds.value[currentImage.value].y
 })
 
-const currentImage = ref(0)
-const currentImageShow = ref(0)
+currentImage.value = 0
+currentImageShow.value = 0
 let motion = useMotion({})
 
 watch(currentImage, (to) => {
@@ -153,17 +148,20 @@ $showSum: $showDuration + $showTransition;
 .project-info {
     .back {
         position: fixed;
-        top: calc(2 * $grid-cell-height);
+        top: calc(2 * $grid-cell-height + $main-margin);
         left: $main-margin;
     }
 
     line-height: 130%;
 
     .info__wrapper {
-        margin-top: calc(3 * $grid-cell-height - $main-margin);
+        margin-top: calc(3 * $grid-cell-height);
         display: flex;
         flex-direction: column;
         margin-bottom: 1.6rem;
+        display: flex;
+        flex-direction: column;
+        text-transform: capitalize;
     }
 
     .info__wrapper,
@@ -172,9 +170,6 @@ $showSum: $showDuration + $showTransition;
         width: calc(4 * $grid-cell-width);
         position: relative;
 
-        display: flex;
-        flex-direction: column;
-        text-transform: capitalize;
     }
 
     .description {
@@ -202,8 +197,24 @@ $showSum: $showDuration + $showTransition;
     transition: opacity $showDuration;
 
     @include breakpoint(mobile) {
-        width: calc(100% - 2 * main-margin);
         position: fixed;
+        transition: 0ms;
+
+        &[data-column="1"] {
+            width: calc($grid-cell-width * 2);
+        }
+
+        &[data-column="2"] {
+            width: calc($grid-cell-width * 3);
+        }
+
+        &[data-column="3"] {
+            width: calc($grid-cell-width * 6);
+        }
+
+        &[data-column="4"] {
+            width: calc($grid-cell-width * 9);
+        }
     }
 
 
@@ -248,7 +259,7 @@ $showSum: $showDuration + $showTransition;
     .overflow {
         @include breakpoint(mobile) {
             position: fixed;
-            top: calc(3 * $grid-cell-height);
+            top: calc(3 * $grid-cell-height + $main-margin);
             left: $main-margin;
 
             .overflow-content {
