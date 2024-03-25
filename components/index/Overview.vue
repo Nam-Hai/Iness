@@ -87,8 +87,8 @@ watch(currentImage, index => {
 
     currentImageShow.value = -1
     motion = useMotion({
-        delay: 100,
-        d: 500,
+        delay: 0,
+        d: 0,
         e: 'io2',
         update({ prog, progE }) {
             if (!el) return
@@ -141,8 +141,8 @@ function computeImgPosition() {
 <style lang="scss" scoped>
 @use "@/styles/shared.scss" as *;
 
-$showDuration: 140ms;
-$showTransition: 200ms;
+$showDuration: 0ms;
+$showTransition: 0ms;
 $showSum: $showDuration + $showTransition;
 
 .placeholder {
@@ -198,10 +198,10 @@ $showSum: $showDuration + $showTransition;
         object-fit: cover;
         opacity: 0;
         // transition: opacity $showDuration 0ms;
-        transition: opacity $showDuration;
+        // transition: opacity $showDuration;
 
         &.loaded.show {
-            transition: opacity 300ms;
+            // transition: opacity 300ms;
             // transition: opacity $showDuration $showSum;
             opacity: 1;
         }
