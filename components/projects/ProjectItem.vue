@@ -2,7 +2,7 @@
     <NuxtLink :to="/projects/ + props.route" class="project__item__wrapper" ref="wrapperRef" :class="{
         filterOpen: filterOpen, highlight: filterActive[props.type], empty: isEmpty, 'disable-route': disableRoute, 'scroll-out': !previewShow
     }" @click="onClick">
-        <div class="container" ref="textRef">
+        <div class="container" ref="textRef" v-leave>
             <span v-streamed-text>{{ props.title }}</span>
             <span v-streamed-text>{{ props.client }}</span>
             <span v-streamed-text>{{ props.type }}</span>
@@ -16,12 +16,13 @@
 
         <div class="project-preview"
             :class="{ relative: routeTo.name === 'projects-id', 'scroll-show': previewShow, hide: routeTo.name === 'projects-id' && routeTo.fullPath === '/projects/' + props.route }">
-            <img :src="props.project_images[0].url" :alt="props.project_images[0].alt" ref="imageRef">
+            <img :src="props.project_images[0].url" :alt="props.project_images[0].alt" ref="imageRef" v-leave>
         </div>
     </NuxtLink>
 </template>
 <script lang="ts" setup>
 import { vStreamedText, vStreamedText2 } from '~/directives/streamedText';
+import { vLeave } from "~/directives/leave"
 import { useFlowProvider } from '~/waterflow/FlowProvider';
 import { onLeave } from '~/waterflow/composables/onFlow';
 

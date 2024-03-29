@@ -46,9 +46,7 @@ export const projectProjectFlowIn: FlowFunction<defaultTransitionProps> = async 
     if (breakpoint.value == "mobile") {
         // return defaultFlowIn({ wrapperRef }, resolve, provider)
     }
-    useDelay(500, () => {
-        resolve()
-    })
+    resolve()
 }
 
 export const flowOutMap = new Map([

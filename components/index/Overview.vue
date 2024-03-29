@@ -1,8 +1,5 @@
 <template>
-    <div class="placeholder" ref="placeholderRef">
-    </div>
-
-    <div class="project__wrapper" ref="wrapperRef">
+    <div class="project__wrapper" ref="wrapperRef" v-leave>
         <div class="column__wrapper" v-for="(img, index) in data" :key="img.alt + '_' + index"
             @mouseenter="() => { currentImage = index }">
             <img :src="img.src" :class="{ show: currentImageShow === index, loaded: img.load }" @load="() => {
@@ -13,8 +10,8 @@
 </template>
 
 <script lang="ts" setup>
+import { vLeave } from '~/directives/leave';
 const wrapperRef = ref() as Ref<HTMLElement>
-const placeholderRef = ref() as Ref<HTMLElement>
 
 const { prismicData } = usePreloader()
 const { vh, breakpoint } = useStoreView()
@@ -35,19 +32,12 @@ const data = prismicData.value.overview.map(el => {
 
 const dragAPI = useDrag({ wrapper: wrapperRef }, (e) => {
     if (breakpoint.value === "desktop") return
-    let y = N.Clamp(placeholderPos.y + e.y, 16, vh.value - 16 - (vh.value - 32) * 0.5 * 0.25)
-    placeholderRef.value.style.transform = `translate(${placeholderPos.x}px, ${y}px)  scale(${placeholderPos.w / 100}, ${placeholderPos.h / 100}) `
-
 })
 watch(dragAPI.on, (b) => {
     if (breakpoint.value === "desktop") return
     if (b) {
         currentImageShow.value = -1
         currentImage.value = -1
-    } else {
-        placeholderPos.y += dragAPI.distance.y
-        placeholderPos.y = N.Clamp(placeholderPos.y, 16, vh.value - 16 - (vh.value - 32) * 0.5 * 0.25)
-        currentImage.value = N.Clamp(Math.round(placeholderPos.y / vh.value * 8), 0, data.length - 1)
     }
 })
 
@@ -59,67 +49,16 @@ const currentImageShow = ref(0)
 
 onMounted(async () => {
     computeImgPosition()
-    const dim = getImageDOMRect(currentImageShow.value)
-    placeholderRef.value.style.transform = `translate(${dim.x}px, ${dim.y}px)  scale(${dim.w / 100}, ${dim.h / 100}) `
-    placeholderPos.w = dim.w
-    placeholderPos.h = dim.h
-    placeholderPos.x = dim.x
-    placeholderPos.y = dim.y
 })
 
-const placeholderPos = {
-    w: 1,
-    h: 1,
-    x: 0,
-    y: 0
-}
-let motion = useMotion({})
 watch(currentImage, index => {
     if (index === -1) return
-    const fromW = placeholderPos.w
-    const fromH = placeholderPos.h
-    const fromX = placeholderPos.x
-    const fromY = placeholderPos.y
-    const { w: toW, h: toH, x: toX, y: toY } = getImageDOMRect(index)
-    const el = placeholderRef.value
 
-    motion.pause()
-
-    currentImageShow.value = -1
-    motion = useMotion({
-        delay: 0,
-        d: 0,
-        e: 'io2',
-        update({ prog, progE }) {
-            if (!el) return
-
-            const w = N.Lerp(fromW, toW, progE)
-            const h = N.Lerp(fromH, toH, progE)
-            const x = N.Lerp(fromX, toX, progE)
-            const y = N.Lerp(fromY, toY, progE)
-            placeholderPos.w = w
-            placeholderPos.h = h
-            placeholderPos.x = x
-            placeholderPos.y = y
-            placeholderRef.value.style.transform = `translate(${x}px, ${y}px) scale(${w / 100}, ${h / 100})`
-        },
-        cb() {
-            currentImageShow.value = index
-        },
-    })
-    motion.play()
+    currentImageShow.value = index
 })
 
 useRO(() => {
-    if (!placeholderRef.value) return
     computeImgPosition()
-    const dim = getImageDOMRect(currentImageShow.value)
-    placeholderPos.w = dim.w
-    placeholderPos.h = dim.h
-    placeholderPos.x = dim.x
-    placeholderPos.y = dim.y
-
-    placeholderRef.value.style.transform = `translate(${dim.x}px, ${dim.y}px)  scale(${dim.w / 100}, ${dim.h / 100}) `
 })
 
 function getImageDOMRect(index: number) {

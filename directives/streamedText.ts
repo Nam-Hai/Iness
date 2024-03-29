@@ -63,24 +63,6 @@ export const vStreamedText = {
         count.value++
 
         tl.play()
-
-        onLeave(() => {
-            const tl = useTL()
-            for (let index = 0; index < spans.length; index++) {
-                const span = spans[index]
-                const letter = char[index]
-                let i = 0
-                tl.from({
-                    el,
-                    p: {
-                        o: [1, 0]
-                    },
-                    d: 50 + 200,
-                    delay: 600,
-                })
-            }
-            tl.play()
-        }, { once: true })
     }
 }
 // const MAP = ["A", "B", "c", "#", "3", "/", "9", "5", "2", "e", "o","P", "p",'O',"y", "q", "W", ",", "@", "7", "&", "{", "}", "|","<", ">", "x", "c", "D", "E", "H"]

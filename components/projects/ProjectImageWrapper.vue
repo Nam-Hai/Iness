@@ -1,13 +1,12 @@
 <template>
-    <div class="wrapper" ref="wrapperRef" @click="currentImage = N.mod(currentImage + 1, props.project_images.length)"
-        :class="{ leave }">
+    <div class="wrapper " ref="wrapperRef" @click="currentImage = N.mod(currentImage + 1, props.project_images.length)">
         <div class="image__wrapper noselect" :data-column="project.column"
             v-for="(project, index) in props.project_images" :class="{ show: index === currentImageShow }"
             :key="project.url + index">
             <img :src="project.url" :alt="project.alt" ref="imageRefs"
-                :style="{ aspectRatio: project.dimensions.width / project.dimensions.height }">
+                :style="{ aspectRatio: project.dimensions.width / project.dimensions.height }" v-leave>
 
-            <span class="overflow" v-streamed-text v-if="currentImageShow !== -1">
+            <span class="overflow" v-streamed-text v-if="currentImageShow !== -1" v-leave>
                 {{ index + 1 }} / {{ props.project_images.length }}
             </span>
         </div>
@@ -30,6 +29,7 @@
 
 <script lang="ts" setup>
 import { vStreamedText } from '~/directives/streamedText';
+import { vLeave } from '~/directives/leave'
 import { onLeave } from '~/waterflow/composables/onFlow';
 
 const { props } = defineProps<{ props: ProjectData }>()
@@ -47,17 +47,12 @@ watch(currentImage, (to) => {
     })
 })
 
-const leave = ref(false)
-onLeave(() => {
-    leave.value = true
-})
-
 </script>
 
 <style lang="scss" scoped>
 @use "@/styles/shared.scss" as *;
 
-$showDuration: 100ms;
+$showDuration: 120ms;
 $showTransition: 0ms;
 $showSum: $showDuration + $showTransition;
 
@@ -84,7 +79,10 @@ $showSum: $showDuration + $showTransition;
 
     cursor: e-resize;
 
+
+
     &.leave {
+        transition: opacity 100ms;
         opacity: 0;
     }
 }

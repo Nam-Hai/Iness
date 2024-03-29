@@ -1,5 +1,5 @@
 <template>
-  <main ref="wrapperRef">
+  <main ref="wrapperRef" v-leave>
 
     <div class="contact__grid-item__wrapper">
       <div class="contact__wrapper">
@@ -24,6 +24,7 @@
 import { usePageFlow } from '~/waterflow/composables/usePageFlow';
 import { defaultFlowIn, defaultFlowOut } from '~/pages_transitions/default.transition';
 import { vStreamedText } from '~/directives/streamedText';
+import { vLeave } from '~/directives/leave';
 
 const { copy } = useStoreInfo()
 const wrapperRef = ref() as Ref<HTMLElement>
