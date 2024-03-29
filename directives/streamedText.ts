@@ -7,8 +7,12 @@ const SPEED_MS = 5
 const test = 150
 
 export const vStreamedText = {
-    mounted: (el: HTMLElement) => {
+    mounted: (el: HTMLElement, binding: any) => {
+
         const { count } = useStoreTransition()
+
+        const delayCount = binding.value || count.value
+
         const flowProvider = useFlowProvider()
         // console.log(flowProvider.getRouteTo().name); 
         const { breakpoint } = useStoreView()
@@ -36,7 +40,7 @@ export const vStreamedText = {
                     o: [0, 1]
                 },
                 d: 100,
-                delay: N.Ease.o2(Math.min(index, test) / test) * test * SPEED_MS + count.value * STAGGER_MS,
+                delay: N.Ease.o2(Math.min(index, test) / test) * test * SPEED_MS + delayCount * STAGGER_MS,
             }).from({
                 update: (t) => {
                     if (letter === " ") {
@@ -48,7 +52,7 @@ export const vStreamedText = {
                     span.innerText = map[Math.floor(N.Rand.range(0, map.length - 1, 1))]
                 },
                 d: 200,
-                delay: N.Ease.o2(Math.min(index, test) / test) * test * SPEED_MS + count.value * STAGGER_MS,
+                delay: N.Ease.o2(Math.min(index, test) / test) * test * SPEED_MS + delayCount * STAGGER_MS,
                 cb() {
                     span.innerText = letter
                 },

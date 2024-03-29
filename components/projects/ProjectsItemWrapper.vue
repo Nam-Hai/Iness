@@ -25,7 +25,8 @@
 <script lang="ts" setup>
 
 const { prismicData } = usePreloader()
-const projects = prismicData.value.projects
+const projects = [...prismicData.value.projects, ...prismicData.value.projects, ...prismicData.value.projects, ...prismicData.value.projects]
+
 
 const { breakpoint } = useStoreView()
 
@@ -37,7 +38,7 @@ const { breakpoint } = useStoreView()
 .projects-item__wrapper {}
 
 .menu__project__wrapper {
-    position: absolute;
+    position: fixed;
     top: calc($grid-cell-height + $main-margin);
     left: $main-margin;
 

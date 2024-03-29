@@ -1,12 +1,15 @@
 <template>
     <div class="filter__wrapper" ref="wrapperRef" @mouseenter="filterOpen = true" @mouseleave="filterOpen = false"
         :class="{ open: filterOpen }">
-        <span :style="{ cursor: 'default' }" v-streamed-text>
-            Filter {{ filterOpen ? "-" : "+" }}
+        <span :style="{ cursor: 'default' }" v-streamed-text="5" :class="{ open: filterOpen }">
+            Filter
         </span>
+        <button @click="toggleFilterAll()" :class="{ active: toggledAll, hide: !filterOpen }">
+            All
+        </button>
 
-        <button v-for="filter in prismicData.filters"
-            :class="{ active: filterActive[filter] || isEmpty, hide: !filterOpen }" @click="toggleFilter(filter)">
+        <button v-for="filter in prismicData.filters" :class="{ active: filterActive[filter], hide: !filterOpen }"
+            @click="toggleFilter(filter)">
             {{ filter }}
         </button>
     </div>
@@ -20,7 +23,17 @@ const wrapperRef = ref() as Ref<HTMLElement>
 const { prismicData } = usePreloader()
 const { filterOpen, filterActive, isEmpty } = useStoreFilter()
 
+const toggledAll = ref(false)
+function toggleFilterAll() {
+    for (const filter in filterActive) {
+        filterActive[filter] = !toggledAll.value
+    }
+
+    toggledAll.value = !toggledAll.value
+}
+
 function toggleFilter(filter: string) {
+    toggledAll.value = false
     filterActive[filter] = !filterActive[filter]
 }
 
@@ -34,8 +47,43 @@ function toggleFilter(filter: string) {
 
     display: flex;
     flex-direction: column;
-    row-gap: 5rem;
+    row-gap: 3.6rem;
     height: 2rem;
+
+    &:hover {
+        >span {
+            &::before {
+                transform: translate(50%, -50%) rotate(90deg);
+            }
+        }
+    }
+
+    >span {
+        position: relative;
+        width: fit-content;
+
+        &::after,
+        &::before {
+            background-color: $primary;
+            content: '';
+            position: absolute;
+            right: -2rem;
+            top: 50%;
+            transform: translate(50%, -50%);
+            transition: transform 250ms $easeInOutQuart;
+        }
+
+        &:before {
+            height: 0.8rem;
+            width: 1px;
+        }
+
+        &::after {
+            width: 0.8rem;
+            height: 1px;
+        }
+
+    }
 
     &.open {
         height: auto;
@@ -57,8 +105,8 @@ function toggleFilter(filter: string) {
         }
 
         &.active {
-            // color: $primary;
-            color: $neutral-text;
+            color: $primary;
+            // color: $neutral-text;
         }
     }
 }
