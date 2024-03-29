@@ -67,7 +67,7 @@ function toggleFilter(filter: string) {
             background-color: $primary;
             content: '';
             position: absolute;
-            right: -2rem;
+            right: -1rem;
             top: 50%;
             transform: translate(50%, -50%);
             transition: transform 250ms $easeInOutQuart;
@@ -106,7 +106,10 @@ function toggleFilter(filter: string) {
 
         &.active {
             color: $primary;
-            // color: $neutral-text;
+        }
+
+        &:hover {
+            color: $neutral-text;
         }
     }
 }
