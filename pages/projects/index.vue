@@ -39,7 +39,7 @@ main {
 
 .filter-c__wrapper {
     position: fixed;
-    left: calc($main-margin + var(--grid-column-width) * 5);
+    left: calc($main-margin + var(--grid-column-width) * 5 + var(--grid-column-gap) * 5);
     top: $main-margin;
 
     @include breakpoint(mobile) {
