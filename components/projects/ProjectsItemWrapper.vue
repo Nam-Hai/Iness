@@ -55,10 +55,11 @@ const { breakpoint } = useStoreView()
     height: calc(var(--100vh) - #{$main-margin * 2});
     width: 100%;
 
-    margin-left: calc($main-margin + var(--grid-column-width));
+    margin-left: calc($main-margin + var(--grid-column-width) + var(--grid-column-gap));
+
+    grid-column-gap: var(--grid-column-gap);
     grid-template-columns: repeat(3, var(--grid-column-width));
     grid-template-rows: repeat(4, 1fr);
-    grid-column-gap: var(--grid-column-gap);
 
     grid-auto-flow: row;
 

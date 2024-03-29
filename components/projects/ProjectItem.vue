@@ -144,7 +144,7 @@ a {
     opacity: 0;
 
     pointer-events: none;
-    width: $grid-cell-width;
+    width: var(--grid-column-width);
 
     transition: opacity 200ms;
 
