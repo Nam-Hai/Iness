@@ -1,6 +1,6 @@
 <template>
     <div class="filter__wrapper" ref="wrapperRef" @mouseenter="filterOpen = true" @mouseleave="filterOpen = false"
-        :class="{ open: filterOpen }">
+        :class="{ open: filterOpen }" @click="filterOpen = !filterOpen">
         <span :style="{ cursor: 'default' }" v-streamed-text="5" :class="{ open: filterOpen }">
             Filter
         </span>
@@ -50,7 +50,7 @@ function toggleFilter(filter: string) {
     row-gap: 3.6rem;
     height: 2rem;
 
-    &:hover {
+    &.open {
         >span {
             &::before {
                 transform: translate(50%, -50%) rotate(90deg);

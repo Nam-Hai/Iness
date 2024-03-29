@@ -28,10 +28,6 @@ import { vStreamedText } from '~/directives/streamedText';
 const { copy } = useStoreInfo()
 const wrapperRef = ref() as Ref<HTMLElement>
 
-onMounted(() => {
-  console.log(navigator);
-})
-
 const copied = ref(false)
 let timer = useTimer(() => {
   copied.value = false

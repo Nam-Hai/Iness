@@ -12,7 +12,6 @@ export const useStoreProjectImage = createStore(() => {
         placeholderPosFrom,
         currentImage,
         currentImageShow,
-        bounds
     }
 })
 

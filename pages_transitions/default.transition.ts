@@ -23,15 +23,16 @@ export const defaultFlowOut: FlowFunction<defaultTransitionProps> = (props, reso
     const tl = useTL()
 
     tl.from({
-        d: 1000,
+        d: 200,
         e: "io3",
         update: (t) => {
 
         },
         cb() {
-            resolve()
+            // resolve()
         },
     }).play()
+    resolve()
 }
 
 export const defaultFlowIn: FlowFunction<defaultTransitionProps> = ({ wrapperRef }, resolve,) => {
@@ -41,43 +42,13 @@ export const defaultFlowIn: FlowFunction<defaultTransitionProps> = ({ wrapperRef
     // resolve()
 }
 export const projectProjectFlowIn: FlowFunction<defaultTransitionProps> = async ({ wrapperRef }, resolve, provider) => {
-    const { placeholderPos, placeholderPosFrom, bounds } = useStoreProjectImage()
-    const from = placeholderPosFrom.value
-    const placeholderDOM = N.get("#project-image__placeholder", wrapperRef.value) as HTMLElement | null
     const { breakpoint } = useStoreView()
     if (breakpoint.value == "mobile") {
         // return defaultFlowIn({ wrapperRef }, resolve, provider)
     }
-    if (!placeholderDOM) return resolve()
-
-    const boundsTo = bounds.value[0]
-
-    N.O(placeholderDOM, 0)
-    placeholderDOM.style.transform = `translate(${from.x}px, ${from.y}px) scale(${from.width / 100}, ${from.height / 100})`
-
-    const motion = useMotion({
-        d: 600,
-        e: 'io3',
-        delay: 180,
-        update({ prog, progE }) {
-            const x = N.Lerp(from.x, boundsTo.x, progE)
-            const y = N.Lerp(from.y, boundsTo.y, progE)
-            const w = N.Lerp(from.width, boundsTo.width, progE)
-            const h = N.Lerp(from.height, boundsTo.height, progE)
-            placeholderPos.x = x
-            placeholderPos.y = y
-            placeholderPos.w = w
-            placeholderPos.h = h
-            placeholderDOM.style.transform = `translate(${x}px, ${y}px) scale(${w / 100}, ${h / 100})`
-
-        },
-        cb() {
-            resolve()
-        },
-    });
-    motion.play()
-    await nextTick()
-    N.O(placeholderDOM, 1)
+    useDelay(500, () => {
+        resolve()
+    })
 }
 
 export const flowOutMap = new Map([

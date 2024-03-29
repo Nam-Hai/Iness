@@ -10,7 +10,7 @@
 
             <div class="description" v-if="routeTo.fullPath === '/projects/' + props.route && currentImageShow !== -1"
                 v-streamed-text2>
-                {{ props.project_images[currentImage].description }}
+                {{ props.project_images[currentImage]?.description || "" }}
             </div>
         </div>
 
@@ -49,7 +49,7 @@ const previewShow = onEnter({
     both: true
 })
 
-const { placeholderPos, placeholderPosFrom, bounds } = useStoreProjectImage()
+const { placeholderPos, placeholderPosFrom } = useStoreProjectImage()
 const imageRef = ref()
 
 const click = ref(false)
