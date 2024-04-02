@@ -3,8 +3,15 @@
         <div class="image__wrapper noselect" :data-column="project.column"
             v-for="(project, index) in props.project_images" :class="{ show: index === currentImageShow }"
             :key="project.url + index">
-            <img :src="project.url" :alt="project.alt" ref="imageRefs"
-                :style="{ aspectRatio: project.dimensions.width / project.dimensions.height }" v-leave>
+
+            <!-- <img :src="project.url" :alt="project.alt" ref="imageRefs"
+                :style="{ aspectRatio: project.dimensions.width / project.dimensions.height }" v-leave> -->
+
+            <div class="image">
+                <ImgWrapper
+                    :props="{ src: project.url, alt: project.alt, height: project.dimensions.height, width: project.dimensions.width }"
+                    v-if="currentImageShow === index" />
+            </div>
 
             <span class="overflow" v-streamed-text v-if="currentImageShow !== -1" v-leave>
                 {{ index + 1 }} / {{ props.project_images.length }}
@@ -30,7 +37,6 @@
 <script lang="ts" setup>
 import { vStreamedText } from '~/directives/streamedText';
 import { vLeave } from '~/directives/leave'
-import { onLeave } from '~/waterflow/composables/onFlow';
 
 const { props } = defineProps<{ props: ProjectData }>()
 const wrapperRef = ref() as Ref<HTMLElement>
@@ -190,7 +196,7 @@ $showSum: $showDuration + $showTransition;
     }
 
 
-    img {
+    .image {
         width: 100%;
         max-height: calc(100% - 3rem);
         // height: calc($grid-cell-height * 2);

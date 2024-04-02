@@ -1,5 +1,6 @@
 <template>
-    <NuxtLink @click="toClipboard()" class="link__wrapper" ref="wrapperRef" :to="href" :disable="copy" target="_blank">
+    <NuxtLink @click="toClipboard()" class="link__wrapper" :class="{ copied }" ref="wrapperRef" :to="href"
+        :disable="copy" target="_blank">
         <span v-streamed-text>
             {{ text }}
         </span>
@@ -37,6 +38,13 @@ function toClipboard() {
     transition: color 250ms;
     cursor: pointer;
     width: fit-content;
+
+    &.copied {
+        .hover-text {
+            color: $primary;
+            transition: color 250ms;
+        }
+    }
 
     .hover-text {
         pointer-events: none;

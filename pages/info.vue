@@ -29,15 +29,6 @@ import { vLeave } from '~/directives/leave';
 const { copy } = useStoreInfo()
 const wrapperRef = ref() as Ref<HTMLElement>
 
-const copied = ref(false)
-let timer = useTimer(() => {
-  copied.value = false
-}, 900)
-function clipMail() {
-  copied.value = true
-  navigator.clipboard.writeText("Contact@in.e.studio");
-  timer.tick()
-}
 usePageFlow({
   props: {
     wrapperRef,

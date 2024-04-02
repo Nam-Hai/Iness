@@ -11,7 +11,6 @@
 </template>
 
 <script setup lang="ts">
-import Lenis from "@studio-freight/lenis";
 import { RafPriority } from "~/plugins/core/raf";
 import { useFlowProvider } from "~/waterflow/FlowProvider";
 import BufferPage from "~/waterflow/components/BufferPage.vue";
