@@ -14,7 +14,7 @@
 
     <div class="projects-item__wrapper projects-item__wrapper-mobile" ref="mobileProjectItemRef" v-else>
         <div class="projects__wrapper projects__wrapper-mobile">
-            <div class="project__wrapper" v-for="project in [...projects, ...projects]">
+            <div class="project__wrapper" v-for="project in [...projects]">
                 <ProjectItem :props="project" />
             </div>
         </div>
@@ -93,6 +93,10 @@ watch(enter, val => {
 
         .project__wrapper {
             height: $grid-cell-height;
+
+            &:last-child {
+                margin-bottom: $main-margin;
+            }
         }
     }
 
