@@ -12,12 +12,8 @@
     </div>
 
     <div class="info-text__wrapper">
-
-      <div class="info-text" v-streamed-text="true">
-        {{ prismicData.info.richText[0].text }}
-      </div>
       <RichText :props="prismicData.info.richText[0]"></RichText>
-      <div class="info-text" v-for="text in [...copy, ...copy, ...copy, ...copy]" v-streamed-text="true">
+      <div class="info-text" v-for="text in [...copy, ...copy]" v-streamed-text="true">
         {{ text }}
       </div>
     </div>
