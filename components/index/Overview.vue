@@ -30,16 +30,27 @@ const data = prismicData.value.overview.map(el => {
     }
 })
 
-const dragAPI = useDrag({ wrapper: wrapperRef }, (e) => {
-    if (breakpoint.value === "desktop") return
-})
-watch(dragAPI.on, (b) => {
-    if (breakpoint.value === "desktop") return
-    if (b) {
-        currentImageShow.value = -1
-        currentImage.value = -1
+useEventListeneer(wrapperRef, 'touchstart', (e: Event) => {
+    const mouse = {
+        x: (e as TouchEvent).touches[0].clientX,
+        y: (e as TouchEvent).touches[0].clientY
     }
+    onTouch(mouse)
 })
+
+useEventListeneer(wrapperRef, 'touchmove', (e) => {
+    const mouse = {
+        x: (e as TouchEvent).touches[0].clientX,
+        y: (e as TouchEvent).touches[0].clientY
+    }
+    onTouch(mouse)
+})
+
+function onTouch({ x, y }: { x: number, y: number }) {
+    const r = N.Clamp((y - 16) / (vh.value - 32), 0, 1)
+
+    currentImage.value = N.Clamp(N.mod(Math.floor(r * 8), 8), 0, data.length - 1)
+}
 
 const currentImage = ref(0)
 const imageRef = ref() as Ref<HTMLElement[]>
