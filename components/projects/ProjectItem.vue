@@ -1,6 +1,6 @@
 <template>
     <NuxtLink :to="/projects/ + props.route" class="project__item__wrapper" ref="wrapperRef" :class="{
-        filterOpen: filterOpen, highlight: filterActive[props.type], empty: isEmpty, 'disable-route': disableRoute, 'scroll-out': !previewShow
+        filterOpen: filterOpen, highlight: filterActive[props.type], empty: isEmpty, 'disable-route': disableRoute, 'scroll-out': !previewShow, 'mobileShow': mobileShow && breakpoint === 'mobile'
     }" @click="onClick">
         <div class="container" ref="textRef" v-leave>
             <span v-streamed-text>{{ props.title }}</span>
@@ -35,11 +35,10 @@ const { filterOpen, filterActive, isEmpty } = useStoreFilter()
 const { breakpoint } = useStoreView()
 const flowProvider = useFlowProvider()
 const routeTo = flowProvider.getRouteTo()
-const { currentImage, currentImageShow } = useStoreProjectImage()
+const { currentImage, currentImageShow, mobileShow } = useStoreProjectImage()
 
 const disableRoute = computed(() => {
     return routeTo.name === 'projects-id' && routeTo.fullPath !== '/projects/' + props.route
-    // return false
 })
 
 
@@ -99,6 +98,10 @@ a {
     cursor: pointer;
     position: relative;
 
+    &.mobileShow {
+        color: $primary !important;
+    }
+
     &.empty,
     &.highlight {
         pointer-events: all;
@@ -114,7 +117,7 @@ a {
 
     @include breakpoint(mobile) {
         &.scroll-out {
-            pointer-events: none;
+            // pointer-events: none;
             color: $neutral-text;
         }
     }

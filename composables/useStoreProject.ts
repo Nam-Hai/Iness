@@ -6,12 +6,14 @@ export const useStoreProjectImage = createStore(() => {
     const bounds = ref() as Ref<DOMRect[]>
     const currentImage = ref(0)
     const currentImageShow = ref(0)
+    const mobileShow = ref(true)
 
     return {
         placeholderPos,
         placeholderPosFrom,
         currentImage,
         currentImageShow,
+        mobileShow
     }
 })
 

@@ -12,7 +12,7 @@
         </div>
     </div>
 
-    <div class="projects-item__wrapper projects-item__wrapper-mobile" v-else>
+    <div class="projects-item__wrapper projects-item__wrapper-mobile" ref="mobileProjectItemRef" v-else>
         <div class="projects__wrapper projects__wrapper-mobile">
             <div class="project__wrapper" v-for="project in [...projects, ...projects]">
                 <ProjectItem :props="project" />
@@ -29,6 +29,21 @@ const projects = [...prismicData.value.projects, ...prismicData.value.projects, 
 
 
 const { breakpoint } = useStoreView()
+
+const mobileProjectItemRef = ref() as Ref<HTMLElement>
+
+const { mobileShow } = useStoreProjectImage()
+const enter = onEnter({
+    el: mobileProjectItemRef,
+    vStart: 1,
+    enterCb: () => {
+        console.log("enter");
+    },
+})
+
+watch(enter, val => {
+    mobileShow.value = !val
+})
 
 </script>
 
@@ -71,11 +86,22 @@ const { breakpoint } = useStoreView()
         // height: $grid-cell-height;
         width: calc(4 * $grid-cell-width);
         right: $main-margin;
+        margin-top: $grid-cell-height;
+
+        min-height: 100vh;
         height: unset;
+
+        .project__wrapper {
+            height: $grid-cell-height;
+        }
     }
 
     .project__wrapper {
         height: $grid-cell-height;
     }
+}
+
+.projects-item__wrapper-mobile {
+    min-height: 100vh;
 }
 </style>

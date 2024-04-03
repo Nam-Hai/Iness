@@ -1,7 +1,8 @@
 <template>
     <div class="filter__wrapper" ref="wrapperRef" @mouseenter="filterOpen = true" @mouseleave="filterOpen = false"
-        :class="{ open: filterOpen }" @click="filterOpen = !filterOpen">
-        <span :style="{ cursor: 'default' }" v-streamed-text="5" :class="{ open: filterOpen }">
+        :class="{ open: filterOpen }">
+        <span :style="{ cursor: 'default' }" v-streamed-text="5" :class="{ open: filterOpen }"
+            @click="filterOpen = !filterOpen">
             Filter
         </span>
         <button @click="toggleFilterAll()" :class="{ active: toggledAll, hide: !filterOpen }">

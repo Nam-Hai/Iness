@@ -31,6 +31,7 @@ const data = prismicData.value.overview.map(el => {
 })
 
 useEventListeneer(wrapperRef, 'touchstart', (e: Event) => {
+    console.log('test');
     const mouse = {
         x: (e as TouchEvent).touches[0].clientX,
         y: (e as TouchEvent).touches[0].clientY
