@@ -43,6 +43,7 @@ export const useScrollEvent = ({
   })
 
   const { lenis } = useLenisScroll(() => {
+    if (!bounds.value) return
     const dist = window.scrollY - bounds.value.y + (vh.value * vStart) / 100 - (bounds.value.height * eStart) / 100;
     const max = (bounds.value.height * (eEnd - eStart)) / 100 + (vh.value * (vStart - vEnd)) / 100;
     const offset = N.Clamp(dist, 0, max);
@@ -101,6 +102,7 @@ export const onEnter = ({
   let boundY = 0
 
   const computeBounds = () => {
+    if (!el.value) return
     bounds = el.value.getBoundingClientRect();
     boundY = bounds.top + scrollY
   };
@@ -114,7 +116,6 @@ export const onEnter = ({
     computeBounds()
 
     flow.value = true
-    console.log(lenis.emit);
     lenis.run();
     lenis.emit()
   });
@@ -126,6 +127,7 @@ export const onEnter = ({
   const flow = ref(false)
 
   const { lenis } = useLenisScroll((e) => {
+    if (!bounds) return
     const dist = window.scrollY - boundY + (vh.value * vStart) / 100 - (bounds.height * eStart) / 100;
     const max = (bounds.height * (eEnd - eStart)) / 100 + (vh.value * (vStart - vEnd)) / 100;
     const offset = N.Clamp(dist, 0, max);

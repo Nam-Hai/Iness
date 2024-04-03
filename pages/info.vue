@@ -13,6 +13,10 @@
 
     <div class="info-text__wrapper">
 
+      <div class="info-text" v-streamed-text="true">
+        {{ prismicData.info.richText[0].text }}
+      </div>
+      <RichText :props="prismicData.info.richText[0]"></RichText>
       <div class="info-text" v-for="text in [...copy, ...copy, ...copy, ...copy]" v-streamed-text="true">
         {{ text }}
       </div>
@@ -28,6 +32,7 @@ import { vLeave } from '~/directives/leave';
 
 const { copy } = useStoreInfo()
 const wrapperRef = ref() as Ref<HTMLElement>
+const { prismicData } = usePreloader()
 
 usePageFlow({
   props: {

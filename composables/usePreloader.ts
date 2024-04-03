@@ -25,12 +25,28 @@ export type ProjectImage = {
     column?: number
 }
 
+export type RichText = {
+
+    text: string,
+    spans: {
+        type: "hyperlink",
+        end: number,
+        start: number,
+        data: {
+            link_type: "Web",
+            url: string,
+            target: "_blank"
+        }
+    }[]
+}
+
 export type FilterData = string[]
 
 export type PrismicData = {
     overview: OverviewData[],
     projects: ProjectData[],
-    filters: FilterData
+    filters: FilterData,
+    info: { richText: RichText[] }
 }
 
 export const usePreloader = createStore(() => {
@@ -70,6 +86,13 @@ export const usePreloader = createStore(() => {
                 }`
             })
 
+            const infoPromise = client.getAllByType('info', {
+                graphQuery: `{
+                    info {
+                        text
+                    }
+                }`
+            })
             const filterPromise = client.getAllByType('filter', {
                 graphQuery: `{
                     filter {
@@ -78,7 +101,7 @@ export const usePreloader = createStore(() => {
                 }`
             })
 
-            const [overviewData, projectData, filterData] = await Promise.all([overviewPromise, projectPromise, filterPromise])
+            const [overviewData, projectData, filterData, infoData] = await Promise.all([overviewPromise, projectPromise, filterPromise, infoPromise])
             const overview: OverviewData[] = overviewData.map(d => {
                 return {
                     image: d.data.overview_image.url,
@@ -108,13 +131,24 @@ export const usePreloader = createStore(() => {
             const filters: FilterData = filterData.map(d => {
                 return d.data.filter
             })
+
+            const info: { richText: RichText[] } = {
+                richText: infoData.map(d => {
+                    return {
+                        text: d.data.text[0].text,
+                        spans: d.data.text[0].spans
+                    }
+                })
+            }
+
             return {
                 overview,
                 projects,
-                filters
+                filters,
+                info
             }
         })
-        prismicData.value = data.value || { overview: [], projects: [], filters: [] }
+        prismicData.value = data.value || { overview: [], projects: [], filters: [], info: { richText: [] } }
 
         const { filterActive } = useStoreFilter()
         for (const f of prismicData.value.filters) {

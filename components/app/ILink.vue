@@ -52,7 +52,6 @@ function toClipboard() {
         opacity: 0;
         position: absolute;
         left: 1rem;
-        top: 0.5rem;
         width: max-content;
     }
 
