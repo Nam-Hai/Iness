@@ -40,7 +40,6 @@ import { vLeave } from '~/directives/leave'
 
 const { props } = defineProps<{ props: ProjectData }>()
 const wrapperRef = ref() as Ref<HTMLElement>
-const imageRefs = ref() as Ref<HTMLElement[]>
 const { currentImage, currentImageShow } = useStoreProjectImage()
 const { breakpoint } = useStoreView()
 currentImage.value = 0
@@ -82,6 +81,22 @@ $showSum: $showDuration + $showTransition;
     width: calc(4 * $grid-cell-width + $main-margin);
     height: 100vh;
     // pointer-events: none;
+
+    @include breakpoint(mobile) {
+        width: 100%;
+
+        -webkit-touch-callout: none;
+        /* iOS Safari */
+        -webkit-user-select: none;
+        /* Safari */
+        -khtml-user-select: none;
+        /* Konqueror HTML */
+        -moz-user-select: none;
+        /* Old versions of Firefox */
+        -ms-user-select: none;
+        /* Internet Explorer/Edge */
+        user-select: none;
+    }
 
     cursor: e-resize;
 

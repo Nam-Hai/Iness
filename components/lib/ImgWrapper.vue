@@ -81,6 +81,15 @@ function mute(e: Event) {
             position: absolute;
             bottom: -2.8rem;
             right: 0;
+            position: relative;
+
+            @include breakpoint(mobile) {
+                position: fixed;
+
+                top: calc(2 * $grid-cell-height + $main-margin);
+                bottom: unset;
+                right: $main-margin;
+            }
         }
 
         button {
