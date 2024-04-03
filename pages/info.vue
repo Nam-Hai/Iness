@@ -59,7 +59,7 @@ main {
 
     >div {
       width: 100%;
-      height: calc((100vh - #{$main-margin * 2})* 0.25);
+      height: $grid-cell-height;
     }
   }
 
