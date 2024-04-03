@@ -118,6 +118,10 @@ $showSum: $showDuration + $showTransition;
     line-height: 130%;
 
     .info__wrapper {
+        @include breakpoint(mobile) {
+            pointer-events: none;
+        }
+
         margin-top: calc(3 * $grid-cell-height);
         display: flex;
         flex-direction: column;
@@ -165,15 +169,15 @@ $showSum: $showDuration + $showTransition;
         transition: 0ms;
 
         &[data-column="1"] {
-            width: calc($grid-cell-width * 2);
+            width: calc($grid-cell-width * 4);
         }
 
         &[data-column="2"] {
-            width: calc($grid-cell-width * 3);
+            width: calc($grid-cell-width * 6);
         }
 
         &[data-column="3"] {
-            width: calc($grid-cell-width * 6);
+            width: calc($grid-cell-width * 9);
         }
 
         &[data-column="4"] {
