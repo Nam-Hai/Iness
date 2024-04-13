@@ -94,11 +94,11 @@ function toggleFilter(filter: string) {
     button {
         text-align: start;
         text-transform: capitalize;
-        transition: color 200ms;
 
-        color: $discard-text;
+        // color: $discard-text;
+        color: $primary;
 
-        transition: opacity 200ms;
+        transition: opacity 200ms, color 200ms;
 
         &.hide {
             pointer-events: none;
@@ -106,11 +106,15 @@ function toggleFilter(filter: string) {
         }
 
         &.active {
-            color: $primary;
+            // color: $primary;
+            color: $neutral-text;
         }
 
         &:hover {
-            color: $neutral-text;
+            color: $discard-text;
+            &.active {
+                color: $neutral-text;
+            }
         }
     }
 }

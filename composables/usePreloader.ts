@@ -59,6 +59,7 @@ export const usePreloader = createStore(() => {
     const loadPrismic = async () => {
         const { client } = usePrismic()
         const { data } = await useAsyncData('prismic', async () => {
+            const a = client.getAllByType("video_test")
             const overviewPromise = client.getAllByType('overviewitem', {
                 graphQuery: `{
                     overviewitem {
