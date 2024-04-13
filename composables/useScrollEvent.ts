@@ -21,58 +21,58 @@ export const useScrollEvent = ({
   onProgress = undefined,
 }: useScrollEventOptions) => {
   const hasEnter = ref(false);
-  const bounds = ref() as Ref<DOMRect>;
+  // const bounds = ref() as Ref<DOMRect>;
 
 
-  const resize = () => {
-    bounds.value = el.value.getBoundingClientRect();
-    bounds.value.y = bounds.value.top + window.scrollY;
-  };
+  // const resize = () => {
+  //   bounds.value = el.value.getBoundingClientRect();
+  //   bounds.value.y = bounds.value.top + window.scrollY;
+  // };
 
-  const { vh, vw } = useStoreView();
-  useRO(resize);
+  // const { vh, vw } = useStoreView();
+  // useRO(resize);
 
-  onMounted(() => {
-    bounds.value = el.value.getBoundingClientRect();
-    bounds.value.y = bounds.value.top;
-  });
+  // onMounted(() => {
+  //   bounds.value = el.value.getBoundingClientRect();
+  //   bounds.value.y = bounds.value.top;
+  // });
 
-  const flow = onFlow(() => {
-    intersectionInit();
-    lenis.emit()
-  })
+  // const flow = onFlow(() => {
+  //   intersectionInit();
+  //   lenis.emit()
+  // })
 
-  const { lenis } = useLenisScroll(() => {
-    if (!bounds.value) return
-    const dist = window.scrollY - bounds.value.y + (vh.value * vStart) / 100 - (bounds.value.height * eStart) / 100;
-    const max = (bounds.value.height * (eEnd - eStart)) / 100 + (vh.value * (vStart - vEnd)) / 100;
-    const offset = N.Clamp(dist, 0, max);
-    const t = offset / max;
-    if (t > 0 && !hasEnter.value && flow.value) {
-      hasEnter.value = true;
-      onEnter && onEnter();
+  // const { lenis } = useLenisScroll(() => {
+  //   if (!bounds.value) return
+  //   const dist = window.scrollY - bounds.value.y + (vh.value * vStart) / 100 - (bounds.value.height * eStart) / 100;
+  //   const max = (bounds.value.height * (eEnd - eStart)) / 100 + (vh.value * (vStart - vEnd)) / 100;
+  //   const offset = N.Clamp(dist, 0, max);
+  //   const t = offset / max;
+  //   if (t > 0 && !hasEnter.value && flow.value) {
+  //     hasEnter.value = true;
+  //     onEnter && onEnter();
 
-      if (!onProgress) {
-        intersectionObserver.value?.disconnect();
-        lenis.stop();
-      }
-    }
-    flow.value && onProgress && onProgress(t);
-  });
+  //     if (!onProgress) {
+  //       intersectionObserver.value?.disconnect();
+  //       lenis.stop();
+  //     }
+  //   }
+  //   flow.value && onProgress && onProgress(t);
+  // });
 
-  const intersectionObserver = ref() as Ref<IntersectionObserver>;
-  const intersectionInit = () => {
-    intersectionObserver.value = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        entry.isIntersecting ? lenis.run() : lenis.stop();
-      });
-    });
-    intersectionObserver.value.observe(el.value);
-  };
+  // const intersectionObserver = ref() as Ref<IntersectionObserver>;
+  // const intersectionInit = () => {
+  //   intersectionObserver.value = new IntersectionObserver((entries) => {
+  //     entries.forEach((entry) => {
+  //       entry.isIntersecting ? lenis.run() : lenis.stop();
+  //     });
+  //   });
+  //   intersectionObserver.value.observe(el.value);
+  // };
 
-  onBeforeUnmount(() => {
-    intersectionObserver.value.disconnect();
-  });
+  // onBeforeUnmount(() => {
+  //   intersectionObserver.value.disconnect();
+  // });
 };
 
 export const onEnter = ({
@@ -116,7 +116,7 @@ export const onEnter = ({
     computeBounds()
 
     flow.value = true
-    lenis.run();
+    // lenis.run();
     lenis.emit()
   });
   onSwap(async () => {
@@ -126,7 +126,7 @@ export const onEnter = ({
 
   const flow = ref(false)
 
-  const { lenis } = useLenisScroll((e) => {
+  const lenis = useLenisScroll(scroll => {
     if (!bounds) return
     const dist = window.scrollY - boundY + (vh.value * vStart) / 100 - (bounds.height * eStart) / 100;
     const max = (bounds.height * (eEnd - eStart)) / 100 + (vh.value * (vStart - vEnd)) / 100;
@@ -143,11 +143,11 @@ export const onEnter = ({
       leaveCb && leaveCb()
       hasEnter.value = false
     }
-  });
-
-  onBeforeUnmount(() => {
-    lenis.off()
   })
+
+  // onBeforeUnmount(() => {
+  //   lenis.off()
+  // })
 
 
 

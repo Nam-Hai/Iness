@@ -66,7 +66,7 @@ const Tab = new class {
 }
 
 
-function binarySearch(arr: { id: number }[], n: number): number {
+export function binarySearch(arr: { id: number }[], n: number): number {
     let left = 0
     let right = arr.length - 1
 

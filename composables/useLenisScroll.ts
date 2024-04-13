@@ -1,32 +1,29 @@
 import { onFlow } from "~/waterflow/composables/onFlow"
 
-export const useLenisScroll = (callback: (e: any) => void) => {
-  const $lenis = useStoreView().lenis
+export const useLenisScroll = (callback: (scroll: number) => void) => {
 
-  const onScrollSubscription = ref()
+  const { scroll, onScroll } = useStoreScroll()
+
+  let scrollUnSub: () => void | undefined;
   onFlow(() => {
-    onScrollSubscription.value = $lenis.value.on('scroll', callback)
-  })
-  onBeforeUnmount(() => {
-    onScrollSubscription.value()
+    scrollUnSub = onScroll(callback)
   })
 
-  const on = () => {
-    onScrollSubscription.value()
-    onScrollSubscription.value = $lenis.value.on('scroll', callback)
+  onBeforeUnmount(() => {
+    scrollUnSub && scrollUnSub()
+  })
+
+  const off = () => scrollUnSub && scrollUnSub()
+  const run = () => {
+    scrollUnSub && scrollUnSub()
+    scrollUnSub = onScroll(callback)
   }
-  const off = () => {
-    onScrollSubscription.value()
-  }
+
+  const emit = () => callback(scroll.value)
 
   return {
-    lenis: {
-      run: on,
-      stop: off,
-      on,
-      off,
-      emit: () => $lenis.value.emit(),
-      onScrollSubscription
-    }
+    off,
+    emit,
+    run
   }
 }

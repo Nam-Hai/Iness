@@ -35,6 +35,7 @@ watch(routeTo, () => {
 
 onBeforeMount(() => {
   useStoreView().init()
+  useStoreScroll().init()
 
   if (!process.client) return
 

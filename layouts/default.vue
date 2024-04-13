@@ -15,32 +15,32 @@ import { RafPriority } from "~/plugins/core/raf";
 import { useFlowProvider } from "~/waterflow/FlowProvider";
 import BufferPage from "~/waterflow/components/BufferPage.vue";
 
-const flowProvider = useFlowProvider();
+// const flowProvider = useFlowProvider();
 
-useRaf(
-  (e) => {
-    // !flowProvider.flowIsHijacked.value && 
-    lenis.value.raf(e.elapsed);
-  },
-  RafPriority.FIRST
-);
+// useRaf(
+//   (e) => {
+//     // !flowProvider.flowIsHijacked.value && 
+//     lenis.value.raf(e.elapsed);
+//   },
+//   RafPriority.FIRST
+// );
 
-const { lenis } = useStoreView()
+// const { lenis } = useStoreView()
 
-flowProvider.registerScrollInterface({
-  resume: () => {
-    lenis.value.start();
-  },
-  stop: () => {
-    lenis.value.stop();
-  },
-  resize: () => {
-    lenis.value.resize();
-  },
-  scrollToTop: () => {
-    lenis.value.scrollTo("top", { immediate: true, force: true });
-  },
-});
+// flowProvider.registerScrollInterface({
+// resume: () => {
+//   lenis.value.start();
+// },
+// stop: () => {
+//   lenis.value.stop();
+// },
+// resize: () => {
+//   lenis.value.resize();
+// },
+// scrollToTop: () => {
+//   lenis.value.scrollTo("top", { immediate: true, force: true });
+// },
+// });
 </script>
 
 <style lang="scss" scoped>

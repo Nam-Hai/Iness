@@ -169,15 +169,15 @@ $showSum: $showDuration + $showTransition;
         transition: 0ms;
 
         &[data-column="1"] {
-            width: calc($grid-cell-width * 4);
+            width: calc($grid-cell-width * 3);
         }
 
         &[data-column="2"] {
-            width: calc($grid-cell-width * 6);
+            width: calc($grid-cell-width * 4);
         }
 
         &[data-column="3"] {
-            width: calc($grid-cell-width * 9);
+            width: calc($grid-cell-width * 7);
         }
 
         &[data-column="4"] {
