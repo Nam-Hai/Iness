@@ -1,6 +1,6 @@
 <template>
     <NuxtLink :to="/projects/ + props.route" class="project__item__wrapper" ref="wrapperRef" :class="{
-        filterOpen: filterOpen, highlight: filterActive[props.type], empty: isEmpty, 'disable-route': disableRoute, 'scroll-out': !previewShow, 'mobileShow': mobileShow && breakpoint === 'mobile'
+        filterOpen: filterOpen, highlight: filterActive[props.type], empty: isEmpty, 'disable-route': disableRoute, 'scroll-out': !previewShow, 'mobileShow': mobileShow && breakpoint === 'mobile',
     }" @click="onClick">
         <div class="container" ref="textRef" v-leave>
             <span v-streamed-text>{{ props.title }}</span>
@@ -14,8 +14,8 @@
             </div>
         </div>
 
-        <div class="project-preview"
-            :class="{ relative: routeTo.name === 'projects-id', 'scroll-show': previewShow, hide: routeTo.name === 'projects-id' && routeTo.fullPath === '/projects/' + props.route }">
+        <div class="project-preview" v-if="routeTo.name !== 'projects-id'"
+            :class="{ 'scroll-show': previewShow, hide: routeTo.name === 'projects-id' && routeTo.fullPath === '/projects/' + props.route }">
             <img :src="props.project_images[0].url" :alt="props.project_images[0].alt" ref="imageRef" v-leave>
 
         </div>
@@ -92,6 +92,9 @@ a {
     padding: 0.4rem;
     margin-left: -0.4rem;
     margin-top: -0.4rem;
+    line-height: 1.5rem;
+    font-size: 1.2rem;
+
 
     @include breakpoint(mobile) {
         line-height: 1.5rem;
@@ -134,6 +137,10 @@ a {
     &.disable-route {
         color: $discard-text;
         height: 100%;
+
+        &:hover {
+            color: $neutral-text;
+        }
     }
 
 
@@ -170,12 +177,6 @@ a {
         }
     }
 
-
-    &.relative {
-        position: absolute;
-        top: 0;
-        left: 0;
-    }
 
     &.hide {
         opacity: 0 !important;

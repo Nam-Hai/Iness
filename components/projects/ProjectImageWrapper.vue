@@ -2,7 +2,7 @@
     <div class="wrapper " ref="wrapperRef" @click="currentImage = N.mod(currentImage + 1, props.project_images.length)">
         <div class="image__wrapper noselect" :data-column="project.column"
             v-for="(project, index) in props.project_images" :class="{ show: index === currentImageShow }"
-            :key="project.url + index">
+            :key="project.url + index" v-leave>
 
             <!-- <img :src="project.url" :alt="project.alt" ref="imageRefs"
                 :style="{ aspectRatio: project.dimensions.width / project.dimensions.height }" v-leave> -->
@@ -13,7 +13,7 @@
                     v-if="currentImageShow === index" />
             </div>
 
-            <span class="overflow" v-streamed-text v-if="currentImageShow !== -1" v-leave>
+            <span class="overflow" v-streamed-text v-if="currentImageShow !== -1">
                 {{ index + 1 }}/{{ props.project_images.length }}
             </span>
         </div>

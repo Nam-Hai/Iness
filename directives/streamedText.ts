@@ -100,7 +100,7 @@ export const vStreamedText2 = {
                     o: [0, 1]
                 },
                 d: 50,
-                delay: N.Ease.o2(Math.min(index, wordLength) / wordLength) * ratio * wordLength * SPEED_MS + count.value * STAGGER_MS,
+                delay: N.Ease.o2(Math.min(index, wordLength) / wordLength) * ratio * SPEED_MS + count.value * STAGGER_MS,
             }).from({
                 update: (t) => {
                     if (letter === " ") {
@@ -112,7 +112,7 @@ export const vStreamedText2 = {
                     span.innerText = map[Math.floor(N.Rand.range(0, map.length - 1, 1))]
                 },
                 d: 200,
-                delay: N.Ease.o2(Math.min(index, wordLength) / wordLength) * ratio * wordLength * SPEED_MS + count.value * STAGGER_MS,
+                delay: N.Ease.o2(Math.min(index, wordLength) / wordLength) * ratio * SPEED_MS + count.value * STAGGER_MS,
                 cb() {
                     span.innerText = letter
                 },
