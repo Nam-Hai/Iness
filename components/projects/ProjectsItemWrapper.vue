@@ -67,7 +67,7 @@ watch(enter, val => {
 .projects__wrapper {
     display: grid;
 
-    height: calc(var(--100vh) - #{$main-margin * 2});
+    // height: calc(var(--100vh) - #{$main-margin * 2});
     width: 100%;
 
     margin-left: calc($main-margin + var(--grid-column-width) + var(--grid-column-gap));
@@ -94,14 +94,16 @@ watch(enter, val => {
         .project__wrapper {
             height: $grid-cell-height;
 
-            &:last-child {
-                margin-bottom: $main-margin;
-            }
+
         }
     }
 
     .project__wrapper {
         height: $grid-cell-height;
+
+        &:last-child {
+            margin-bottom: $main-margin;
+        }
     }
 }
 
