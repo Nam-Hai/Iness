@@ -2,22 +2,27 @@ import { useFlowProvider } from "~/waterflow/FlowProvider";
 import { onLeave } from "~/waterflow/composables/onFlow";
 
 
-const STAGGER_MS = 25
-const SPEED_MS = 5
-const test = 150
+const STAGGER_MS = 20
+const SPEED_MS = 500
+const wordMax = 30
 
 export const vStreamedText = {
     mounted: (el: HTMLElement, binding: any) => {
 
         const { count } = useStoreTransition()
 
+        console.log(binding);
         const delayCount = binding.value || count.value
+
 
         const flowProvider = useFlowProvider()
         const { breakpoint } = useStoreView()
         if (flowProvider.getRouteTo().name === "projects-id" && breakpoint.value === "desktop" || !flowProvider.flowIsHijacked.value && !(flowProvider.getRouteTo().name === "projects-id" && breakpoint.value === "mobile")) return
         const text = el.innerText
         const char = text.split('')
+
+        const wordLength = char.length
+        const ratio = Math.min(wordMax, wordLength) / wordMax
         el.innerHTML = ""
         const spans: HTMLElement[] = []
         for (const c of char) {
@@ -42,7 +47,7 @@ export const vStreamedText = {
                     o: [0, 1]
                 },
                 d: 50,
-                delay: N.Ease.o2(Math.min(index, test) / test) * test * SPEED_MS + delayCount * STAGGER_MS,
+                delay: N.Ease.o2(Math.min(index, wordLength) / wordLength) * ratio * SPEED_MS + delayCount * STAGGER_MS,
             }).from({
                 update: (t) => {
                     i++
@@ -54,7 +59,7 @@ export const vStreamedText = {
                     span.innerText = map[Math.floor(N.Rand.range(0, map.length - 1, 1))]
                 },
                 d: 200,
-                delay: N.Ease.o2(Math.min(index, test) / test) * test * SPEED_MS + delayCount * STAGGER_MS,
+                delay: N.Ease.o2(Math.min(index, wordLength) / wordLength) * ratio * SPEED_MS + delayCount * STAGGER_MS,
                 cb() {
                     span.innerText = letter
                 },
@@ -73,6 +78,8 @@ export const vStreamedText2 = {
         const flowProvider = useFlowProvider()
         const text = el.innerText
         const char = text.split('')
+        const wordLength = char.length
+        const ratio = Math.min(wordMax, wordLength) / wordMax
         el.innerHTML = ""
         const spans: HTMLElement[] = []
         for (const c of char) {
@@ -94,7 +101,7 @@ export const vStreamedText2 = {
                     o: [0, 1]
                 },
                 d: 50,
-                delay: N.Ease.o2(Math.min(index, test) / test) * test * SPEED_MS + count.value * STAGGER_MS,
+                delay: N.Ease.o2(Math.min(index, wordLength) / wordLength) * ratio * wordLength * SPEED_MS + count.value * STAGGER_MS,
             }).from({
                 update: (t) => {
                     if (letter === " ") {
@@ -106,7 +113,7 @@ export const vStreamedText2 = {
                     span.innerText = map[Math.floor(N.Rand.range(0, map.length - 1, 1))]
                 },
                 d: 200,
-                delay: N.Ease.o2(Math.min(index, test) / test) * test * SPEED_MS + count.value * STAGGER_MS,
+                delay: N.Ease.o2(Math.min(index, wordLength) / wordLength) * ratio * wordLength * SPEED_MS + count.value * STAGGER_MS,
                 cb() {
                     span.innerText = letter
                 },
@@ -126,6 +133,9 @@ export const vStreamedTextMenu = {
         if (flowProvider.getRouteTo().name === "projects-id" && breakpoint.value === "desktop" || !flowProvider.flowIsHijacked.value && !(flowProvider.getRouteTo().name === "projects-id" && breakpoint.value === "mobile")) return
         const text = el.innerText
         const char = text.split('')
+        const wordLength = char.length
+        const ratio = Math.min(wordMax, wordLength) / wordMax
+
         el.innerHTML = ""
         const spans: HTMLElement[] = []
         for (const c of char) {
@@ -147,7 +157,7 @@ export const vStreamedTextMenu = {
                     o: [0, 1]
                 },
                 d: 50,
-                delay: N.Ease.o2(Math.min(index, test) / test) * test * SPEED_MS + count.value * STAGGER_MS,
+                delay: N.Ease.o2(Math.min(index, wordLength) / wordLength) * ratio * SPEED_MS + count.value * STAGGER_MS,
             }).from({
                 update: (t) => {
                     if (letter === " ") {
@@ -159,7 +169,7 @@ export const vStreamedTextMenu = {
                     span.innerText = map[Math.floor(N.Rand.range(0, map.length - 1, 1))]
                 },
                 d: 200,
-                delay: N.Ease.o2(Math.min(index, test) / test) * test * SPEED_MS + count.value * STAGGER_MS,
+                delay: N.Ease.o2(Math.min(index, wordLength) / wordLength) * ratio * SPEED_MS + count.value * STAGGER_MS,
                 cb() {
                     span.innerText = letter
                 },

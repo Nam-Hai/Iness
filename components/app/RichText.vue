@@ -4,7 +4,6 @@
 
 <script lang="tsx" setup>
 import ILink from './ILink.vue';
-import { vStreamedText } from '~/directives/streamedText';
 import StreamedSpan from './StreamedSpan.vue';
 
 const { props } = defineProps<{ props: RichText }>()

@@ -17,6 +17,9 @@ const { prismicData } = usePreloader()
 const { breakpoint } = useStoreView()
 const projects = prismicData.value.projects
 
+const { resetFilter } = useStoreFilter()
+resetFilter()
+
 const flowProvider = useFlowProvider()
 
 const currentProject = projects.filter(el => {
