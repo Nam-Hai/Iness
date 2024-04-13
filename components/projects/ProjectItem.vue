@@ -17,6 +17,7 @@
         <div class="project-preview"
             :class="{ relative: routeTo.name === 'projects-id', 'scroll-show': previewShow, hide: routeTo.name === 'projects-id' && routeTo.fullPath === '/projects/' + props.route }">
             <img :src="props.project_images[0].url" :alt="props.project_images[0].alt" ref="imageRef" v-leave>
+
         </div>
     </NuxtLink>
 </template>

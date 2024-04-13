@@ -46,7 +46,8 @@ export type PrismicData = {
     overview: OverviewData[],
     projects: ProjectData[],
     filters: FilterData,
-    info: { richText: RichText[] }
+    info: { richText: RichText[] },
+    test: any
 }
 
 export const usePreloader = createStore(() => {
@@ -145,10 +146,11 @@ export const usePreloader = createStore(() => {
                 overview,
                 projects,
                 filters,
-                info
+                info,
+                test: a
             }
         })
-        prismicData.value = data.value || { overview: [], projects: [], filters: [], info: { richText: [] } }
+        prismicData.value = data.value || { overview: [], projects: [], filters: [], info: { richText: [] }, test: {} }
 
         const { filterActive } = useStoreFilter()
         for (const f of prismicData.value.filters) {

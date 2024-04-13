@@ -11,7 +11,6 @@ export const vStreamedText = {
 
         const { count } = useStoreTransition()
 
-        console.log(binding);
         const delayCount = binding.value || count.value
 
 
