@@ -36,6 +36,7 @@ export const useStoreScroll = createStore(() => {
 		useRafR(({ delta, elapsed }) => {
 			if (!ticking) return
 			scroll.value = window.scrollY
+			console.log('scroll');
 
 			for (let index = scrollItem.length - 1; index >= 0; index--) {
 				scrollItem[index].callback(scroll.value)

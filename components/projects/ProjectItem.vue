@@ -88,10 +88,14 @@ a {
     pointer-events: none;
     opacity: 0;
 
+    @include breakpoint(mobile) {
+        line-height: 1.5rem;
+        font-size: 1.2rem;
+    }
+
     .container {
         display: flex;
         flex-direction: column;
-        row-gap: 0.3rem;
         // text-transform: capitalize;
     }
 

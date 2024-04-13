@@ -31,7 +31,6 @@ const data = prismicData.value.overview.map(el => {
 })
 
 useEventListeneer(wrapperRef, 'touchstart', (e: Event) => {
-    console.log('test');
     const mouse = {
         x: (e as TouchEvent).touches[0].clientX,
         y: (e as TouchEvent).touches[0].clientY
@@ -110,7 +109,7 @@ $showSum: $showDuration + $showTransition;
 }
 
 .project__wrapper {
-    position: absolute;
+    position: fixed;
     inset: 0;
 
     @include breakpoint(desktop) {

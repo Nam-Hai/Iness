@@ -124,4 +124,9 @@ main {
 
   line-height: 100%;
 }
+
+.info-text {
+  font-size: 1.2rem;
+  line-height: 1.5rem;
+}
 </style>
