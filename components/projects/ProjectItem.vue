@@ -88,6 +88,10 @@ a {
     pointer-events: none;
     opacity: 0;
 
+    padding: 0.4rem;
+    margin-left: -0.4rem;
+    margin-top: -0.4rem;
+
     @include breakpoint(mobile) {
         line-height: 1.5rem;
         font-size: 1.2rem;
