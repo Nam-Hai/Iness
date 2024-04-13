@@ -14,7 +14,7 @@
             </div>
 
             <span class="overflow" v-streamed-text v-if="currentImageShow !== -1" v-leave>
-                {{ index + 1 }} / {{ props.project_images.length }}
+                {{ index + 1 }}/{{ props.project_images.length }}
             </span>
         </div>
     </div>

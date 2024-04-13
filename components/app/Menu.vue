@@ -5,6 +5,9 @@
         <NuxtLink to="/projects" :class="{ 'menu__active': $route.path === '/index', hideMenu }" v-streamed-text-menu>
             Index</NuxtLink>
         <NuxtLink to="/info" :class="{ hideMenu }" v-streamed-text-menu>Info</NuxtLink>
+        <div :class="{ hideMenu }" v-streamed-text-menu disable>
+            Shop
+        </div>
 
         <NuxtLink to="#">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
@@ -93,6 +96,41 @@ const { trigger } = useStreamingText(hoverTextRef)
 
     pointer-events: none;
 
+    div:nth-child(4) {
+        grid-column: 1 / 3;
+        grid-row: 4/5;
+        cursor: pointer;
+        font-size: 1.2rem;
+        font-weight: 500;
+        height: fit-content;
+        width: fit-content;
+        pointer-events: all;
+        position: relative;
+
+        &::after {
+            position: absolute;
+            content: "Comming soon";
+            left: 0;
+            top: 0;
+            color: $neutral-text;
+            opacity: 0;
+            transition: opacity 250ms;
+            width: max-content;
+        }
+
+        color: $primary;
+
+        &:hover {
+            color: $discard-text;
+            transition: color 250ms;
+
+            &::after {
+                opacity: 1;
+            }
+
+        }
+    }
+
     a {
         &.hideMenu {
             display: none;
@@ -119,8 +157,9 @@ const { trigger } = useStreamingText(hoverTextRef)
             grid-row: 3/4;
         }
 
+
         // linkedin
-        &:nth-child(4) {
+        &:nth-child(5) {
             grid-column: 1 / 9;
             grid-row: 4 / 5;
             align-self: end;
@@ -139,8 +178,8 @@ const { trigger } = useStreamingText(hoverTextRef)
 
         }
 
-        &:nth-child(4),
-        &:nth-child(5) {
+        &:nth-child(5),
+        &:nth-child(6) {
 
             &:hover {
                 svg {
@@ -169,7 +208,7 @@ const { trigger } = useStreamingText(hoverTextRef)
             }
         }
 
-        &:nth-child(5) {
+        &:nth-child(6) {
             grid-column: 3 / 4;
             grid-row: 4 / 5;
             align-self: end;
@@ -180,7 +219,7 @@ const { trigger } = useStreamingText(hoverTextRef)
             }
         }
 
-        &:nth-child(6) {
+        &:nth-child(7) {
             grid-column: 6 / 9;
             grid-row: 4 / 5;
             align-self: end;
