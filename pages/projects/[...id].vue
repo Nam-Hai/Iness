@@ -3,13 +3,20 @@
         <ProjectsItemWrapper v-if="breakpoint == 'desktop'" />
 
         <ProjectImageWrapper :props="currentProject" />
+
+        <span class="counter" v-if="currentProject.project_images.length > 1 && breakpoint === 'mobile'">
+            <span>{{ currentImage + 1 }}</span>/{{ currentProject.project_images.length }}
+        </span>
     </main>
 </template>
+
 
 <script lang="ts" setup>
 import { usePageFlow } from '~/waterflow/composables/usePageFlow';
 import { defaultFlowIn, defaultFlowOut, flowInMap, flowOutMap } from '~/pages_transitions/default.transition';
 import { useFlowProvider } from '~/waterflow/FlowProvider';
+
+const { currentImage, currentImageShow } = useStoreProjectImage()
 
 const wrapperRef = ref() as Ref<HTMLElement>
 
@@ -38,6 +45,12 @@ usePageFlow({
 
 <style lang="scss" scoped>
 @use "@/styles/shared.scss" as *;
+
+.counter {
+    position: fixed;
+    top: calc(3 * $grid-cell-height + $main-margin);
+    left: $main-margin;
+}
 
 main {
     line-height: 100%;

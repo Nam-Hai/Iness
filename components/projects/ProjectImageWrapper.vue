@@ -3,7 +3,7 @@
         @click="$event.stopPropagation(); currentImage = N.mod(currentImage + 1, props.project_images.length)">
         <div class="image__wrapper noselect" :data-column="project.column"
             v-for="(project, index) in props.project_images" :class="{ show: index === currentImageShow }"
-            :key="project.url + index" v-leave>
+            :key="project.url + '__' + index" v-leave>
 
             <!-- <img :src="project.url" :alt="project.alt" ref="imageRefs"
                 :style="{ aspectRatio: project.dimensions.width / project.dimensions.height }" v-leave> -->
@@ -14,8 +14,8 @@
                     v-if="currentImageShow === index" />
             </div>
 
-            <span class="overflow" v-streamed-text v-if="currentImageShow !== -1 && props.project_images.length > 1">
-                {{ index + 1 }}/{{ props.project_images.length }}
+            <span class="overflow" v-if="currentImageShow !== -1 && props.project_images.length > 1 && breakpoint === 'desktop'">
+                <span>{{ index + 1 }}</span>/{{ props.project_images.length }}
             </span>
         </div>
     </div>
@@ -129,7 +129,12 @@ $showSum: $showDuration + $showTransition;
         margin-top: calc(3 * $grid-cell-height);
         display: flex;
         flex-direction: column;
-        margin-bottom: 1.2rem;
+
+        @include breakpoint(desktop) {
+            margin-bottom: 1.2rem;
+        }
+
+
         display: flex;
         flex-direction: column;
         text-transform: capitalize;
