@@ -14,7 +14,8 @@
                     v-if="currentImageShow === index" />
             </div>
 
-            <span class="overflow" v-if="currentImageShow !== -1 && props.project_images.length > 1 && breakpoint === 'desktop'">
+            <span class="overflow"
+                v-if="currentImageShow !== -1 && props.project_images.length > 1 && breakpoint === 'desktop'">
                 <span>{{ index + 1 }}</span>/{{ props.project_images.length }}
             </span>
         </div>
@@ -150,7 +151,7 @@ $showSum: $showDuration + $showTransition;
 
     .description {
         // font-size: 5rem;
-        margin-bottom: calc($grid-cell-height + $main-margin);
+        // margin-bottom: calc($grid-cell-height + $main-margin);
     }
 }
 
