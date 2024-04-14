@@ -1,7 +1,8 @@
 <template>
-    <NuxtLink :to="/projects/ + props.route" class="project__item__wrapper" ref="wrapperRef" :class="{
-        filterOpen: filterOpen, highlight: filterActive[props.type], empty: isEmpty, 'disable-route': disableRoute, 'scroll-out': !previewShow, 'mobileShow': mobileShow && breakpoint === 'mobile',
-    }" @click="onClick">
+    <NuxtLink :to="routeTo.path === '/projects/' + props.route ? '/projects' : /projects/ + props.route"
+        class="project__item__wrapper" ref="wrapperRef" :class="{
+            filterOpen: filterOpen, highlight: filterActive[props.type], empty: isEmpty, 'disable-route': disableRoute, 'scroll-out': !previewShow, 'mobileShow': mobileShow && breakpoint === 'mobile',
+        }" @click="onClick">
         <div class="container" ref="textRef" v-leave>
             <span v-streamed-text>{{ props.title }}</span>
             <span v-streamed-text>{{ props.client }}</span>
@@ -16,7 +17,8 @@
 
         <div class="project-preview" v-if="routeTo.name !== 'projects-id'"
             :class="{ 'scroll-show': previewShow, hide: routeTo.name === 'projects-id' && routeTo.fullPath === '/projects/' + props.route }">
-            <img :src="props.project_images[0].url" :alt="props.project_images[0].alt" ref="imageRef" v-leave>
+            <img :src="props.project_images[0].url" :alt="props.project_images[0].alt" ref="imageRef"
+                @click="navigateTo('projects/' + props.route)" v-leave>
 
         </div>
     </NuxtLink>

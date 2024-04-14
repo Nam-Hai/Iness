@@ -1,5 +1,9 @@
 <template>
-    <main ref="wrapperRef" @click="navigateTo('/projects')">
+    <main ref="wrapperRef">
+        <span class="back-index" v-if="breakpoint === 'desktop'" @click="navigateTo('/projects')" v-leave
+            v-streamed-text2>
+            Back to index
+        </span>
         <ProjectsItemWrapper v-if="breakpoint == 'desktop'" />
 
         <ProjectImageWrapper :props="currentProject" />
@@ -15,6 +19,8 @@
 import { usePageFlow } from '~/waterflow/composables/usePageFlow';
 import { defaultFlowIn, defaultFlowOut, flowInMap, flowOutMap } from '~/pages_transitions/default.transition';
 import { useFlowProvider } from '~/waterflow/FlowProvider';
+import { vLeave } from '~/directives/leave';
+import { vStreamedText2 } from '~/directives/streamedText';
 
 const { currentImage, currentImageShow } = useStoreProjectImage()
 
@@ -45,6 +51,14 @@ usePageFlow({
 
 <style lang="scss" scoped>
 @use "@/styles/shared.scss" as *;
+
+.back-index {
+    position: fixed;
+    top: calc($main-margin + $grid-cell-height);
+    left: $main-margin;
+    z-index: 200;
+    cursor: pointer;
+}
 
 .counter {
     position: fixed;

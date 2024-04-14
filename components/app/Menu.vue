@@ -6,7 +6,7 @@
             </span>
         </NuxtLink>
         <NuxtLink to="/projects" :class="{ 'menu__active': routeRef.path === '/index', hideMenu: delayedHideMenu }">
-            <span ref="indexRef">
+            <span ref="indexRef" :style="{ display: routeRef.name === 'projects-id' ? 'none' : 'unset' }">
                 Index
             </span>
         </NuxtLink>
