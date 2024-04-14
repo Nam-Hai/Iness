@@ -36,14 +36,6 @@ function toggleFilterAll() {
     toggledAll.value = !toggledAll.value
 }
 
-// const nbFilter = computed(() => {
-//     let sum = 0
-//     for (const [type, active] of Object.entries(filterActive)) {
-//         if (active) sum++
-//     }
-//     console.log(sum);
-//     return sum
-// })
 function toggleFilter(filter: string) {
     toggledAll.value = false
     filterActive[filter] = !filterActive[filter]
@@ -70,6 +62,7 @@ function toggleFilter(filter: string) {
     }
 
     &.open {
+        pointer-events: all;
         button {
             pointer-events: all;
         }
@@ -125,8 +118,12 @@ function toggleFilter(filter: string) {
         &::after {
             content: "select";
             position: absolute;
-            left: 0;
-            top: 0;
+            left: 1rem;
+            top: 0.5rem;
+            color: $neutral-text;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 200ms;
         }
 
         &:nth-child(1)::after {
@@ -147,8 +144,14 @@ function toggleFilter(filter: string) {
             &:hover {
                 color: $discard-text;
 
+                &::after {
+                    opacity: 1;
+                }
                 &.active {
                     color: $neutral-text;
+                    &::after {
+                        opacity: 0;
+                    }
                 }
             }
         }
