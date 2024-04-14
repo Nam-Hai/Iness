@@ -1,16 +1,17 @@
 <template>
-    <div class="project__wrapper" ref="wrapperRef" v-leave>
+    <div class="project__wrapper" ref="wrapperRef">
         <div class="column__wrapper" v-for="(img, index) in data" :key="img.alt + '_' + index"
             @mouseenter="() => { currentImage = index }">
             <img :src="img.src" :class="{ show: currentImageShow === index, loaded: img.load }" @load="() => {
-            img.load.value = true
-        }" ref="imageRef" :style="{ aspectRatio: img.dimensionsNative.width / img.dimensionsNative.height }" />
+                img.load.value = true
+            }" ref="imageRef" :style="{ aspectRatio: img.dimensionsNative.width / img.dimensionsNative.height }"
+                v-leave-img />
         </div>
     </div>
 </template>
 
 <script lang="ts" setup>
-import { vLeave } from '~/directives/leave';
+import { vLeave, vLeaveImg } from '~/directives/leave';
 const wrapperRef = ref() as Ref<HTMLElement>
 
 const { prismicData } = usePreloader()
@@ -141,6 +142,8 @@ $showSum: $showDuration + $showTransition;
     }
 
     img {
+        // background-color: $primary;
+
         @include breakpoint(desktop) {
             width: 100%;
         }

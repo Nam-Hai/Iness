@@ -54,7 +54,8 @@ const { placeholderPos, placeholderPosFrom } = useStoreProjectImage()
 const imageRef = ref()
 
 const click = ref(false)
-function onClick() {
+function onClick(e:Event) {
+    e.stopPropagation()
     click.value = true
 }
 onLeave(() => {

@@ -1,5 +1,6 @@
 <template>
-    <div class="wrapper " ref="wrapperRef" @click="currentImage = N.mod(currentImage + 1, props.project_images.length)">
+    <div class="wrapper " ref="wrapperRef"
+        @click="$event.stopPropagation(); currentImage = N.mod(currentImage + 1, props.project_images.length)">
         <div class="image__wrapper noselect" :data-column="project.column"
             v-for="(project, index) in props.project_images" :class="{ show: index === currentImageShow }"
             :key="project.url + index" v-leave>
@@ -13,7 +14,7 @@
                     v-if="currentImageShow === index" />
             </div>
 
-            <span class="overflow" v-streamed-text v-if="currentImageShow !== -1">
+            <span class="overflow" v-streamed-text v-if="currentImageShow !== -1 && props.project_images.length > 1">
                 {{ index + 1 }}/{{ props.project_images.length }}
             </span>
         </div>
@@ -77,6 +78,8 @@ $showSum: $showDuration + $showTransition;
     position: fixed;
     top: 0;
     right: 0;
+    font-size: 12px;
+    line-height: 15px;
 
     width: calc(4 * $grid-cell-width + $main-margin);
     height: 100vh;
@@ -125,7 +128,7 @@ $showSum: $showDuration + $showTransition;
         margin-top: calc(3 * $grid-cell-height);
         display: flex;
         flex-direction: column;
-        margin-bottom: 1.6rem;
+        margin-bottom: 1.2rem;
         display: flex;
         flex-direction: column;
         text-transform: capitalize;
@@ -219,7 +222,7 @@ $showSum: $showDuration + $showTransition;
         width: 100%;
         max-height: calc(100% - 3rem);
         // height: calc($grid-cell-height * 2);
-        margin-bottom: 1.6rem;
+        margin-bottom: 1.2rem;
 
         max-width: 100%;
     }

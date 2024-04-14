@@ -17,3 +17,15 @@ export const vLeave = {
         }, { once: true })
     }
 }
+
+
+export const vLeaveImg = {
+    mounted: (el: HTMLElement) => {
+
+        onLeave(() => { 
+            el.style.transition = "opacity 80ms"
+            N.O(el, 0)
+
+        }, { once: true })
+    }
+}

@@ -1,10 +1,14 @@
 <template>
     <div class="menu__wrapper" ref="wrapperRef">
-        <NuxtLink to="/" :class="{ 'menu__active': $route.path === '/', hideMenu }" v-streamed-text-menu>Overview
+        <NuxtLink to="/" :class="{ 'menu__active': $route.path === '/', hideMenu }" v-streamed-text-menu>
+            Overview
         </NuxtLink>
         <NuxtLink to="/projects" :class="{ 'menu__active': $route.path === '/index', hideMenu }" v-streamed-text-menu>
-            Index</NuxtLink>
-        <NuxtLink to="/info" :class="{ hideMenu }" v-streamed-text-menu>Info</NuxtLink>
+            Index
+        </NuxtLink>
+        <NuxtLink to="/info" :class="{ hideMenu }" v-streamed-text-menu>
+            Info
+        </NuxtLink>
         <div :class="{ hideMenu }" v-streamed-text-menu disable>
             Shop
         </div>

@@ -4,8 +4,17 @@ export type defaultTransitionProps = {
     wrapperRef: Ref<HTMLElement>
 }
 
+
+
 export const indexFlowOut: FlowFunction<defaultTransitionProps> = (props, resolve, provider) => {
     const tl = useTL()
+
+    const images = N.getAll("image", props.wrapperRef.value)
+    const videos = N.getAll("video", props.wrapperRef.value)
+    console.log(images, videos);
+    for (const el of [...images, ...videos]) {
+        // N.O(el as HTMLElement, 0)
+    }
 
     tl.from({
         d: 1000,
@@ -21,6 +30,13 @@ export const indexFlowOut: FlowFunction<defaultTransitionProps> = (props, resolv
 }
 export const defaultFlowOut: FlowFunction<defaultTransitionProps> = (props, resolve, provider) => {
     const tl = useTL()
+
+    const images = N.getAll("img", props.wrapperRef.value)
+    const videos = N.getAll("video", props.wrapperRef.value)
+    console.log(images, videos);
+    for (const el of [...images, ...videos]) {
+        // N.O(el as HTMLElement, 0)
+    }
 
     tl.from({
         d: 200,

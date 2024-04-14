@@ -1,5 +1,5 @@
 <template>
-    <main ref="wrapperRef">
+    <main ref="wrapperRef" @click="navigateTo('/projects')">
         <ProjectsItemWrapper v-if="breakpoint == 'desktop'" />
 
         <ProjectImageWrapper :props="currentProject" />
@@ -43,7 +43,6 @@ main {
     line-height: 100%;
     // position: relative;
     padding-top: $main-margin;
-
 }
 
 

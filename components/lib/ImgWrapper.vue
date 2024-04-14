@@ -1,13 +1,13 @@
 <template>
     <div class="img__wrapper" ref="wrapperRef">
-        <!-- <img :src="props.src" :alt="props.alt" onload="this.style.opacity = 1"
-            :style="{ aspectRatio: props.width / props.height }" v-leave v-if="props.src === 'mp4'"> -->
+        <img :src="props.src" :alt="props.alt" onload="this.style.opacity = 1"
+            :style="{ aspectRatio: props.width / props.height }" v-leave-img v-if="true">
 
 
-        <div class="video__wrapper">
-            <video disable-remote-playback="true" disable-picture-in-picture="true" autoplay="true" playsinline="true"
+        <div class="video__wrapper" v-else>
+            <!-- <video disable-remote-playback="true" disable-picture-in-picture="true" autoplay="true" playsinline="true"
                 loop="true" src="/la_feve_trim.mp4" onloadstart="this.style.opacity = 1;">
-            </video>
+            </video> -->
 
             <div class="controller__wrapper">
                 <button class="play__btn" @click="pause">
@@ -28,7 +28,7 @@
 </template>
 
 <script lang="ts" setup>
-import { vLeave } from '~/directives/leave';
+import { vLeave, vLeaveImg } from '~/directives/leave';
 
 const { props } = defineProps<{ props: { src: string, alt: string, height: number, width: number } }>()
 
@@ -60,7 +60,7 @@ function mute(e: Event) {
 @use "@/styles/shared.scss" as *;
 
 .img__wrapper {
-    background-color: $primary;
+    // background-color: $primary;
     position: relative;
     display: flex;
 
@@ -74,14 +74,17 @@ function mute(e: Event) {
     }
 
     .video__wrapper {
+        position: relative;
+
         .controller__wrapper {
             display: flex;
             color: $primary;
             font-size: 12px;
+            line-height: 15px;
             position: absolute;
-            bottom: -2.8rem;
+            bottom: -1.2rem - 1.5rem;
             right: 0;
-            position: relative;
+            position: absolute;
 
             @include breakpoint(mobile) {
                 position: fixed;
