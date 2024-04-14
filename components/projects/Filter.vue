@@ -4,7 +4,6 @@
         <button :style="{ cursor: 'default', color: '#AB0000' }" v-streamed-text="5" :class="{ open: filterOpen }"
             @click="filterOpen = !filterOpen">
             Filter
-            <!-- <span v-if="nbFilter !== 0">({{ nbFilter }})</span> -->
         </button>
 
         <button @click="toggleFilterAll()" :class="{ active: toggledAll, hide: !filterOpen }">

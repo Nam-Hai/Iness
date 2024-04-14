@@ -102,6 +102,10 @@ watch(enter, val => {
         height: $grid-cell-height;
 
         &:last-child {
+            @include breakpoint(mobile) {
+                margin-bottom: calc(grid-cell-height * 3 + $main-margin);
+            }
+
             margin-bottom: $main-margin;
         }
     }
