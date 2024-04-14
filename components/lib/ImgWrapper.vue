@@ -9,7 +9,7 @@
                 loop="true" src="/la_feve_trim.mp4" onloadstart="this.style.opacity = 1;">
             </video> -->
 
-            <div class="controller__wrapper">
+            <div class="controller__wrapper" v-if="videoController">
                 <button class="play__btn" @click="pause">
                     {{ isPaused ? "Play" : "Pause" }}
                 </button>
@@ -30,7 +30,7 @@
 <script lang="ts" setup>
 import { vLeave, vLeaveImg } from '~/directives/leave';
 
-const { props } = defineProps<{ props: { src: string, alt: string, height: number, width: number } }>()
+const { props, videoController = true } = defineProps<{ props: { src: string, alt: string, height: number, width: number }, videoController?: boolean }>()
 
 const wrapperRef = ref() as Ref<HTMLElement>
 
