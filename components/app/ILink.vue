@@ -1,11 +1,11 @@
 <template>
     <NuxtLink @click="toClipboard()" class="link__wrapper" :class="{ copied }" ref="wrapperRef" :to="href"
-        :disable="copy" target="_blank">
+        :disable="copy" target="_blank" @mouseenter="trigger">
         <span v-streamed-text>
             {{ text }}
         </span>
 
-        <span class="hover-text">
+        <span class="hover-text" ref="hoverTextRef">
             {{ copy ? copy : "Visit" }}
         </span>
     </NuxtLink>
@@ -16,6 +16,9 @@ import { vStreamedText } from '~/directives/streamedText';
 
 const { href = "#", copy = "", text } = defineProps<{ href?: string, copy?: string, text: string }>()
 const wrapperRef = ref() as Ref<HTMLElement>
+
+const hoverTextRef = ref()
+const { trigger } = useStreamingText(hoverTextRef)
 
 const copied = ref(false)
 let timer = useTimer(() => {
