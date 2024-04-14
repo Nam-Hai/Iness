@@ -36,14 +36,14 @@ function toggleFilterAll() {
     toggledAll.value = !toggledAll.value
 }
 
-const nbFilter = computed(() => {
-    let sum = 0
-    for (const [type, active] of Object.entries(filterActive)) {
-        if (active) sum++
-    }
-    console.log(sum);
-    return sum
-})
+// const nbFilter = computed(() => {
+//     let sum = 0
+//     for (const [type, active] of Object.entries(filterActive)) {
+//         if (active) sum++
+//     }
+//     console.log(sum);
+//     return sum
+// })
 function toggleFilter(filter: string) {
     toggledAll.value = false
     filterActive[filter] = !filterActive[filter]
@@ -121,6 +121,17 @@ function toggleFilter(filter: string) {
         color: $primary;
 
         transition: opacity 200ms, color 200ms;
+
+        &::after {
+            content: "select";
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        &:nth-child(1)::after {
+            display: none;
+        }
 
         &.hide {
             pointer-events: none;
