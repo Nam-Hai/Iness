@@ -1,5 +1,5 @@
 <template>
-    <div class="menu__wrapper" ref="wrapperRef">
+    <div class="menu__wrapper" ref="wrapperRef" :class="{ filterOpen }">
         <NuxtLink to="/" :class="{ 'menu__active': routeRef.path === '/', hideMenu: delayedHideMenu && hideMenu }">
             <span ref="overviewRef">
                 Overview
@@ -80,6 +80,8 @@ import { onLeave } from '~/waterflow/composables/onFlow';
 // const emits = defineEmits([])
 const wrapperRef = ref() as Ref<HTMLElement>
 
+const { filterOpen } = useStoreFilter()
+
 const overviewRef = ref()
 const indexRef = ref()
 const infoRef = ref()
@@ -150,6 +152,10 @@ watch(routeRef, (routeTo, routeFrom) => {
     @include mainGrid();
 
     color: $primary;
+
+    &.filterOpen {
+        color: $neutral-text;
+    }
     line-height: 100%;
 
     pointer-events: none;
@@ -182,9 +188,6 @@ watch(routeRef, (routeTo, routeFrom) => {
             transition: opacity 250ms;
             width: max-content;
         }
-
-        color: $primary;
-
         &:hover {
             color: $discard-text;
             transition: color 250ms;
