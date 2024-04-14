@@ -59,8 +59,10 @@ function toggleFilter(filter: string) {
 
     display: flex;
     flex-direction: column;
-    row-gap: 3.6rem;
-    height: 2rem;
+    justify-content: space-between;
+    // row-gap: 3.6rem;
+    // height: 2rem;
+    height: $grid-cell-height;
 
     &.open {
         >span {
@@ -98,7 +100,7 @@ function toggleFilter(filter: string) {
     }
 
     &.open {
-        height: auto;
+        // height: auto;
     }
 
 
