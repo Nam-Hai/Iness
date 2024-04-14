@@ -1,5 +1,5 @@
 <template>
-    <div class="wrapper " ref="wrapperRef"
+    <div class="wrapper " ref="wrapperRef" :class="{ 'cursor-resize': props.project_images.length > 1 }"
         @click="$event.stopPropagation(); currentImage = N.mod(currentImage + 1, props.project_images.length)">
         <div class="image__wrapper noselect" :data-column="project.column"
             v-for="(project, index) in props.project_images" :class="{ show: index === currentImageShow }"
@@ -86,6 +86,11 @@ $showSum: $showDuration + $showTransition;
     height: 100vh;
     // pointer-events: none;
 
+    &.cursor-resize {
+
+        cursor: e-resize;
+    }
+
     @include breakpoint(mobile) {
         width: 100%;
 
@@ -102,7 +107,6 @@ $showSum: $showDuration + $showTransition;
         user-select: none;
     }
 
-    cursor: e-resize;
 
 
 
@@ -150,6 +154,10 @@ $showSum: $showDuration + $showTransition;
     }
 
     .description {
+        @include breakpoint(mobile) {
+            margin-top: 1.2rem;
+        }
+
         // font-size: 5rem;
         // margin-bottom: calc($grid-cell-height + $main-margin);
     }
