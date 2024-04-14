@@ -1,7 +1,7 @@
 <template>
     <div class="projects-item__wrapper" v-if="breakpoint == 'desktop'">
         <div class="menu__project__wrapper">
-            <div class="project__wrapper" >
+            <div class="project__wrapper">
                 <ProjectItem :props="projects[0]" />
             </div>
         </div>
@@ -14,7 +14,7 @@
 
     <div class="projects-item__wrapper projects-item__wrapper-mobile" ref="mobileProjectItemRef" v-else>
         <div class="projects__wrapper projects__wrapper-mobile">
-            <div class="project__wrapper" v-for="project in [...projects]">
+            <div class="project__wrapper" v-for="project in projects">
                 <ProjectItem :props="project" />
             </div>
         </div>

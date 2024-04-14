@@ -29,7 +29,6 @@ export function useStreamingText(elRef: Ref<HTMLElement>) {
             cb() {
                 for (const span of spans) {
                     N.O(span, 0)
-                    console.log(span);
                 }
             },
         })
@@ -69,7 +68,6 @@ export function useStreamingText(elRef: Ref<HTMLElement>) {
 
     function trigger() {
 
-        console.log('trigger');
         tl.play()
     }
 

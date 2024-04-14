@@ -1,10 +1,12 @@
 <template>
-    <div class="filter__wrapper" ref="wrapperRef" @mouseenter="filterOpen = true" @mouseleave="filterOpen = false"
-        :class="{ open: filterOpen }">
-        <span :style="{ cursor: 'default' }" v-streamed-text="5" :class="{ open: filterOpen }"
+    <div class="filter__wrapper" ref="wrapperRef" @mouseenter="!isMobile && (filterOpen = true)"
+        @mouseleave="!isMobile && (filterOpen = false)" :class="{ open: filterOpen }">
+        <button :style="{ cursor: 'default', color: '#AB0000' }" v-streamed-text="5" :class="{ open: filterOpen }"
             @click="filterOpen = !filterOpen">
             Filter
-        </span>
+            <!-- <span v-if="nbFilter !== 0">({{ nbFilter }})</span> -->
+        </button>
+
         <button @click="toggleFilterAll()" :class="{ active: toggledAll, hide: !filterOpen }">
             All
         </button>
@@ -22,6 +24,7 @@ import { vStreamedText } from '~/directives/streamedText';
 const wrapperRef = ref() as Ref<HTMLElement>
 
 const { prismicData } = usePreloader()
+const { isMobile } = useStore()
 const { filterOpen, filterActive, isEmpty } = useStoreFilter()
 
 const toggledAll = ref(false)
@@ -33,6 +36,14 @@ function toggleFilterAll() {
     toggledAll.value = !toggledAll.value
 }
 
+const nbFilter = computed(() => {
+    let sum = 0
+    for (const [type, active] of Object.entries(filterActive)) {
+        if (active) sum++
+    }
+    console.log(sum);
+    return sum
+})
 function toggleFilter(filter: string) {
     toggledAll.value = false
     filterActive[filter] = !filterActive[filter]
@@ -110,10 +121,13 @@ function toggleFilter(filter: string) {
             color: $neutral-text;
         }
 
-        &:hover {
-            color: $discard-text;
-            &.active {
-                color: $neutral-text;
+        @media (hover:hover) and (pointer: fine) {
+            &:hover {
+                color: $discard-text;
+
+                &.active {
+                    color: $neutral-text;
+                }
             }
         }
     }

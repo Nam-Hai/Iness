@@ -54,7 +54,7 @@ const { placeholderPos, placeholderPosFrom } = useStoreProjectImage()
 const imageRef = ref()
 
 const click = ref(false)
-function onClick(e:Event) {
+function onClick(e: Event) {
     e.stopPropagation()
     click.value = true
 }
@@ -113,6 +113,15 @@ a {
 
     &.mobileShow {
         color: $primary !important;
+
+        &.filterOpen {
+            color: $discard-text !important;
+            opacity: 1;
+
+            &.highlight {
+                color: $neutral-text !important;
+            }
+        }
     }
 
     &.empty,
