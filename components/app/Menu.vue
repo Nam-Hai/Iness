@@ -1,15 +1,21 @@
 <template>
     <div class="menu__wrapper" ref="wrapperRef">
-        <NuxtLink to="/" :class="{ 'menu__active': $route.path === '/', hideMenu }" v-streamed-text-menu>
-            Overview
+        <NuxtLink to="/" :class="{ 'menu__active': routeRef.path === '/', hideMenu }">
+            <span ref="overviewRef">
+                Overview
+            </span>
         </NuxtLink>
-        <NuxtLink to="/projects" :class="{ 'menu__active': $route.path === '/index', hideMenu }" v-streamed-text-menu>
-            Index
+        <NuxtLink to="/projects" :class="{ 'menu__active': routeRef.path === '/index', hideMenu }">
+            <span ref="indexRef">
+                Index
+            </span>
         </NuxtLink>
-        <NuxtLink to="/info" :class="{ hideMenu }" v-streamed-text-menu>
-            Info
+        <NuxtLink to="/info" :class="{ hideMenu }">
+            <span ref="infoRef">
+                Info
+            </span>
         </NuxtLink>
-        <div :class="{ hideMenu }" v-streamed-text-menu disable>
+        <div :class="{ hideMenu }" disable ref="shopRef">
             Shop
         </div>
 
@@ -67,19 +73,51 @@
 
 <script lang="ts" setup>
 import { vStreamedText, vStreamedTextMenu } from '~/directives/streamedText';
+import { useFlowProvider } from '~/waterflow/FlowProvider';
+import { onLeave } from '~/waterflow/composables/onFlow';
 // const {propName = fallbackValue} = defineProps<{propName: type}>()
 // const emits = defineEmits([])
 const wrapperRef = ref() as Ref<HTMLElement>
+
+const overviewRef = ref()
+const indexRef = ref()
+const infoRef = ref()
+const shopRef = ref()
+
 const { breakpoint } = useStoreView()
-const router = useRouter()
 const hideMenu = computed(() => {
-    return breakpoint.value === 'mobile' && router.currentRoute.value.name === 'projects-id'
+    return breakpoint.value === 'mobile' && routeRef.value.name === 'projects-id'
 })
+
+const { routeRef } = useFlowProvider()
+
 
 const hoverTextRef = ref() as Ref<HTMLElement>
 
 const { trigger } = useStreamingText(hoverTextRef)
 
+const { trigger: overviewTrigger } = useStreamingText(overviewRef)
+const { trigger: indexTrigger } = useStreamingText(indexRef)
+const { trigger: infoTrigger } = useStreamingText(infoRef)
+const { trigger: shopTrigger } = useStreamingText(shopRef)
+
+onMounted(() => {
+    overviewTrigger()
+    indexTrigger()
+    infoTrigger()
+    shopTrigger()
+})
+
+watch(routeRef, (routeTo, routeFrom) => {
+    const check = routeFrom.name === "projects-id" && routeTo.name !== "projects-id" && breakpoint.value === "mobile"
+    console.log(check);
+    if (check) {
+        overviewTrigger()
+        indexTrigger()
+        infoTrigger()
+        shopTrigger()
+    }
+})
 
 </script>
 
@@ -136,9 +174,6 @@ const { trigger } = useStreamingText(hoverTextRef)
     }
 
     a {
-        &.hideMenu {
-            display: none;
-        }
 
         pointer-events: all;
         font-size: 1.2rem;
@@ -249,5 +284,9 @@ const { trigger } = useStreamingText(hoverTextRef)
         width: max-content;
         font-size: 2.6rem;
     }
+}
+
+.hideMenu {
+    display: none;
 }
 </style>

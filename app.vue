@@ -28,6 +28,7 @@ watch(flowProvider.flowIsHijacked, (flow) => {
 })
 
 const { resetCount } = useStoreTransition()
+
 const routeTo = flowProvider.getRouteTo()
 watch(routeTo, () => {
   resetCount()

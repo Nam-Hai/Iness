@@ -10,6 +10,7 @@ export function useStreamingText(elRef: Ref<HTMLElement>) {
     onMounted(() => {
         const el = elRef.value
         const text = elRef.value.innerText
+        console.log(elRef.value, text);
         const char = text.split('')
         el.innerHTML = ""
         const spans: HTMLElement[] = []

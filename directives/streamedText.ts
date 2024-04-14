@@ -129,7 +129,10 @@ export const vStreamedTextMenu = {
         const { count } = useStoreTransition()
         const flowProvider = useFlowProvider()
         const { breakpoint } = useStoreView()
+
         if (flowProvider.getRouteTo().name === "projects-id" && breakpoint.value === "desktop" || !flowProvider.flowIsHijacked.value && !(flowProvider.getRouteTo().name === "projects-id" && breakpoint.value === "mobile")) return
+
+
         const text = el.innerText
         const char = text.split('')
         const wordLength = char.length
