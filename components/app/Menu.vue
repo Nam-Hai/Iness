@@ -1,21 +1,21 @@
 <template>
     <div class="menu__wrapper" ref="wrapperRef">
-        <NuxtLink to="/" :class="{ 'menu__active': routeRef.path === '/', hideMenu }">
+        <NuxtLink to="/" :class="{ 'menu__active': routeRef.path === '/', hideMenu: delayedHideMenu && hideMenu }">
             <span ref="overviewRef">
                 Overview
             </span>
         </NuxtLink>
-        <NuxtLink to="/projects" :class="{ 'menu__active': routeRef.path === '/index', hideMenu }">
+        <NuxtLink to="/projects" :class="{ 'menu__active': routeRef.path === '/index', hideMenu: delayedHideMenu }">
             <span ref="indexRef">
                 Index
             </span>
         </NuxtLink>
-        <NuxtLink to="/info" :class="{ hideMenu }">
+        <NuxtLink to="/info" :class="{ hideMenu: delayedHideMenu }">
             <span ref="infoRef">
                 Info
             </span>
         </NuxtLink>
-        <div :class="{ hideMenu }" disable ref="shopRef">
+        <div :class="{ hideMenu: delayedHideMenu }" disable ref="shopRef">
             Shop
         </div>
 
@@ -73,6 +73,7 @@
 
 <script lang="ts" setup>
 import { vStreamedText, vStreamedTextMenu } from '~/directives/streamedText';
+import { sleep } from '~/plugins/core/raf';
 import { useFlowProvider } from '~/waterflow/FlowProvider';
 import { onLeave } from '~/waterflow/composables/onFlow';
 // const {propName = fallbackValue} = defineProps<{propName: type}>()
@@ -85,11 +86,27 @@ const infoRef = ref()
 const shopRef = ref()
 
 const { breakpoint } = useStoreView()
-const hideMenu = computed(() => {
-    return breakpoint.value === 'mobile' && routeRef.value.name === 'projects-id'
-})
 
 const { routeRef } = useFlowProvider()
+
+const delayedHideMenu = ref(false)
+
+const hideMenu = computed(() => {
+    const hide = breakpoint.value === 'mobile' && routeRef.value.name === 'projects-id'
+
+    useDelay(routeRef.value.name === 'projects-id' && breakpoint.value === 'mobile' ? 600 : 0, () => {
+        delayedHideMenu.value = hide
+    })
+    return hide
+})
+
+watch(hideMenu, (hide) => {
+    console.log({ hide });
+})
+watch(delayedHideMenu, () => {
+    console.log("object");
+})
+
 
 
 const hoverTextRef = ref() as Ref<HTMLElement>
@@ -110,7 +127,6 @@ onMounted(() => {
 
 watch(routeRef, (routeTo, routeFrom) => {
     const check = routeFrom.name === "projects-id" && routeTo.name !== "projects-id" && breakpoint.value === "mobile"
-    console.log(check);
     if (check) {
         overviewTrigger()
         indexTrigger()
@@ -137,6 +153,13 @@ watch(routeRef, (routeTo, routeFrom) => {
     line-height: 100%;
 
     pointer-events: none;
+
+    div:nth-child(1),
+    div:nth-child(2),
+    div:nth-child(3),
+    div:nth-child(4) {
+        transition: opacity 100ms;
+    }
 
     div:nth-child(4) {
         grid-column: 1 / 3;

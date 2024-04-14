@@ -63,8 +63,17 @@ function toggleFilter(filter: string) {
     // row-gap: 3.6rem;
     // height: 2rem;
     height: $grid-cell-height;
+    pointer-events: none;
+
+    button:first-child {
+        pointer-events: all;
+    }
 
     &.open {
+        button {
+            pointer-events: all;
+        }
+
         >span {
             &::before {
                 transform: translate(50%, -50%) rotate(90deg);

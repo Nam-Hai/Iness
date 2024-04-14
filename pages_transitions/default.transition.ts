@@ -6,35 +6,7 @@ export type defaultTransitionProps = {
 
 
 
-export const indexFlowOut: FlowFunction<defaultTransitionProps> = (props, resolve, provider) => {
-    const tl = useTL()
-
-
-    tl.from({
-        d: 1000,
-        e: "io3",
-        update: (t) => {
-
-        },
-        cb() {
-            resolve()
-        },
-    }).play()
-    // resolve()
-}
 export const defaultFlowOut: FlowFunction<defaultTransitionProps> = (props, resolve, provider) => {
-    const tl = useTL()
-
-    tl.from({
-        d: 200,
-        e: "io3",
-        update: (t) => {
-
-        },
-        cb() {
-            // resolve()
-        },
-    }).play()
     resolve()
 }
 
@@ -50,6 +22,9 @@ export const projectProjectFlowIn: FlowFunction<defaultTransitionProps> = async 
         // return defaultFlowIn({ wrapperRef }, resolve, provider)
     }
     resolve()
+    useDelay(1000, () => {
+        // resolve()
+    })
 }
 
 export const flowOutMap = new Map([

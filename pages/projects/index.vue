@@ -42,6 +42,8 @@ main {
     left: calc($main-margin + var(--grid-column-width) * 5 + var(--grid-column-gap) * 5);
     top: $main-margin;
 
+    pointer-events: none;
+
     @include breakpoint(mobile) {
         left: calc($grid-cell-width * 5 + $main-margin); 
     }

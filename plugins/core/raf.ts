@@ -252,7 +252,7 @@ class Delay {
     }
 }
 
-const delay = async (cb: () => void, delay: number) => {
+const sleep = async (cb: () => void, delay: number) => {
     await new Promise<void>(resolve => {
         (new Delay(() => { cb(); resolve() }, delay)).run()
     })
@@ -275,4 +275,5 @@ class Timer {
     }
 }
 
-export { Raf, RafR, Delay, delay, Timer } 
+export { Raf, RafR, Delay, sleep, Timer } 
+

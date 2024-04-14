@@ -118,7 +118,8 @@ $showSum: $showDuration + $showTransition;
         left: $main-margin;
     }
 
-    line-height: 130%;
+    font-size: 12px;
+    line-height: 15px;
 
     .info__wrapper {
         @include breakpoint(mobile) {
