@@ -144,6 +144,7 @@ watch(routeRef, (routeTo, routeFrom) => {
     top: 0;
     transform: translate(-50%);
     z-index: $z-menu;
+    line-height: 15px;
 
     @include mainGrid();
 
@@ -153,7 +154,6 @@ watch(routeRef, (routeTo, routeFrom) => {
         color: $neutral-text;
     }
 
-    line-height: 100%;
 
     pointer-events: none;
 

@@ -147,10 +147,9 @@ $showSum: $showDuration + $showTransition;
     .description {
         @include breakpoint(mobile) {
             margin-top: 1.2rem;
+            margin-bottom: calc($grid-cell-height + $main-margin);
         }
 
-        // font-size: 5rem;
-        // margin-bottom: calc($grid-cell-height + $main-margin);
     }
 }
 

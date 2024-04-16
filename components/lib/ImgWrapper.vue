@@ -70,7 +70,7 @@ function mute(e: Event) {
         opacity: 0;
         // transition: opacity 500ms;
         object-fit: cover;
-        transition: opacity 200ms;
+        transition: opacity 100ms;
     }
 
     .video__wrapper {
