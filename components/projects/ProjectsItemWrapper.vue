@@ -103,7 +103,7 @@ watch(enter, val => {
 
         &:last-child {
             @include breakpoint(mobile) {
-                margin-bottom: calc(grid-cell-height * 3 + $main-margin);
+                margin-bottom: calc(3* $grid-cell-height + $main-margin);
             }
 
             margin-bottom: $main-margin;
