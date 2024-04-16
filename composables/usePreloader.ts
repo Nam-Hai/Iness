@@ -114,7 +114,6 @@ export const usePreloader = createStore(() => {
                 return d.data["overview-video-image"]
             })
 
-            console.log("PROJECT DATA ============>", projectData);
             const projects: ProjectData[] = projectData.map(d => {
                 return {
                     title: d.data.title || "Projet",
