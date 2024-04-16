@@ -2,7 +2,7 @@
     <div class="lib-media" ref="wrapperRef" v-leave-img>
         <img :src="props.url" :alt="props.name" v-if="props.kind === 'image'" />
 
-        <video v-else-if="props.kind[0] === 'v'" playsinline disableremoteplayback="true"
+        <video v-else-if="props.kind === 'video'" playsinline disableremoteplayback="true"
             disable-picture-in-picture="true" muted loop autoplay>
             <source :src="props.url">
         </video>
