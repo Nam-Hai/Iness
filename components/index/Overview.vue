@@ -1,9 +1,8 @@
 <template>
     <div class="project__wrapper" ref="wrapperRef">
-        <div class="column__wrapper" v-for="(img, index) in data" :key="img.alt + '_' + index"
-            @mouseenter="() => { currentImage = index }"
-            :class="{ show: currentImageShow === index, loaded: img.load }">
-            <IMedia :props="{ kind: 'image', name: 'image-1', url: img.src, size: '20', id: '2002' }"></IMedia>
+        <div class="column__wrapper" v-for="(img, index) in data" :key="img.name + '_' + index"
+            @mouseenter="() => { currentImage = index }" :class="{ show: currentImageShow === index, loaded: true }">
+            <IMedia :props="img"></IMedia>
             <!-- <img :src="img.src" :class="{ show: currentImageShow === index, loaded: img.load }" @load="() => {
                 img.load.value = true
             }" ref="imageRef" v-leave-img /> -->
@@ -17,20 +16,8 @@ const wrapperRef = ref() as Ref<HTMLElement>
 
 const { prismicData } = usePreloader()
 const { vh, breakpoint } = useStoreView()
-const data = prismicData.value.overview.map(el => {
-    return {
-        src: el.image,
-        dimensionsNative: el.dimensions,
-        domRect: {
-            h: 1,
-            w: 1,
-            x: 0,
-            y: 0,
-        },
-        alt: el.alt,
-        load: ref(false)
-    }
-})
+const data = prismicData.value.overview
+console.log(data);
 
 useEventListeneer(wrapperRef, 'touchstart', (e: Event) => {
     const mouse = {

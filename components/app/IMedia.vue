@@ -2,7 +2,8 @@
     <div class="lib-media" ref="wrapperRef" v-leave-img>
         <img :src="props.url" :alt="props.name" v-if="props.kind === 'image'" />
 
-        <video v-else-if="props.kind[0] === 'v'" playsinline disableremoteplayback="true" muted loop autoplay>
+        <video v-else-if="props.kind[0] === 'v'" playsinline disableremoteplayback="true"
+            disable-picture-in-picture="true" muted loop autoplay>
             <source :src="props.url">
         </video>
     </div>
@@ -10,13 +11,6 @@
 
 <script lang="ts" setup>
 import { vLeave, vLeaveImg } from '~/directives/leave';
-export type PrismicMedia = {
-    id: string,
-    kind: string,
-    name: string,
-    size: string,
-    url: string,
-}
 const { props } = defineProps<{ props: PrismicMedia }>()
 // const emits = defineEmits([])
 

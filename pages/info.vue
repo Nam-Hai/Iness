@@ -15,11 +15,11 @@
     </div>
 
     <div class="info-text__wrapper">
-      <!-- <RichText :props="prismicData..richText[0]"></RichText> -->
-      <div class="info-text" v-for="(text, index) in [...copy, ...copy]" v-streamed-text="index * 5"
+      <RichText :props="richText" v-for="richText in prismicData.info"></RichText>
+      <!-- <div class="info-text" v-for="(text, index) in [...copy, ...copy]" v-streamed-text="index * 5"
         :key="'info-text-' + index">
         {{ text }}
-      </div>
+      </div> -->
     </div>
   </main>
 </template>

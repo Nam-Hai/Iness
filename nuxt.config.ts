@@ -12,7 +12,7 @@ export default defineNuxtConfig({
         "@nuxtjs/prismic"
     ],
     prismic: {
-        endpoint: 'https://inessportfolio.cdn.prismic.io/api/v2',
+        endpoint: 'https://iness-portfolio.cdn.prismic.io/api/v2',
         preview: false,
         toolbar: false
     },
