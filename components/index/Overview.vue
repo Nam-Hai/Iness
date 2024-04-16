@@ -1,11 +1,12 @@
 <template>
     <div class="project__wrapper" ref="wrapperRef">
         <div class="column__wrapper" v-for="(img, index) in data" :key="img.alt + '_' + index"
-            @mouseenter="() => { currentImage = index }">
-            <img :src="img.src" :class="{ show: currentImageShow === index, loaded: img.load }" @load="() => {
+            @mouseenter="() => { currentImage = index }"
+            :class="{ show: currentImageShow === index, loaded: img.load }">
+            <IMedia :props="{ kind: 'image', name: 'image-1', url: img.src, size: '20', id: '2002' }"></IMedia>
+            <!-- <img :src="img.src" :class="{ show: currentImageShow === index, loaded: img.load }" @load="() => {
                 img.load.value = true
-            }" ref="imageRef" :style="{ aspectRatio: img.dimensionsNative.width / img.dimensionsNative.height }"
-                v-leave-img />
+            }" ref="imageRef" v-leave-img /> -->
         </div>
     </div>
 </template>
@@ -59,34 +60,11 @@ const imageRef = ref() as Ref<HTMLElement[]>
 
 const currentImageShow = ref(0)
 
-onMounted(async () => {
-    computeImgPosition()
-})
-
 watch(currentImage, index => {
     if (index === -1) return
 
     currentImageShow.value = index
 })
-
-useRO(() => {
-    computeImgPosition()
-})
-
-function getImageDOMRect(index: number) {
-    return data[index].domRect
-}
-function computeImgPosition() {
-    for (let index = 0; index < data.length; index++) {
-        const el = imageRef.value[index]
-        const domRec = el.getBoundingClientRect()
-        const ratio = data[index].dimensionsNative.height / data[index].dimensionsNative.width
-        data[index].domRect.h = domRec.width * ratio
-        data[index].domRect.w = domRec.width
-        data[index].domRect.x = domRec.x
-        data[index].domRect.y = domRec.y
-    }
-}
 </script>
 
 <style lang="scss" scoped>
@@ -96,18 +74,6 @@ $showDuration: 0ms;
 $showTransition: 0ms;
 $showSum: $showDuration + $showTransition;
 
-.placeholder {
-    position: absolute;
-    height: 100px;
-    width: 100px;
-    background-color: $primary;
-
-    left: 0;
-    top: 0;
-    transform-origin: left top;
-
-    // transition: transform $showTransition $showDuration;
-}
 
 .project__wrapper {
     position: fixed;
@@ -139,25 +105,21 @@ $showSum: $showDuration + $showTransition;
     .column__wrapper {
         width: 100%;
         height: calc(100% - $main-margin);
+
+        opacity: 0;
+
+        &.loaded.show {
+            opacity: 1;
+        }
     }
 
-    img {
+    .lib-media {
         // background-color: $primary;
 
         @include breakpoint(desktop) {
             width: 100%;
         }
 
-        object-fit: cover;
-        opacity: 0;
-        // transition: opacity $showDuration 0ms;
-        // transition: opacity $showDuration;
-
-        &.loaded.show {
-            // transition: opacity 300ms;
-            // transition: opacity $showDuration $showSum;
-            opacity: 1;
-        }
     }
 }
 </style>

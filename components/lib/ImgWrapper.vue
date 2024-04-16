@@ -5,9 +5,9 @@
 
 
         <div class="video__wrapper" v-else>
-            <!-- <video disable-remote-playback="true" disable-picture-in-picture="true" autoplay="true" playsinline="true"
+            <video disable-remote-playback="true" disable-picture-in-picture="true" autoplay="true" playsinline="true"
                 loop="true" src="/la_feve_trim.mp4" onloadstart="this.style.opacity = 1;">
-            </video> -->
+            </video>
 
             <div class="controller__wrapper" v-if="videoController">
                 <button class="play__btn" @click="pause">
@@ -18,12 +18,7 @@
                     {{ isMuted ? "Unmute" : "Mute" }}
                 </button>
             </div>
-
         </div>
-        <!-- <video disableremoteplayback="true"
-            src="https://res.cloudinary.com/mkpill/video/upload/v1691655828/makepill_showreel_opti_a5c666148b.mp4"
-            autoplay="" playsinline="" muted="muted" loop="" data-v-970f869d=""
-            style="translate: none; rotate: none; scale: none; transform: scale(1.2, 1.2);"></video> -->
     </div>
 </template>
 

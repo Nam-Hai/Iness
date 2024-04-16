@@ -1,5 +1,5 @@
 <template>
-    <div class="lib-media" ref="wrapperRef">
+    <div class="lib-media" ref="wrapperRef" v-leave-img>
         <img :src="props.url" :alt="props.name" v-if="props.kind === 'image'" />
 
         <video v-else-if="props.kind[0] === 'v'" playsinline disableremoteplayback="true" muted loop autoplay>
@@ -9,6 +9,7 @@
 </template>
 
 <script lang="ts" setup>
+import { vLeave, vLeaveImg } from '~/directives/leave';
 export type PrismicMedia = {
     id: string,
     kind: string,
@@ -28,5 +29,16 @@ const wrapperRef = ref() as Ref<HTMLElement>
 <style lang="scss" scoped>
 @use "@/styles/shared.scss" as *;
 
-.lib-media {}
+.lib-media {
+    // width: 100%;
+    // height: 100%;
+
+    img,
+    video {
+        width: 100%;
+        height: 100%;
+
+        object-fit: cover;
+    }
+}
 </style>
