@@ -13,6 +13,8 @@ export const defaultFlowOut: FlowFunction<defaultTransitionProps> = (props, reso
 }
 
 export const defaultFlowIn: FlowFunction<defaultTransitionProps> = ({ wrapperRef }, resolve,) => {
+    const { resetFilter } = useStoreFilter()
+    resetFilter()
     useDelay(1000, () => {
         resolve()
     })

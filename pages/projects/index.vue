@@ -12,9 +12,6 @@
 import { usePageFlow } from '~/waterflow/composables/usePageFlow';
 import { defaultFlowIn, defaultFlowOut } from '~/pages_transitions/default.transition';
 
-const { resetFilter } = useStoreFilter()
-resetFilter()
-
 const wrapperRef = ref() as Ref<HTMLElement>
 
 usePageFlow({

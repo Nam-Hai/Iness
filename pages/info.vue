@@ -15,7 +15,7 @@
     </div>
 
     <div class="info-text__wrapper">
-      <RichText :props="richText" v-for="richText in prismicData.info"></RichText>
+      <RichText :props="richText" v-for="richText, index in prismicData.info" :key="'info-text-' + index"></RichText>
       <!-- <div class="info-text" v-for="(text, index) in [...copy, ...copy]" v-streamed-text="index * 5"
         :key="'info-text-' + index">
         {{ text }}
@@ -34,9 +34,6 @@ const { copy } = useStoreInfo()
 const wrapperRef = ref() as Ref<HTMLElement>
 const { prismicData } = usePreloader()
 const { isMobile } = useStore()
-
-const { resetFilter } = useStoreFilter()
-resetFilter()
 
 usePageFlow({
   props: {

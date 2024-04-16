@@ -10,9 +10,6 @@ import { defaultFlowIn, defaultFlowOut } from '~/pages_transitions/default.trans
 
 const wrapperRef = ref() as Ref<HTMLElement>
 
-const { resetFilter } = useStoreFilter()
-resetFilter()
-
 usePageFlow({
   props: {
     wrapperRef,
