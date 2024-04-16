@@ -5,7 +5,9 @@ export type ProjectData = {
     type: string,
     date: string,
     cover: PrismicMedia,
+    cover_mobile: PrismicMedia,
     project_images: ProjectImage[]
+    project_images_mobile: ProjectImage[]
 }
 export type ProjectImage = {
     image: PrismicMedia,
@@ -79,7 +81,14 @@ export const usePreloader = createStore(() => {
                         client_name
                         date
                         cover
+                        cover_mobile
                         project_images {
+                            project_image
+                            description
+                            controller
+                            width_column
+                        }
+                        project_images_mobile {
                             project_image
                             description
                             controller
@@ -122,7 +131,16 @@ export const usePreloader = createStore(() => {
                     type: d.data.type.data.filter,
                     date: d.data.date || "2024",
                     cover: d.data.cover,
+                    cover_mobile: d.data.cover_mobile,
                     project_images: d.data.project_images.map((el: any) => {
+                        return {
+                            controller: el.controller || false,
+                            description: el.description || "",
+                            column: el.width_column || 4,
+                            image: el.project_image
+                        }
+                    }),
+                    project_images_mobile: d.data.project_images_mobile.map((el: any) => {
                         return {
                             controller: el.controller || false,
                             description: el.description || "",

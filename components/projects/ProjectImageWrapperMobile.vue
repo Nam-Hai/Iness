@@ -1,18 +1,13 @@
 <template>
-    <div class="wrapper " ref="wrapperRef" :class="{ 'cursor-resize': props.project_images.length > 1 }"
-        @click="$event.stopPropagation(); currentImage = N.mod(currentImage + 1, props.project_images.length)">
+    <div class="wrapper " ref="wrapperRef" :class="{ 'cursor-resize': props.project_images_mobile.length > 1 }"
+        @click="$event.stopPropagation(); currentImage = N.mod(currentImage + 1, props.project_images_mobile.length)">
         <div class="image__wrapper noselect" :data-column="project.column"
-            v-for="(project, index) in props.project_images" :class="{ show: index === currentImageShow }"
+            v-for="(project, index) in props.project_images_mobile" :class="{ show: index === currentImageShow }"
             :key="project.image.id + '__' + index" v-leave>
 
             <div class="image">
                 <ImgWrapper :props="project.image" :controller="project.controller" v-if="currentImageShow === index" />
             </div>
-
-            <span class="overflow"
-                v-if="currentImageShow !== -1 && props.project_images.length > 1 && breakpoint === 'desktop'">
-                <span>{{ index + 1 }}</span>/{{ props.project_images.length }}
-            </span>
         </div>
     </div>
 
@@ -20,13 +15,14 @@
         <NuxtLink to="/projects" class="back" v-streamed-text>Back to index</NuxtLink>
 
         <div class="info__wrapper">
+            {{ breakpoint }}
             <span v-streamed-text>{{ props.title }}</span>
             <span v-streamed-text>{{ props.client }}</span>
             <span v-streamed-text>{{ props.type }}</span>
             <span v-streamed-text>{{ props.date }}</span>
         </div>
         <div class="description" v-streamed-text v-if="currentImageShow !== -1">
-            {{ props.project_images[currentImage]?.description || "" }}
+            {{ props.project_images_mobile[currentImage]?.description || "" }}
         </div>
     </div>
 </template>
@@ -181,19 +177,19 @@ $showSum: $showDuration + $showTransition;
         position: fixed;
         transition: 0ms;
 
-        &[data-column="1"] {
+        &[data-column="3"] {
             width: calc($grid-cell-width * 3);
         }
 
-        &[data-column="2"] {
+        &[data-column="4"] {
             width: calc($grid-cell-width * 4);
         }
 
-        &[data-column="3"] {
+        &[data-column="7"] {
             width: calc($grid-cell-width * 7);
         }
 
-        &[data-column="4"] {
+        &[data-column="9"] {
             width: calc($grid-cell-width * 9);
         }
     }
@@ -206,24 +202,6 @@ $showSum: $showDuration + $showTransition;
 
         .overflow-content {
             transform: translateY(0%);
-        }
-    }
-
-    @include breakpoint(desktop) {
-        &[data-column="1"] {
-            width: calc($grid-cell-width);
-        }
-
-        &[data-column="2"] {
-            width: calc($grid-cell-width * 2);
-        }
-
-        &[data-column="3"] {
-            width: calc($grid-cell-width * 3);
-        }
-
-        &[data-column="4"] {
-            width: calc($grid-cell-width * 4);
         }
     }
 

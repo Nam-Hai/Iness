@@ -6,7 +6,8 @@
             </div>
         </div>
         <div class="projects__wrapper">
-            <div class="project__wrapper" v-for="project in projects.slice(1, projects.length)">
+            <div class="project__wrapper" v-for="project, index in projects.slice(1, projects.length)"
+                :class="{ gridFlow: index >= 9 }">
                 <ProjectItem :props="project" />
             </div>
         </div>
@@ -106,7 +107,9 @@ watch(enter, val => {
                 margin-bottom: calc(3* $grid-cell-height + $main-margin);
             }
 
-            margin-bottom: $main-margin;
+            &.gridFlow {
+                margin-bottom: $main-margin;
+            }
         }
     }
 }

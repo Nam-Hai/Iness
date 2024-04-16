@@ -6,10 +6,11 @@
         </span>
         <ProjectsItemWrapper v-if="breakpoint == 'desktop'" />
 
-        <ProjectImageWrapper :props="currentProject" />
+        <ProjectImageWrapper :props="currentProject" v-if="breakpoint === 'desktop'" />
+        <ProjectImageWrapperMobile :props="currentProject" v-else />
 
-        <span class="counter" v-if="currentProject.project_images.length > 1 && breakpoint === 'mobile'">
-            <span>{{ currentImage + 1 }}</span>/{{ currentProject.project_images.length }}
+        <span class="counter" v-if="currentProject.project_images_mobile.length > 1 && breakpoint === 'mobile'">
+            <span>{{ currentImage + 1 }}</span>/{{ currentProject.project_images_mobile.length }}
         </span>
     </main>
 </template>

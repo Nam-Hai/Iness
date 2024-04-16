@@ -71,6 +71,8 @@ function mute(e: Event) {
     .video__wrapper {
         position: relative;
 
+        width: 100%;
+        height: 100%;
         .controller__wrapper {
             display: flex;
             color: $primary;

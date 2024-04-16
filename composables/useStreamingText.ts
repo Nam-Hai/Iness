@@ -21,6 +21,8 @@ export function useStreamingText(elRef: Ref<HTMLElement>, options: { breakpoint:
     function computeTimeline() {
         tl.reset()
         const el = elRef.value
+        console.log(el);
+        if(!el) return
         const text = elRef.value.innerText
         const char = text.split('')
         el.innerHTML = ""
@@ -80,9 +82,9 @@ export function useStreamingText(elRef: Ref<HTMLElement>, options: { breakpoint:
     }
 
     function trigger() {
-
+        tl.pause()
         tl.play()
     }
 
-    return { trigger }
+    return { trigger, computeTimeline }
 }

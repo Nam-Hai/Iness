@@ -17,7 +17,9 @@
 
         <div class="project-preview" v-if="routeTo.name !== 'projects-id'"
             :class="{ 'scroll-show': previewShow, hide: routeTo.name === 'projects-id' && routeTo.fullPath === '/projects/' + props.route }">
-            <IMedia :props="props.cover" @click="navigateTo('project/' + props.route)"></IMedia>
+            <IMedia :props="props.cover" @click="navigateTo('project/' + props.route)" v-if="breakpoint === 'desktop'">
+            </IMedia>
+            <IMedia :props="props.cover_mobile" @click="navigateTo('project/' + props.route)" v-else></IMedia>
         </div>
     </NuxtLink>
 </template>
@@ -28,6 +30,7 @@ import { useFlowProvider } from '~/waterflow/FlowProvider';
 import { onLeave } from '~/waterflow/composables/onFlow';
 
 const { props } = defineProps<{ props: ProjectData }>()
+console.log('imedia', props.cover_mobile, props.cover);
 
 const wrapperRef = ref() as Ref<HTMLElement>
 const textRef = ref() as Ref<HTMLElement>
@@ -42,15 +45,12 @@ const disableRoute = computed(() => {
     return routeTo.name === 'projects-id' && routeTo.fullPath !== '/projects/' + props.route
 })
 
-
 const previewShow = onEnter({
     el: textRef,
     vStart: 20,
     vEnd: 5,
     both: true
 })
-
-const { placeholderPos, placeholderPosFrom } = useStoreProjectImage()
 
 const click = ref(false)
 function onClick(e: Event) {
