@@ -49,8 +49,12 @@ export type PrismicMedia = {
 
 export type FilterData = string[]
 
+type OverviewData = {
+    image: PrismicMedia,
+    order: number
+}
 export type PrismicData = {
-    overview: PrismicMedia[],
+    overview: OverviewData[],
     projects: ProjectData[],
     filters: FilterData,
     info: RichText[][],
@@ -70,6 +74,7 @@ export const usePreloader = createStore(() => {
                 graphQuery: `{
                     overview {
                         overview-video-image
+                        order
                     }
                 }`
             })
@@ -119,8 +124,11 @@ export const usePreloader = createStore(() => {
             })
 
             const [overviewData, projectData, filterData, infoData] = await Promise.all([overviewPromise, projectPromise, filterPromise, infoPromise])
-            const overview: PrismicMedia[] = overviewData.map(d => {
-                return d.data["overview-video-image"]
+            const overview: OverviewData[] = overviewData.map(d => {
+                return {
+                    image: d.data["overview-video-image"],
+                    order: +d.data.order || 1
+                }
             })
 
             const projects: ProjectData[] = projectData.map(d => {
