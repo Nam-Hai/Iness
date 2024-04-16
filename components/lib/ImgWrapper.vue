@@ -59,6 +59,10 @@ function mute(e: Event) {
     position: relative;
     display: flex;
 
+    background-color: $discard-text;
+
+    display: flex;
+
     img,
     video {
         height: 100%;
@@ -66,9 +70,11 @@ function mute(e: Event) {
         opacity: 0;
         // transition: opacity 500ms;
         object-fit: cover;
+        transition: opacity 200ms;
     }
 
     .video__wrapper {
+        display: flex;
         position: relative;
 
         width: 100%;
