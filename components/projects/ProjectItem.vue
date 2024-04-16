@@ -17,9 +17,7 @@
 
         <div class="project-preview" v-if="routeTo.name !== 'projects-id'"
             :class="{ 'scroll-show': previewShow, hide: routeTo.name === 'projects-id' && routeTo.fullPath === '/projects/' + props.route }">
-            <img :src="props.project_images[0].url" :alt="props.project_images[0].alt" ref="imageRef"
-                @click="navigateTo('projects/' + props.route)" v-leave>
-
+            <IMedia :props="props.cover" @click="navigateTo('project/' + props.route)"></IMedia>
         </div>
     </NuxtLink>
 </template>
@@ -53,7 +51,6 @@ const previewShow = onEnter({
 })
 
 const { placeholderPos, placeholderPosFrom } = useStoreProjectImage()
-const imageRef = ref()
 
 const click = ref(false)
 function onClick(e: Event) {
@@ -71,9 +68,6 @@ onLeave(() => {
 
     if (click.value === false) return
     if (fromRoute.name !== 'projects') return
-
-    const domRect = imageRef.value.getBoundingClientRect()
-    placeholderPosFrom.value = domRect
 })
 
 </script>

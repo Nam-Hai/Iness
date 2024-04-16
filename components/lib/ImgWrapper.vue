@@ -1,15 +1,15 @@
 <template>
     <div class="img__wrapper" ref="wrapperRef">
-        <img :src="props.src" :alt="props.alt" onload="this.style.opacity = 1"
-            :style="{ aspectRatio: props.width / props.height }" v-leave-img v-if="true">
+        <img :src="props.url" :alt="props.name" onload="this.style.opacity = 1" v-leave-img
+            v-if="props.kind === 'image'">
 
 
         <div class="video__wrapper" v-else>
             <video disable-remote-playback="true" disable-picture-in-picture="true" autoplay="true" playsinline="true"
-                loop="true" src="/la_feve_trim.mp4" onloadstart="this.style.opacity = 1;">
+                loop="true" src="/la_feve_trim.mp4" onloadstart="this.style.opacity = 1;" :muted="!controller">
             </video>
 
-            <div class="controller__wrapper" v-if="videoController">
+            <div class="controller__wrapper" v-if="controller">
                 <button class="play__btn" @click="pause">
                     {{ isPaused ? "Play" : "Pause" }}
                 </button>
@@ -25,7 +25,7 @@
 <script lang="ts" setup>
 import { vLeave, vLeaveImg } from '~/directives/leave';
 
-const { props, videoController = true } = defineProps<{ props: { src: string, alt: string, height: number, width: number }, videoController?: boolean }>()
+const { props, controller = true } = defineProps<{ props: PrismicMedia, controller: boolean }>()
 
 const wrapperRef = ref() as Ref<HTMLElement>
 
