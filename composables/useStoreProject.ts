@@ -32,9 +32,10 @@ export const useStoreFilter = createStore(() => {
     const filterOpen = shallowRef(false)
 
     function resetFilter() {
-        for (const [type, active] of Object.entries(filterActive)) {
-            filterActive[type] = false
-        }
+        // disabled
+        // for (const [type, active] of Object.entries(filterActive)) {
+        //     filterActive[type] = false
+        // }
     }
 
     return {
