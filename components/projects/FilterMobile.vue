@@ -1,21 +1,23 @@
 <template>
-    <div class="filter__wrapper" ref="wrapperRef" @mouseenter="!isMobile && (filterOpen = true)"
-        @mouseleave="!isMobile && (filterOpen = false)" :class="{ open: filterOpen }" v-if="breakpoint === 'desktop'">
-        <button :style="{ cursor: 'default', color: '#AB0000' }" v-streamed-text="5" :class="{ open: filterOpen }"
+    <div class="filter-modal" v-if="filterOpen" @click="filterOpen = false">
+    </div>
+    <div class="filter__wrapper" ref="wrapperRef" :class="{ open: filterOpen }">
+        <button :style="{ cursor: 'pointer', color: '#AB0000' }" v-streamed-text="5" :class="{ open: filterOpen }"
             @click="filterOpen = !filterOpen">
             Filter
         </button>
 
-        <button @click="toggleFilterAll()" :class="{ active: toggledAll, hide: !filterOpen }">
-            All
-        </button>
+        <div class="filter-item__wrapper">
+            <button @click="toggleFilterAll()" :class="{ active: toggledAll, hide: !filterOpen }">
+                All
+            </button>
 
-        <button v-for="filter in prismicData.filters" :class="{ active: filterActive[filter], hide: !filterOpen }"
-            @click="toggleFilter(filter)">
-            {{ filter }}
-        </button>
+            <button v-for="filter in prismicData.filters" :class="{ active: filterActive[filter], hide: !filterOpen }"
+                @click="toggleFilter(filter)">
+                {{ filter }}
+            </button>
+        </div>
     </div>
-    <FilterMobile v-else />
 </template>
 
 <script lang="ts" setup>
@@ -47,6 +49,11 @@ function toggleFilter(filter: string) {
 <style lang="scss" scoped>
 @use "@/styles/shared.scss" as *;
 
+.filter-modal {
+    position: fixed;
+    inset: 0;
+}
+
 .filter__wrapper {
     font-weight: 500;
 
@@ -76,37 +83,19 @@ function toggleFilter(filter: string) {
         }
     }
 
-    >span {
-        position: relative;
-        width: fit-content;
-
-        &::after,
-        &::before {
-            background-color: $primary;
-            content: '';
-            position: absolute;
-            right: -1rem;
-            top: 50%;
-            transform: translate(50%, -50%);
-            transition: transform 250ms $easeInOutQuart;
-        }
-
-        &:before {
-            height: 0.8rem;
-            width: 1px;
-        }
-
-        &::after {
-            width: 0.8rem;
-            height: 1px;
-        }
-
-    }
-
     &.open {
         // height: auto;
     }
 
+
+    .filter-item__wrapper {
+        display: flex;
+        position: fixed;
+        top: calc($main-margin + $grid-cell-height);
+        height: $grid-cell-height;
+        justify-content: space-between;
+        flex-direction: column;
+    }
 
     button {
         text-align: start;
