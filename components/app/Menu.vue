@@ -87,7 +87,7 @@ const { breakpoint } = useStoreView()
 
 const { routeRef } = useFlowProvider()
 
-const text = breakpoint.value === 'desktop' ? `dependant creative, working in every type of studio and collaboration, as long as the project is cool` : `dependent creative`
+const text = computed(() => breakpoint.value === 'desktop' ? `dependant creative, working in every type of studio and collaboration, as long as the project is cool` : `dependent creative`)
 const delayedHideMenu = ref(false)
 
 const hideMenu = computed(() => {
@@ -109,7 +109,7 @@ watch(delayedHideMenu, () => {
 
 
 const hoverTextRef = ref() as Ref<HTMLElement>
-const { trigger } = useStreamingText(hoverTextRef)
+const { trigger } = useStreamingText(hoverTextRef, { breakpoint: true })
 
 const { trigger: overviewTrigger } = useStreamingText(overviewRef)
 const { trigger: indexTrigger } = useStreamingText(indexRef)

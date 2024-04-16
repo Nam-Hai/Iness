@@ -3,14 +3,25 @@ const STAGGER_MS = 25
 const SPEED_MS = 5
 const test = 150
 
-export function useStreamingText(elRef: Ref<HTMLElement>) {
+export function useStreamingText(elRef: Ref<HTMLElement>, options: { breakpoint: boolean } = { breakpoint: false }) {
 
     const tl = useTL()
 
     onMounted(() => {
+        computeTimeline()
+    })
+    if (options.breakpoint) {
+        const { breakpoint } = useStoreView()
+        watch(breakpoint, async () => {
+            await nextTick()
+            console.log('usestreaming braekpoint change');
+            computeTimeline()
+        })
+    }
+    function computeTimeline() {
+        tl.reset()
         const el = elRef.value
         const text = elRef.value.innerText
-        console.log(elRef.value, text);
         const char = text.split('')
         el.innerHTML = ""
         const spans: HTMLElement[] = []
@@ -65,7 +76,8 @@ export function useStreamingText(elRef: Ref<HTMLElement>) {
             })
         }
 
-    })
+
+    }
 
     function trigger() {
 
