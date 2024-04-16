@@ -6,8 +6,11 @@
         <span v-streamed-text>
           You can contact me on
         </span>
-        <ILink copy="copy the email" text="Contact@in.e.studio" />
-        <ILink copy="copy the phone number" text="+ 33 7 88 25 67 07" />
+        <ILink copy="copy email" text="Contact@in.e.studio" v-if="!isMobile" />
+        <NuxtLink class="link-hover" to="mailto:contact@in.e.studio" v-else>Contact@in.e.studio</NuxtLink>
+
+        <ILink copy="copy phone number" text="+ 33 7 88 25 67 07" v-if="!isMobile" />
+        <NuxtLink class="link-hover" to="tel:+33788256707" v-else>+ 33 7 88 25 67 07</NuxtLink>
       </div>
     </div>
 
@@ -30,6 +33,7 @@ import { vLeave } from '~/directives/leave';
 const { copy } = useStoreInfo()
 const wrapperRef = ref() as Ref<HTMLElement>
 const { prismicData } = usePreloader()
+const { isMobile } = useStore()
 
 const { resetFilter } = useStoreFilter()
 resetFilter()
@@ -137,5 +141,27 @@ main {
 .info-text {
   font-size: 1.2rem;
   line-height: 1.5rem;
+}
+
+.link-hover {
+  &::after {
+    position: absolute;
+    left: 1rem;
+    top: 0.5rem;
+    color: $neutral-text;
+    content: "call me";
+    opacity: 0;
+    transition: opacity 250ms;
+  }
+
+  transition: color 250ms;
+
+  &:hover {
+    color: $discard-text;
+
+    &::after {
+      opacity: 1;
+    }
+  }
 }
 </style>
