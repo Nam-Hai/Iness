@@ -6,7 +6,7 @@
 
         <div class="video__wrapper" v-else>
             <video disable-remote-playback="true" disable-picture-in-picture="true" autoplay="true" playsinline="true"
-                loop="true" src="/la_feve_trim.mp4" onloadstart="this.style.opacity = 1;" :muted="!controller">
+                loop="true" :src="props.url" onloadstart="this.style.opacity = 1;" :muted="!controller">
             </video>
 
             <div class="controller__wrapper" v-if="controller">
