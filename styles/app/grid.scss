@@ -24,7 +24,7 @@
     //--scrollbar-width: 0px // this breaks the layout - leave for windows
   }
 
-  --grid-cell-height: calc((100vh - $main-margin * 2) * 0.25);
+  --grid-cell-height: calc((var(--100vh) - $main-margin * 2) * 0.25);
 
   @include breakpoint(mobile) {
     --scrollbar-width: 0px;
