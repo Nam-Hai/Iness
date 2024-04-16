@@ -65,19 +65,15 @@
             </svg>
         </NuxtLink>
 
-        <span class="hover-text" ref="hoverTextRef">
-            dependant creative, working in every type of studio and collaboration, as long as the project is cool
-        </span>
+        <div class="hover-text" ref="hoverTextRef">
+            {{ text }}
+        </div>
     </div>
 </template>
 
 <script lang="ts" setup>
-import { vStreamedText, vStreamedTextMenu } from '~/directives/streamedText';
-import { sleep } from '~/plugins/core/raf';
 import { useFlowProvider } from '~/waterflow/FlowProvider';
-import { onLeave } from '~/waterflow/composables/onFlow';
-// const {propName = fallbackValue} = defineProps<{propName: type}>()
-// const emits = defineEmits([])
+
 const wrapperRef = ref() as Ref<HTMLElement>
 
 const { filterOpen } = useStoreFilter()
@@ -91,6 +87,7 @@ const { breakpoint } = useStoreView()
 
 const { routeRef } = useFlowProvider()
 
+const text = breakpoint.value === 'desktop' ? `dependant creative, working in every type of studio and collaboration, as long as the project is cool` : `dependent creative`
 const delayedHideMenu = ref(false)
 
 const hideMenu = computed(() => {
@@ -112,7 +109,6 @@ watch(delayedHideMenu, () => {
 
 
 const hoverTextRef = ref() as Ref<HTMLElement>
-
 const { trigger } = useStreamingText(hoverTextRef)
 
 const { trigger: overviewTrigger } = useStreamingText(overviewRef)
@@ -156,6 +152,7 @@ watch(routeRef, (routeTo, routeFrom) => {
     &.filterOpen {
         color: $neutral-text;
     }
+
     line-height: 100%;
 
     pointer-events: none;
@@ -188,6 +185,7 @@ watch(routeRef, (routeTo, routeFrom) => {
             transition: opacity 250ms;
             width: max-content;
         }
+
         &:hover {
             color: $discard-text;
             transition: color 250ms;
@@ -206,6 +204,7 @@ watch(routeRef, (routeTo, routeFrom) => {
         font-weight: 500;
         height: fit-content;
         width: fit-content;
+        position: relative;
 
         &:nth-child(1) {
             grid-column: 1 / 3;
@@ -244,6 +243,7 @@ watch(routeRef, (routeTo, routeFrom) => {
         }
 
         &:nth-child(5),
+        &:nth-child(7),
         &:nth-child(6) {
 
             &:hover {
@@ -253,12 +253,6 @@ watch(routeRef, (routeTo, routeFrom) => {
 
                 // line-height: 80%;
 
-
-                @include breakpoint(mobile) {
-                    &::after {
-                        content: "independent creative  "
-                    }
-                }
 
                 &~.hover-text {
 
@@ -309,6 +303,7 @@ watch(routeRef, (routeTo, routeFrom) => {
         position: fixed;
         width: max-content;
         font-size: 2.6rem;
+        z-index: -1;
     }
 }
 
