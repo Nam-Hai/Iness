@@ -66,14 +66,14 @@ export const useStoreScroll = createStore(() => {
 		let scrollStart = 0
 
 		window.addEventListener("touchstart", (e) => {
-			const y = e.touches[0].clientY
+			const y = e.touches[0].screenY
 			start = y
 			scrollStart = virtualScroll
+			console.log(scrollStart);
 		})
 		window.addEventListener("touchmove", (e) => {
-			const y = e.touches[0].clientY
+			const y = e.touches[0].screenY
 			const delta = y - start
-			console.log(delta);
 			virtualScroll = scrollStart - delta
 			virtualScroll = N.Clamp(virtualScroll, 0, dimension.value)
 			ticking = true
