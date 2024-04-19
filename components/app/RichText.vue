@@ -41,14 +41,14 @@ let nodeParent = <div>
 function getAnchor(span: Spans, text: string) {
     if (span.type === "hyperlink") {
         // return <a href={span.data.url} target="_blank">{text}</a>
-        return <ILink text={text} href={span.data.url} />
+        return <ILink font={true} text={text} href={span.data.url} />
     }
     return undefined
 }
 
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @use "@/styles/shared.scss" as *;
 
 .rich-text__wrapper {
@@ -57,7 +57,8 @@ function getAnchor(span: Spans, text: string) {
 
     a {
         position: relative;
-        color: blue;
+        font-size: 1.2rem;
+        line-height: 1.5rem;
     }
 
     a::after {

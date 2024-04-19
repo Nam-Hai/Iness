@@ -1,5 +1,5 @@
 <template>
-    <NuxtLink @click="toClipboard()" class="link__wrapper" :class="{ copied }" ref="wrapperRef" :to="href"
+    <NuxtLink @click="toClipboard()" class="link__wrapper" :class="{ copied, font }" ref="wrapperRef" :to="href"
         :disable="copy" target="_blank" @mouseenter="trigger">
         <span v-streamed-text>
             {{ text }}
@@ -14,7 +14,8 @@
 <script lang="ts" setup>
 import { vStreamedText } from '~/directives/streamedText';
 
-const { href = "#", copy = "", text } = defineProps<{ href?: string, copy?: string, text: string }>()
+const { href = "#", copy = "", text, font } = defineProps<{ href?: string, copy?: string, text: string, font: boolean }>()
+console.log(font);
 const wrapperRef = ref() as Ref<HTMLElement>
 
 const hoverTextRef = ref()
@@ -42,6 +43,11 @@ function toClipboard() {
     transition: color 250ms;
     cursor: pointer;
     width: fit-content;
+
+    &.font {
+        line-height: 1.5rem;
+        font-size: 1.2rem;
+    }
 
     &.copied {
         .hover-text {
