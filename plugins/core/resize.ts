@@ -48,7 +48,7 @@ const Ro = new class {
         this.arr = []
 
         BM(this, ['fn', 'gRaf', 'run'])
-        this.timer = new Timer(this.gRaf, 35)
+        this.timer = new Timer(this.gRaf, 20)
         window.addEventListener('resize', this.fn)
 
         this.breakpoints = {}
