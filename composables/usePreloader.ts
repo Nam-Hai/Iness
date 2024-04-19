@@ -67,20 +67,21 @@ export const usePreloader = createStore(() => {
     const preloaderComplete = ref(false);
 
     const loadPrismic = async () => {
-        const { client } = usePrismic()
-        const { data } = await useAsyncData('prismic', async () => {
+        return new Promise<void>(async (res) => {
+            const { client } = usePrismic()
+            const { data } = await useAsyncData('prismic', async () => {
 
-            const overviewPromise = client.getAllByType('overview', {
-                graphQuery: `{
+                const overviewPromise = client.getAllByType('overview', {
+                    graphQuery: `{
                     overview {
                         overview-video-image
                         order
                     }
                 }`
-            })
+                })
 
-            const projectPromise = client.getAllByType('project', {
-                graphQuery: `{
+                const projectPromise = client.getAllByType('project', {
+                    graphQuery: `{
                     project {
                         title
                         client_name
@@ -106,85 +107,101 @@ export const usePreloader = createStore(() => {
                         }
                     }
                 }`
-            })
+                })
 
-            const infoPromise = client.getAllByType('info', {
-                graphQuery: `{
+                const infoPromise = client.getAllByType('info', {
+                    graphQuery: `{
                     info {
                         info-text
                     }
                 }`
-            })
-            const filterPromise = client.getAllByType('filter', {
-                graphQuery: `{
+                })
+                const filterPromise = client.getAllByType('filter', {
+                    graphQuery: `{
                     filter {
                         filter
                     }
                 }`
-            })
+                })
 
-            const [overviewData, projectData, filterData, infoData] = await Promise.all([overviewPromise, projectPromise, filterPromise, infoPromise])
-            const overview: OverviewData[] = overviewData.map(d => {
-                return {
-                    image: d.data["overview-video-image"],
-                    order: +d.data.order || 1
+                const [overviewData, projectData, filterData, infoData] = await Promise.all([overviewPromise, projectPromise, filterPromise, infoPromise])
+
+                const placeholderMedia: PrismicMedia = {
+                    id: "-1",
+                    kind: "image",
+                    name: "placeholder",
+                    width: "392",
+                    height: "476",
+                    size: "2000",
+                    url: "/Assets/2.png"
+
                 }
-            })
 
-            const projects: ProjectData[] = projectData.map(d => {
-                return {
-                    title: d.data.title || "Projet",
-                    route: d.data.title.replace(/\s/g, '-'),
-                    client: d.data.client || "",
-                    type: d.data.type.data.filter,
-                    date: d.data.date || "2024",
-                    cover: d.data.cover,
-                    cover_mobile: d.data.cover_mobile,
-                    project_images: d.data.project_images.map((el: any) => {
-                        return {
-                            controller: el.controller || false,
-                            description: el.description || "",
-                            column: el.width_column || 4,
-                            image: el.project_image
-                        }
-                    }),
-                    project_images_mobile: d.data.project_images_mobile.map((el: any) => {
-                        return {
-                            controller: el.controller || false,
-                            description: el.description || "",
-                            column: el.width_column || 4,
-                            image: el.project_image
-                        }
-                    })
-                }
-            })
-
-            const filters: FilterData = filterData.map(d => {
-                return d.data.filter
-            })
-
-            const info: RichText[][] = infoData.map(d => {
-                return d.data['info-text'].map((richText: any) => {
+                const overview: OverviewData[] = overviewData.map(d => {
                     return {
-                        text: richText.text,
-                        spans: richText.spans
+                        image: d.data["overview-video-image"].id ? d.data["overview-video-image"] : placeholderMedia,
+                        order: +d.data.order || 1
                     }
                 })
+
+                const projects: ProjectData[] = projectData.map(d => {
+                    return {
+                        title: d.data.title || "Projet",
+                        route: (d.data.title || "Project" ).replace(/\s/g, '-'),
+                        client: d.data.client || "",
+                        type: d.data.type.id ? d.data.type.data.filter : "Filter placeholder",
+                        date: d.data.date || "2024",
+                        cover: d.data.cover.id ? d.data.cover : placeholderMedia,
+                        cover_mobile: d.data.cover_mobile.id ? d.data.cover_mobile : placeholderMedia,
+                        project_images: d.data.project_images.map((el: any) => {
+                            return {
+                                controller: el.controller || false,
+                                description: el.description || "",
+                                column: el.width_column || 4,
+                                image: el.project_image.id ? el.project_image : placeholderMedia
+                            }
+                        }),
+                        project_images_mobile: d.data.project_images_mobile.map((el: any) => {
+                            return {
+                                controller: el.controller || false,
+                                description: el.description || "",
+                                column: el.width_column || 4,
+                                image: el.project_image.id ? el.project_image : placeholderMedia
+                            }
+                        })
+                    }
+                })
+
+                const filters: FilterData = filterData.map(d => {
+                    return d.data.filter
+                })
+
+                const info: RichText[][] = infoData.map(d => {
+                    return d.data['info-text'].map((richText: any) => {
+                        return {
+                            text: richText.text,
+                            spans: richText.spans
+                        }
+                    })
+                })
+
+                return {
+                    overview,
+                    projects,
+                    filters,
+                    info,
+                }
             })
+            prismicData.value = data.value || { overview: [], info: [], filters: [], projects: [] }
 
-            return {
-                overview,
-                projects,
-                filters,
-                info,
+            console.log('test');
+            const { filterActive } = useStoreFilter()
+            for (const f of prismicData.value.filters) {
+                filterActive[f] = false
             }
-        })
-        prismicData.value = data.value || { overview: [], info: [], filters: [], projects: [] }
 
-        const { filterActive } = useStoreFilter()
-        for (const f of prismicData.value.filters) {
-            filterActive[f] = false
-        }
+            res()
+        })
     }
 
     return { loadPrismic, prismicData, fromPreloader, preloaderComplete, }
