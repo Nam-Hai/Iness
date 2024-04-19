@@ -15,7 +15,6 @@
 import { vStreamedText } from '~/directives/streamedText';
 
 const { href = "#", copy = "", text, font } = defineProps<{ href?: string, copy?: string, text: string, font: boolean }>()
-console.log(font);
 const wrapperRef = ref() as Ref<HTMLElement>
 
 const hoverTextRef = ref()
