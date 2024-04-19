@@ -25,8 +25,7 @@ const flowProvider = useFlowProvider();
 //   RafPriority.FIRST
 // );
 
-const { container, scrollToTop, resize } = useStoreScroll()
-resize()
+const { scrollToTop, resize } = useStoreScroll()
 
 flowProvider.registerScrollInterface({
   resize: resize,
