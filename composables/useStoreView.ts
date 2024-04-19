@@ -157,7 +157,7 @@ export const useStoreScroll = createStore(() => {
 		lenis.value.on("scroll", (e: any) => callback(e.animatedScroll))
 	}
 	function scrollToTop() {
-		lenis.value.scrollTo("top")
+		lenis.value.scrollTo("top", {immediate: true})
 	}
 	return {
 		init,
