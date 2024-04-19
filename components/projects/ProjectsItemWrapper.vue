@@ -103,7 +103,7 @@ watch(enter, val => {
 
         &:last-child {
             @include breakpoint(mobile) {
-                margin-bottom: calc(3* $grid-cell-height + $main-margin + env(safe-area-inset-top));
+                margin-bottom: calc(3* $grid-cell-height + $main-margin);
             }
 
             &.gridFlow {
