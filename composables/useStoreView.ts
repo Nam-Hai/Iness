@@ -42,17 +42,20 @@ export const useStoreScroll = createStore(() => {
 		useRafR(({ delta, elapsed }) => {
 			if (!ticking) return
 			if (container.value) {
-				scroll.value = virtualScroll
-				if (container.value.scrollTop != scroll.value) {
-					container.value.scrollTop = scroll.value
+				// if (container.value.scrollTop != scroll.value) {
+				if (ticking) {
+					container.value.scrollTop = virtualScroll
 				}
+				virtualScroll = container.value.scrollTop
+				scroll.value = virtualScroll
+
 			}
 
+			if (!ticking) return
 			for (let index = scrollItem.length - 1; index >= 0; index--) {
 				scrollItem[index].callback(scroll.value)
 			}
 
-			// ticking = false
 		}, RafPriority.FIRST).run()
 
 		window.addEventListener("wheel", (e) => {
