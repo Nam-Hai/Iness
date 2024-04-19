@@ -13,6 +13,7 @@ onBeforeMount(() => {
         normalizeWheel: true,
         smoothTouch: false,
         syncTouch: true,
+        touchInertiaMultiplier: 20, 
         wheelMultiplier: 1,
         touchMultiplier: 1,
     })
