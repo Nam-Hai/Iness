@@ -7,10 +7,11 @@
           You can contact me on
         </span>
         <ILink copy="copy email" text="Contact@in.e.studio" v-if="!isMobile" />
-        <NuxtLink class="link-hover" to="mailto:contact@in.e.studio"  v-streamed-text v-else>Contact@in.e.studio</NuxtLink>
+        <NuxtLink class="link-hover" to="mailto:contact@in.e.studio" v-streamed-text v-else>Contact@in.e.studio
+        </NuxtLink>
 
         <ILink copy="copy phone number" text="+ 33 7 88 25 67 07" v-if="!isMobile" />
-        <NuxtLink class="link-hover" to="tel:+33788256707"  v-streamed-text v-else>+ 33 7 88 25 67 07</NuxtLink>
+        <NuxtLink class="link-hover" to="tel:+33788256707" v-streamed-text v-else>+ 33 7 88 25 67 07</NuxtLink>
       </div>
     </div>
 
@@ -55,6 +56,7 @@ main {
   margin-top: $main-margin;
 
   font-weight: 500;
+  height: 100vh;
 
   .info-text__wrapper {
     grid-column: 6 / 7;
@@ -79,6 +81,7 @@ main {
     position: fixed;
     top: 0;
     font-size: 5.2rem;
+    pointer-events: none;
 
     @include breakpoint(mobile) {
       font-size: 2.8rem;
@@ -141,6 +144,9 @@ main {
 }
 
 .link-hover {
+
+  pointer-events: auto;
+
   &::after {
     position: absolute;
     left: 1rem;

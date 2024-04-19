@@ -41,6 +41,10 @@ watch(bufferTopZ, state => {
 
 })
 
+onMounted(() => {
+  const { resize } = useStoreScroll()
+  resize()
+})
 provider.connectBuffer(currentPage, bufferPage, bufferTopZ, swapClass)
 </script>
 

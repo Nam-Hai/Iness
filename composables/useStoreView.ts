@@ -29,13 +29,24 @@ export const useStoreView = createStore(() => {
 
 export const useStoreScroll = createStore(() => {
 	const scroll = ref(0)
+	const dimension = ref(100)
+	let virtualScroll = 0
+	const { vh } = useStoreView()
 
+	const container: Ref<Element | undefined> = ref()
 
 	let ticking = false
 	function init() {
+		const app = N.get("#app")!
+		container.value = app
 		useRafR(({ delta, elapsed }) => {
 			if (!ticking) return
-			scroll.value = document.body.scrollTop
+			if (container.value) {
+				scroll.value = virtualScroll
+				if (container.value.scrollTop != scroll.value) {
+					container.value.scrollTop = scroll.value
+				}
+			}
 
 			for (let index = scrollItem.length - 1; index >= 0; index--) {
 				scrollItem[index].callback(scroll.value)
@@ -44,14 +55,48 @@ export const useStoreScroll = createStore(() => {
 			ticking = false
 		}, RafPriority.FIRST).run()
 
-		document.body.addEventListener("scroll", (e: Event) => {
+		window.addEventListener("wheel", (e) => {
+			const delta = e.deltaY
+			virtualScroll += delta
+			virtualScroll = N.Clamp(virtualScroll, 0, dimension.value)
+			ticking = true
+		})
+
+		let start = 0
+		let scrollStart = 0
+
+		window.addEventListener("touchstart", (e) => {
+			const y = e.touches[0].clientY
+			start = y
+			scrollStart = virtualScroll
+		})
+		window.addEventListener("touchmove", (e) => {
+			const y = e.touches[0].clientY
+			const delta = y - start
+			console.log(delta);
+			virtualScroll = scrollStart - delta
+			virtualScroll = N.Clamp(virtualScroll, 0, dimension.value)
 			ticking = true
 		})
 
 		const ro = useROR((e) => {
+			if (!container.value) return
+			dimension.value = container.value.scrollHeight - vh.value
 			ticking = true
 		});
 		ro.on();
+	}
+
+	function resize() {
+		if (!container.value) return
+		dimension.value = container.value.scrollHeight - vh.value
+		ticking = true
+	}
+	function scrollToTop() {
+		scroll.value = 0
+		virtualScroll = 0
+		if (container.value) container.value.scrollTop = 0
+		ticking = true
 	}
 
 	let scrollID = 0
@@ -78,7 +123,10 @@ export const useStoreScroll = createStore(() => {
 	return {
 		init,
 		scroll,
+		resize,
 		emit,
-		onScroll
+		container,
+		onScroll,
+		scrollToTop
 	}
 })

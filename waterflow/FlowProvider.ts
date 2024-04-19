@@ -58,9 +58,12 @@ export class FlowProvider {
     this.routerMap.set(path, pageComponent)
   }
 
-  registerScrollInterface(api: { stop: () => void, resume: () => void, scrollToTop: () => void, resize: () => void } | undefined) {
+  registerScrollInterface(api: { stop?: () => void, resume?: () => void, scrollToTop?: () => void, resize?: () => void } | undefined) {
     if (!api) return
-    this.scrollFlow = api
+    api.stop && (this.scrollFlow.stop = api.stop);
+    api.resume && (this.scrollFlow.resume = api.resume)
+    api.scrollToTop && (this.scrollFlow.scrollToTop = api.scrollToTop);
+    api.resize && (this.scrollFlow.resize = api.resize);
   }
 
   // connect the BufferPage in the Layout for crossfade animations

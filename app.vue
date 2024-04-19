@@ -36,7 +36,6 @@ watch(routeTo, () => {
 
 onBeforeMount(() => {
   useStoreView().init()
-  useStoreScroll().init()
 
   if (!process.client) return
 
@@ -52,6 +51,9 @@ onBeforeMount(() => {
       el.remove()
     }
   }
+})
+onMounted(() => {
+  useStoreScroll().init()
 })
 
 useRO(() => {

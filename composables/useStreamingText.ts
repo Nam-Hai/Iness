@@ -14,14 +14,12 @@ export function useStreamingText(elRef: Ref<HTMLElement>, options: { breakpoint:
         const { breakpoint } = useStoreView()
         watch(breakpoint, async () => {
             await nextTick()
-            console.log('usestreaming braekpoint change');
             computeTimeline()
         })
     }
     function computeTimeline() {
         tl.reset()
         const el = elRef.value
-        console.log(el);
         if(!el) return
         const text = elRef.value.innerText
         const char = text.split('')

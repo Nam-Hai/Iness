@@ -194,7 +194,6 @@ export const usePreloader = createStore(() => {
             })
             prismicData.value = data.value || { overview: [], info: [], filters: [], projects: [] }
 
-            console.log('test');
             const { filterActive } = useStoreFilter()
             for (const f of prismicData.value.filters) {
                 filterActive[f] = false

@@ -11,9 +11,10 @@
 </template>
 
 <script setup lang="ts">
+import { useFlowProvider } from "~/waterflow/FlowProvider";
 import BufferPage from "~/waterflow/components/BufferPage.vue";
 
-// const flowProvider = useFlowProvider();
+const flowProvider = useFlowProvider();
 
 // useRaf(
 //   (e) => {
@@ -23,22 +24,15 @@ import BufferPage from "~/waterflow/components/BufferPage.vue";
 //   RafPriority.FIRST
 // );
 
-// const { lenis } = useStoreView()
+const { container, scrollToTop, resize } = useStoreScroll()
+resize()
 
-// flowProvider.registerScrollInterface({
-// resume: () => {
-//   lenis.value.start();
-// },
-// stop: () => {
-//   lenis.value.stop();
-// },
-// resize: () => {
-//   lenis.value.resize();
-// },
-// scrollToTop: () => {
-//   lenis.value.scrollTo("top", { immediate: true, force: true });
-// },
-// });
+flowProvider.registerScrollInterface({
+  resize: resize,
+  scrollToTop: () => {
+    scrollToTop()
+  },
+});
 </script>
 
 <style lang="scss" scoped>
