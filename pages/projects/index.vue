@@ -29,8 +29,6 @@ usePageFlow({
 
 main {
     line-height: 100%;
-    // position: relative;
-    padding-top: $main-margin;
 }
 
 

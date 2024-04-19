@@ -19,7 +19,6 @@
             <div class="project__wrapper" v-for="project in prismicData.projects">
                 <ProjectItem :props="project" />
             </div>
-            <div class="offset"></div>
         </div>
 
     </div>
@@ -104,7 +103,7 @@ watch(enter, val => {
 
         &:last-child {
             @include breakpoint(mobile) {
-                // margin-bottom: calc(3* $grid-cell-height + $main-margin);
+                margin-bottom: calc(3* $grid-cell-height + $main-margin);
             }
 
             &.gridFlow {
@@ -113,11 +112,6 @@ watch(enter, val => {
         }
     }
 
-    .offset {
-        background-color: blue;
-        height: calc(3* $grid-cell-height + 2 * $main-margin);
-        width: 100%;
-    }
 }
 
 .projects-item__wrapper-mobile {
