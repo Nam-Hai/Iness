@@ -52,7 +52,7 @@ export const useStoreScroll = createStore(() => {
 				scrollItem[index].callback(scroll.value)
 			}
 
-			ticking = false
+			// ticking = false
 		}, RafPriority.FIRST).run()
 
 		window.addEventListener("wheel", (e) => {
