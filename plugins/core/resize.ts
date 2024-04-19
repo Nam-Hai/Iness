@@ -147,7 +147,6 @@ const Ro = new class {
 
         document.documentElement.style.setProperty('--vh', `${this.vh * 0.01}px`)
         document.documentElement.style.setProperty('--100vh', `${this.vh}px`)
-        console.log(this.vh);
     }
 
     private updateScale() {

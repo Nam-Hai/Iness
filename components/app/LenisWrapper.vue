@@ -23,7 +23,6 @@ onBeforeMount(() => {
         lenis.raf(elapsed)
     }).run()
     lenis.on("scroll", (e) => {
-        console.log(e.animatedScroll);
     })
 })
 
