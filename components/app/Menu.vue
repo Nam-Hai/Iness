@@ -99,15 +99,6 @@ const hideMenu = computed(() => {
     return hide
 })
 
-watch(hideMenu, (hide) => {
-    console.log({ hide });
-})
-watch(delayedHideMenu, () => {
-    console.log("object");
-})
-
-
-
 const hoverTextRef = ref() as Ref<HTMLElement>
 const { trigger } = useStreamingText(hoverTextRef, { breakpoint: true })
 

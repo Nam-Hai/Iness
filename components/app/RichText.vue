@@ -12,13 +12,10 @@ type ExtractSpansType<T> = T extends { spans: infer S } ? S : never;
 type Spans = ExtractSpansType<RichText>[number];
 
 
-console.log(props);
-
 let nodeParent = <div>
     {
         props.map(richText => {
             let text = richText.text
-            console.log(richText, text);
             if (richText.spans.length === 0) {
 
                 return <>

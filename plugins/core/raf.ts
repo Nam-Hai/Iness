@@ -5,7 +5,6 @@ function Now() {
 }
 
 const processClient = process.client
-console.log("process.client", processClient);
 
 export enum RafPriority {
     FIRST = 0,
@@ -212,7 +211,6 @@ class debugClock {
     }
     tick() {
         const t = performance.now()
-        console.log("delta : ", t - this.last)
         this.last = t
     }
 }

@@ -61,7 +61,6 @@ onLeave(() => {
     const fromRoute = flowProvider.getRouteFrom()
     const routeTo = flowProvider.getRouteTo()
     if (routeTo.name === 'projects' || (routeTo.name === "projects-id" && breakpoint.value === "desktop")) {
-        console.log('test');
         textRef.value.style.opacity = "0!important"
     }
 

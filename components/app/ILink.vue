@@ -37,6 +37,7 @@ function toClipboard() {
 @use "@/styles/shared.scss" as *;
 
 .link__wrapper {
+    pointer-events: auto;
     color: $primary;
     transition: color 250ms;
     cursor: pointer;

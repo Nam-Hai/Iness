@@ -17,7 +17,6 @@ const wrapperRef = ref() as Ref<HTMLElement>
 const { prismicData } = usePreloader()
 const { vh, breakpoint } = useStoreView()
 const data = prismicData.value.overview
-console.log(data);
 
 useEventListeneer(wrapperRef, 'touchstart', (e: Event) => {
     const mouse = {

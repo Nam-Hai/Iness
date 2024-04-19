@@ -27,7 +27,6 @@
 <script lang="ts" setup>
 
 const { prismicData } = usePreloader()
-console.log("test", prismicData.value.projects);
 
 
 const { breakpoint } = useStoreView()
@@ -39,7 +38,6 @@ const enter = onEnter({
     el: mobileProjectItemRef,
     vStart: 1,
     enterCb: () => {
-        console.log("enter");
     },
 })
 
