@@ -223,7 +223,6 @@ watch(routeRef, (routeTo, routeFrom) => {
 
             max-width: 10rem;
             position: relative;
-            top: -0.1rem;
 
 
             svg {
@@ -264,6 +263,7 @@ watch(routeRef, (routeTo, routeFrom) => {
             grid-row: 4 / 5;
             align-self: end;
 
+            top: 0.3rem;
             svg {
                 width: 13.792px;
                 height: 14.498px;
@@ -274,6 +274,7 @@ watch(routeRef, (routeTo, routeFrom) => {
             grid-column: 6 / 9;
             grid-row: 4 / 5;
             align-self: end;
+            top: 0.4rem;
 
             svg {
                 width: 74.731px;
