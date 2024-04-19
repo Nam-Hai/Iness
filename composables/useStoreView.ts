@@ -40,11 +40,11 @@ export const useStoreScroll = createStore(() => {
 		const app = N.get("#app")!
 		container.value = app
 		useRafR(({ delta, elapsed }) => {
-			// if (!ticking) return
+			if (!ticking) return
 			if (container.value) {
 				// if (container.value.scrollTop != scroll.value) {
 				if (ticking) {
-					container.value.scrollTop = virtualScroll
+					// container.value.scrollTop = virtualScroll
 				}
 				virtualScroll = container.value.scrollTop
 				scroll.value = virtualScroll
@@ -55,29 +55,36 @@ export const useStoreScroll = createStore(() => {
 
 		}, RafPriority.FIRST).run()
 
-		window.addEventListener("wheel", (e) => {
-			const delta = e.deltaY
-			virtualScroll += delta
-			virtualScroll = N.Clamp(virtualScroll, 0, dimension.value)
+		document.body.addEventListener("scroll", ()=>{
+			console.log('test');
 			ticking = true
 		})
+		app.addEventListener("scroll", (e) => {
+			// ticking = true
+		})
+		// window.addEventListener("wheel", (e) => {
+		// 	const delta = e.deltaY
+		// 	virtualScroll += delta
+		// 	virtualScroll = N.Clamp(virtualScroll, 0, dimension.value)
+		// 	ticking = true
+		// })
 
 		let start = 0
 		let scrollStart = 0
 
-		window.addEventListener("touchstart", (e) => {
-			const y = e.touches[0].clientY
-			start = y
-			scrollStart = virtualScroll
-			ticking = true
-		})
-		window.addEventListener("touchmove", (e) => {
-			const y = e.touches[0].clientY
-			const delta = y - start
-			virtualScroll = scrollStart - delta
-			virtualScroll = N.Clamp(virtualScroll, 0, dimension.value)
-			ticking = true
-		})
+		// window.addEventListener("touchstart", (e) => {
+		// 	const y = e.touches[0].clientY
+		// 	start = y
+		// 	scrollStart = virtualScroll
+		// 	ticking = true
+		// })
+		// window.addEventListener("touchmove", (e) => {
+		// 	const y = e.touches[0].clientY
+		// 	const delta = y - start
+		// 	virtualScroll = scrollStart - delta
+		// 	virtualScroll = N.Clamp(virtualScroll, 0, dimension.value)
+		// 	ticking = true
+		// })
 
 		const ro = useROR((e) => {
 			if (!container.value) return

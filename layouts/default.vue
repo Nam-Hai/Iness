@@ -7,6 +7,7 @@
         <BufferPage />
       </Preloader>
     </div>
+    <LenisWrapper />
   </div>
 </template>
 

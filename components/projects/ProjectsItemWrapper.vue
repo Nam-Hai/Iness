@@ -77,6 +77,7 @@ watch(enter, val => {
     // grid-template-rows: repeat(4, 1fr);
 
     grid-auto-flow: row;
+    margin-top: $main-margin;
 
     &-mobile {
         margin-left: 0;
@@ -86,7 +87,7 @@ watch(enter, val => {
         // height: $grid-cell-height;
         width: calc(4 * $grid-cell-width);
         right: $main-margin;
-        margin-top: $grid-cell-height;
+        margin-top: calc($grid-cell-height + $main-margin);
 
         min-height: 100vh;
         height: unset;

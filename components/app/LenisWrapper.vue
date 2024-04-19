@@ -13,8 +13,16 @@ onBeforeMount(() => {
         normalizeWheel: true,
         smoothTouch: false,
         syncTouch: true,
-        wheelMultiplier: 0.82,
-        touchMultiplier: 1.7,
+        wheelMultiplier: 1,
+        touchMultiplier: 1,
+    })
+    lenis.start()
+
+    const raf = useRafR(({ elapsed }) => {
+        lenis.raf(elapsed)
+    }).run()
+    lenis.on("scroll", (e) => {
+        console.log(e.animatedScroll);
     })
 })
 

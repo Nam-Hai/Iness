@@ -72,7 +72,7 @@ main {
 
       &:last-child {
         height: $grid-cell-height ;
-        margin-bottom: calc($main-margin * 2 + env(safe-area-inset-bottom));
+        margin-bottom: calc($main-margin  + env(safe-area-inset-bottom));
       }
     }
   }
