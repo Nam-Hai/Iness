@@ -132,7 +132,7 @@ export const useStoreScroll = createStore(() => {
 			syncTouch: true,
 			touchInertiaMultiplier: 20,
 			wheelMultiplier: 1,
-			touchMultiplier: 1,
+			touchMultiplier: 1.2,
 		})
 		lenis.value.start()
 
