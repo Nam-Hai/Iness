@@ -90,14 +90,15 @@ const { routeRef } = useFlowProvider()
 const text = computed(() => breakpoint.value === 'desktop' ? `dependant creative, working in every type of studio and collaboration, as long as the project is cool` : `dependent creative`)
 const delayedHideMenu = ref(false)
 
-const hideMenu = computed(() => {
+const hideMenu = ref(false)
+watch([routeRef, breakpoint], () => {
     const hide = breakpoint.value === 'mobile' && routeRef.value.name === 'projects-id'
 
     useDelay(routeRef.value.name === 'projects-id' && breakpoint.value === 'mobile' ? 600 : 0, () => {
         delayedHideMenu.value = hide
     })
-    return hide
-})
+    hideMenu.value = hide
+}, { immediate: true })
 
 const hoverTextRef = ref() as Ref<HTMLElement>
 const { trigger } = useStreamingText(hoverTextRef, { breakpoint: true })
@@ -299,6 +300,6 @@ watch(routeRef, (routeTo, routeFrom) => {
 }
 
 .hideMenu {
-    display: none;
+    display: none !important;
 }
 </style>
