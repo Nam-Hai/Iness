@@ -292,7 +292,7 @@ watch(routeRef, (routeTo, routeFrom) => {
         opacity: 0;
         color: $neutral-text;
         left: 1.9rem;
-        bottom: 2.1rem;
+        bottom: 1.9rem;
         position: fixed;
         width: max-content;
         font-size: 2.6rem;
