@@ -2,11 +2,12 @@
     <div class="projects-item__wrapper" v-if="breakpoint == 'desktop'">
         <div class="menu__project__wrapper">
             <div class="project__wrapper">
-                <ProjectItem :props="projects[0]" />
+                <ProjectItem :props="prismicData.projects[0]" />
             </div>
         </div>
         <div class="projects__wrapper">
-            <div class="project__wrapper" v-for="project, index in projects.slice(1, projects.length)"
+            <div class="project__wrapper"
+                v-for="project, index in prismicData.projects.slice(1, prismicData.projects.length)"
                 :class="{ gridFlow: index >= 9 }">
                 <ProjectItem :props="project" />
             </div>
@@ -15,7 +16,7 @@
 
     <div class="projects-item__wrapper projects-item__wrapper-mobile" ref="mobileProjectItemRef" v-else>
         <div class="projects__wrapper projects__wrapper-mobile">
-            <div class="project__wrapper" v-for="project in projects">
+            <div class="project__wrapper" v-for="project in prismicData.projects">
                 <ProjectItem :props="project" />
             </div>
         </div>
@@ -26,7 +27,7 @@
 <script lang="ts" setup>
 
 const { prismicData } = usePreloader()
-const projects = [...prismicData.value.projects]
+console.log("test", prismicData.value.projects);
 
 
 const { breakpoint } = useStoreView()
@@ -75,7 +76,7 @@ watch(enter, val => {
 
     grid-column-gap: var(--grid-column-gap);
     grid-template-columns: repeat(3, var(--grid-column-width));
-    grid-template-rows: repeat(4, 1fr);
+    // grid-template-rows: repeat(4, 1fr);
 
     grid-auto-flow: row;
 

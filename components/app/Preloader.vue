@@ -26,7 +26,6 @@ watch(preloaderComplete, async () => {
 
 onMounted(() => {
     loadPrismic().then(() => {
-        console.log('then');
         endPreloader()
     })
 })
