@@ -129,7 +129,7 @@ export const onEnter = ({
   const lenis = useLenisScroll(scroll => {
     if (!bounds) return
     if (breakpoint.value !== 'mobile') return
-    const dist = window.scrollY - boundY + (vh.value * vStart) / 100 - (bounds.height * eStart) / 100;
+    const dist = scroll - boundY + (vh.value * vStart) / 100 - (bounds.height * eStart) / 100;
     const max = (bounds.height * (eEnd - eStart)) / 100 + (vh.value * (vStart - vEnd)) / 100;
     const offset = N.Clamp(dist, 0, max);
     const t = offset / max;

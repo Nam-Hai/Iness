@@ -35,7 +35,7 @@ export const useStoreScroll = createStore(() => {
 	function init() {
 		useRafR(({ delta, elapsed }) => {
 			if (!ticking) return
-			scroll.value = window.scrollY
+			scroll.value = document.body.scrollTop
 
 			for (let index = scrollItem.length - 1; index >= 0; index--) {
 				scrollItem[index].callback(scroll.value)
@@ -44,7 +44,7 @@ export const useStoreScroll = createStore(() => {
 			ticking = false
 		}, RafPriority.FIRST).run()
 
-		document.addEventListener("scroll", (e: Event) => {
+		document.body.addEventListener("scroll", (e: Event) => {
 			ticking = true
 		})
 
