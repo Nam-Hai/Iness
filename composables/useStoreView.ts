@@ -40,7 +40,7 @@ export const useStoreScroll = createStore(() => {
 		const app = N.get("#app")!
 		container.value = app
 		useRafR(({ delta, elapsed }) => {
-			if (!ticking) return
+			// if (!ticking) return
 			if (container.value) {
 				// if (container.value.scrollTop != scroll.value) {
 				if (ticking) {
@@ -48,13 +48,11 @@ export const useStoreScroll = createStore(() => {
 				}
 				virtualScroll = container.value.scrollTop
 				scroll.value = virtualScroll
+				console.log(virtualScroll);
 
 			}
 
-			if (!ticking) return
-			for (let index = scrollItem.length - 1; index >= 0; index--) {
-				scrollItem[index].callback(scroll.value)
-			}
+			ticking = false
 
 		}, RafPriority.FIRST).run()
 
@@ -79,11 +77,6 @@ export const useStoreScroll = createStore(() => {
 			const delta = y - start
 			virtualScroll = scrollStart - delta
 			virtualScroll = N.Clamp(virtualScroll, 0, dimension.value)
-			ticking = true
-		})
-		window.addEventListener("touchend", (e) => {
-			start = 0
-			scrollStart = 0
 			ticking = true
 		})
 
@@ -123,6 +116,12 @@ export const useStoreScroll = createStore(() => {
 		}
 		scrollItem.splice(i, 1)
 	}
+
+	watch(scroll, (s) => {
+		for (let index = scrollItem.length - 1; index >= 0; index--) {
+			scrollItem[index].callback(s)
+		}
+	})
 
 	function emit() {
 		ticking = true

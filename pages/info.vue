@@ -71,7 +71,8 @@ main {
 
 
       &:last-child {
-        margin-bottom: $main-margin;
+        // margin-bottom: $main-margin;
+        height: calc($grid-cell-height + $main-margin * 2);
       }
     }
   }
