@@ -10,7 +10,7 @@
         <NuxtLink class="link-hover" to="mailto:contact@in.e.studio" v-streamed-text v-else>Contact@in.e.studio
         </NuxtLink>
 
-        <ILink copy="copy phone number" text="+ 33 7 88 25 67 07" :font="false"  v-if="!isMobile" />
+        <ILink copy="copy phone number" text="+ 33 7 88 25 67 07" :font="false" v-if="!isMobile" />
         <NuxtLink class="link-hover" to="tel:+33788256707" v-streamed-text v-else>+ 33 7 88 25 67 07</NuxtLink>
       </div>
     </div>
@@ -72,7 +72,7 @@ main {
 
       &:last-child {
         height: $grid-cell-height ;
-        margin-bottom: calc($main-margin  + env(safe-area-inset-bottom));
+        margin-bottom: calc(env(safe-area-inset-bottom));
       }
     }
   }

@@ -1,5 +1,5 @@
 <template>
-    <div class="projects-item__wrapper" v-if="breakpoint == 'desktop'">
+    <div class="projects-item__wrapper" v-if="breakpoint == 'desktop'" :class="{ overflow: true }">
         <div class="menu__project__wrapper">
             <div class="project__wrapper">
                 <ProjectItem :props="prismicData.projects[0]" />
@@ -7,8 +7,8 @@
         </div>
         <div class="projects__wrapper">
             <div class="project__wrapper"
-                v-for="project, index in prismicData.projects.slice(1, prismicData.projects.length)"
-                :class="{ gridFlow: index >= 9 }">
+                v-for="project, index in [...prismicData.projects, ...prismicData.projects].slice(1, prismicData.projects.length * 2)"
+                :class="{ gridFlow: index > 12 }">
                 <ProjectItem :props="project" />
             </div>
         </div>
@@ -68,16 +68,17 @@ watch(enter, val => {
     display: grid;
 
     // height: calc(var(--100vh) - #{$main-margin * 2});
+    // height: 100vh;
     width: 100%;
 
-    margin-left: calc($main-margin + var(--grid-column-width) + var(--grid-column-gap));
+    padding-left: calc($main-margin + var(--grid-column-width) + var(--grid-column-gap));
 
     grid-column-gap: var(--grid-column-gap);
     grid-template-columns: repeat(3, var(--grid-column-width));
     // grid-template-rows: repeat(4, 1fr);
 
     grid-auto-flow: row;
-    margin-top: $main-margin;
+    padding-top: $main-margin;
 
     &-mobile {
         margin-left: 0;
@@ -105,10 +106,6 @@ watch(enter, val => {
         &:last-child {
             @include breakpoint(mobile) {
                 margin-bottom: calc(3* $grid-cell-height + $main-margin + env(safe-area-inset-top));
-            }
-
-            &.gridFlow {
-                margin-bottom: $main-margin;
             }
         }
     }

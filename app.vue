@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" :class="{}">
     <NuxtLayout>
       <NuxtPage></NuxtPage>
     </NuxtLayout>
@@ -60,5 +60,9 @@ useRO(() => {
   const m = window.matchMedia('(pointer: coarse)').matches
   const { isMobile } = useStore()
   isMobile.value = m
+
+  if (m) {
+    N.Class.add(document.body, "is-mobile")
+  }
 })
 </script>

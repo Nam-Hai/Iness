@@ -41,35 +41,35 @@ html {
 }
 
 html {
-  overflow: hidden;
-  height: 0px;
-  width: 100%;
+  // overflow: hidden;
+  // height: 0px;
+  // width: 100%;
 }
 
-// body {
+body.is-mobile {
 
-//   width: 100vw;
-//   height: 100vh;
-//   position: fixed;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
 
-//   overflow-y: scroll;
-//   overflow-x: hidden;
-// }
+  overflow-y: scroll;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+
+  #app {
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
+}
 
 html,
 body {
-  // overflow: hidden;
-  // overscroll-behavior: contain;
-
-  // @include breakpoint(mobile) {
-  //   height: 100%;
-  //   position: fixed;
-  //   width: 100%;
-  //   overflow-y: scroll;
-  // }
-
   margin: 0;
-  line-height: 0 !important;
+  overflow-x: hidden;
+  // overflow: hidden;
+
+
+  font-size: 10px !important;
 }
 
 body {
@@ -80,7 +80,6 @@ body {
   display: contents;
 }
 
-#app {}
 
 html,
 body,
@@ -220,7 +219,6 @@ main {
 
 main {
   width: 100vw;
-  min-height: var(--100vh);
 
   position: relative;
 }
