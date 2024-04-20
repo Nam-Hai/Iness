@@ -7,7 +7,7 @@
         </div>
         <div class="projects__wrapper">
             <div class="project__wrapper"
-                v-for="project, index in [...prismicData.projects, ...prismicData.projects].slice(1, prismicData.projects.length * 2)"
+                v-for="project, index in prismicData.projects.slice(1, prismicData.projects.length * 2)"
                 :class="{ gridFlow: index > 12 }">
                 <ProjectItem :props="project" />
             </div>
@@ -105,7 +105,7 @@ watch(enter, val => {
 
         &:last-child {
             @include breakpoint(mobile) {
-                margin-bottom: calc(3* $grid-cell-height + env(safe-area-inset-top) + env(safe-area-inset-bottom));
+                padding-bottom: calc(var(--100vh) - $main-margin);
             }
         }
     }
