@@ -2,7 +2,7 @@
     <div class="project__wrapper" ref="wrapperRef">
         <div class="column__wrapper" v-for="(d, index) in data.slice(0, 9).sort((a, b)=> a.order - b.order)" :key="d.image.name + '_' + index"
             @mouseenter="() => { currentImage = index }" :class="{ show: currentImageShow === index, loaded: true }">
-            <IMedia :props="d.image"></IMedia>
+            <IMediaOverview :props="d.image"></IMediaOverview>
             <!-- <img :src="img.src" :class="{ show: currentImageShow === index, loaded: img.load }" @load="() => {
                 img.load.value = true
             }" ref="imageRef" v-leave-img /> -->
