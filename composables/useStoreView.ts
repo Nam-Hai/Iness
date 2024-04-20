@@ -130,7 +130,7 @@ export const useStoreScroll = createStore(() => {
 			normalizeWheel: true,
 			smoothTouch: false,
 			syncTouch: true,
-			touchInertiaMultiplier: 20,
+			touchInertiaMultiplier: 1,
 			wheelMultiplier: 1,
 			touchMultiplier: 1.2,
 		})
@@ -154,15 +154,23 @@ export const useStoreScroll = createStore(() => {
 	}
 
 	function onScroll(callback: (scroll: number) => void) {
-		lenis.value.on("scroll", (e: any) => callback(e.animatedScroll))
+		return lenis.value.on("scroll", (e: any) => callback(e.animatedScroll))
 	}
 	function scrollToTop() {
 		lenis.value.scrollTo("top", {immediate: true})
+	}
+	function stop(){
+		lenis.value.stop()
+	}
+	function resume(){
+		lenis.value.start()
 	}
 	return {
 		init,
 		scroll,
 		resize,
+		stop,
+		resume,
 		emit,
 		onScroll,
 		scrollToTop
