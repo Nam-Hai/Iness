@@ -26,10 +26,11 @@ const wrapperRef = ref() as Ref<HTMLElement>
 .lib-media {
     // width: 100%;
     // height: 100%;
+    display: flex;
 
     img,
     video {
-        // width: 100%;
+        width: 100%;
         height: 100%;
 
         object-fit: cover;
