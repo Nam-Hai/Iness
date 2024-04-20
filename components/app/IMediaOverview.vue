@@ -27,6 +27,7 @@ const wrapperRef = ref() as Ref<HTMLElement>
     width: 100%;
     height: 100%;
     display: flex;
+    justify-content: flex-end;
 
     img,
     video {

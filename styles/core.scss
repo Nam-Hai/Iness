@@ -57,6 +57,7 @@ body.is-mobile {
   overscroll-behavior: contain;
 
   #app {
+    overscroll-behavior: contain;
     overflow-y: scroll;
     overflow-x: hidden;
     background-color: blue;
