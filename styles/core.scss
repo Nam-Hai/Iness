@@ -61,10 +61,11 @@ body.is-mobile {
   // overflow-x: hidden;
   // overscroll-behavior: contain;
   overflow: hidden;
+  overscroll-behavior-y: none;
 
   #app {
     position: fixed;
-    overscroll-behavior-y: contain;
+    overscroll-behavior-y: none;
     overflow-y: scroll;
     overflow-x: hidden;
   }
