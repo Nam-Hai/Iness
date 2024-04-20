@@ -42,7 +42,7 @@ html {
 }
 
 * {
-  overscroll-behavior-y: none;
+  // overscroll-behavior-y: none;
 }
 
 html {
@@ -68,6 +68,10 @@ body.is-mobile {
     overflow-y: scroll;
     overflow-x: hidden;
   }
+}
+
+#app {
+  width: 100%;
 }
 
 html,
