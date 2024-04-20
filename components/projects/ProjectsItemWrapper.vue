@@ -88,7 +88,7 @@ watch(enter, val => {
         // height: $grid-cell-height;
         width: calc(4 * $grid-cell-width);
         right: $main-margin;
-        margin-top: calc($grid-cell-height + $main-margin);
+        padding-top: calc($grid-cell-height + $main-margin);
 
         min-height: 100vh;
         height: unset;
@@ -105,7 +105,7 @@ watch(enter, val => {
 
         &:last-child {
             @include breakpoint(mobile) {
-                margin-bottom: calc(3* $grid-cell-height + $main-margin + env(safe-area-inset-top));
+                margin-bottom: calc(3* $grid-cell-height + env(safe-area-inset-top) + env(safe-area-inset-bottom));
             }
         }
     }
