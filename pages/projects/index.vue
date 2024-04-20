@@ -28,7 +28,10 @@ usePageFlow({
 @use "@/styles/shared.scss" as *;
 
 main {
-    line-height: 100%;
+    position: relative;
+
+    font-weight: 500;
+    height: 100vh;
 }
 
 
@@ -40,7 +43,7 @@ main {
     pointer-events: none;
 
     @include breakpoint(mobile) {
-        left: calc($grid-cell-width * 5 + $main-margin); 
+        left: calc($grid-cell-width * 5 + $main-margin);
     }
 }
 </style>
