@@ -77,7 +77,7 @@ $showSum: $showDuration + $showTransition;
         flex-direction: column;
 
         .column__wrapper {
-            height: calc((100vh - 2 * $main-margin) * 0.25 * 0.5) !important;
+            height: calc((var(--100vh) - 2 * $main-margin) * 0.25 * 0.5) !important;
             padding-right: $main-margin;
             display: flex;
             justify-content: flex-end;
