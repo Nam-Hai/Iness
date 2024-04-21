@@ -135,6 +135,13 @@ onMounted(() => {
     indexTrigger()
     infoTrigger()
     shopTrigger()
+
+    if (routeRef.value.name === 'projects-id' && breakpoint.value === 'mobile') {
+        shopTriggerLeave()
+        infoTriggerLeave()
+        indexTriggerLeave()
+        overviewTriggerLeave()
+    }
 })
 
 watch(routeRef, (routeTo, routeFrom) => {

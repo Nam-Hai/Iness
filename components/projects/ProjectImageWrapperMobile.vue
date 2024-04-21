@@ -111,6 +111,7 @@ $showSum: $showDuration + $showTransition;
 }
 
 .project-info {
+    height: calc(2 * $grid-cell-height + $main-margin);
     .back {
         position: fixed;
         top: calc(2 * $grid-cell-height + $main-margin);
@@ -150,7 +151,7 @@ $showSum: $showDuration + $showTransition;
     .description {
         @include breakpoint(mobile) {
             margin-top: 1.2rem;
-            margin-bottom: calc($grid-cell-height + $main-margin);
+            // padding-bottom: calc($grid-cell-height + $main-margin);
         }
 
     }

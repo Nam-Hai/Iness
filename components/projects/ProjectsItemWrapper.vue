@@ -42,7 +42,6 @@ const enter = onEnter({
 })
 
 watch(enter, val => {
-    console.log(val);
     mobileShow.value = !val
 })
 
