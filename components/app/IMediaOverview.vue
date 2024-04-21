@@ -32,8 +32,8 @@ const wrapperRef = ref() as Ref<HTMLElement>
 
     .container {
         display: flex;
-        height: min-content;
-        width: min-content;
+        height: fit-content;
+        width: fit-content;
         background-color: $discard-text;
     }
 
