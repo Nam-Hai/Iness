@@ -59,7 +59,7 @@ export function useStreamingText(elRef: Ref<HTMLElement>, options: { breakpoint:
                     o: [0, 1]
                 },
                 d: 50,
-                delay: N.Ease.o2(Math.min(index, test) / test) * test * SPEED_MS,
+                delay: N.Ease.linear(Math.min(index, test) / test) * test * SPEED_MS,
             }).from({
                 update: (t) => {
                     i++
@@ -71,7 +71,7 @@ export function useStreamingText(elRef: Ref<HTMLElement>, options: { breakpoint:
                     span.innerText = map[Math.floor(N.Rand.range(0, map.length - 1, 1))]
                 },
                 d: 200,
-                delay: N.Ease.o2(Math.min(index, test) / test) * test * SPEED_MS,
+                delay: N.Ease.linear(Math.min(index, test) / test) * test * SPEED_MS,
                 cb() {
                     span.innerText = letter
                 },
@@ -119,7 +119,7 @@ export function useLeaveText(elRef: Ref<HTMLElement>) {
                     o: [1, 0]
                 },
                 d: 50,
-                delay: N.Ease.o2(Math.min(index, wordLength) / wordLength) * ratio * SPEED_MS + 200 + 800,
+                delay: N.Ease.linear(Math.min(index, wordLength) / wordLength) * ratio * SPEED_MS + 200 + 800,
             }).from({
                 update: (t) => {
                     i++
@@ -131,7 +131,7 @@ export function useLeaveText(elRef: Ref<HTMLElement>) {
                     span.innerText = map[Math.floor(N.Rand.range(0, map.length - 1, 1))]
                 },
                 d: 200,
-                delay: N.Ease.o2(Math.min(index, wordLength) / wordLength) * ratio * SPEED_MS + 800,
+                delay: N.Ease.linear(Math.min(index, wordLength) / wordLength) * ratio * SPEED_MS + 800,
                 cb() {
                     span.innerText = letter
                 },
