@@ -73,7 +73,10 @@ body.is-mobile {
 
 #app {
   width: 100%;
-  height: var(--100vh);
+
+  @include breakpoint(mobile) {
+    height: var(--100vh);
+  }
 }
 
 html,

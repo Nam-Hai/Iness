@@ -1,5 +1,5 @@
 <template>
-    <div class="projects-item__wrapper" v-if="breakpoint == 'desktop'" :class="{ overflow: true }">
+    <div class="projects-item__wrapper" v-if="breakpoint == 'desktop'" :class="{ overflow: false }">
         <div class="menu__project__wrapper">
             <div class="project__wrapper">
                 <ProjectItem :props="prismicData.projects[0]" />
@@ -7,7 +7,7 @@
         </div>
         <div class="projects__wrapper">
             <div class="project__wrapper"
-                v-for="project, index in prismicData.projects.slice(1, prismicData.projects.length * 2)"
+                v-for="project, index in prismicData.projects.slice(1)"
                 :class="{ gridFlow: index > 12 }">
                 <ProjectItem :props="project" />
             </div>

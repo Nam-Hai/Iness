@@ -31,7 +31,7 @@ main {
     position: relative;
 
     font-weight: 500;
-    height: 100vh;
+    // height: 100vh;
 }
 
 

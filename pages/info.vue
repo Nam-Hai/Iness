@@ -53,7 +53,7 @@ main {
   @include gridColumn();
 
   position: relative;
-  margin-top: $main-margin;
+  padding-top: $main-margin;
 
   font-weight: 500;
   height: 100vh;
