@@ -2,7 +2,7 @@
     <div class="filter-modal" v-if="filterOpen" @click="filterOpen = false">
     </div>
     <div class="filter__wrapper" ref="wrapperRef" :class="{ open: filterOpen }">
-        <button :style="{ cursor: 'pointer', color: '#AB0000' }" v-streamed-text="5" :class="{ open: filterOpen }"
+        <button :style="{ cursor: 'pointer', color: '#AB0000' }" v-streamed-text="5" v-leave-text :class="{ open: filterOpen }"
             @click="filterOpen = !filterOpen">
             Filter
         </button>
@@ -22,6 +22,7 @@
 
 <script lang="ts" setup>
 import { vStreamedText } from '~/directives/streamedText';
+import { vLeaveText } from '~/directives/leave';
 
 const wrapperRef = ref() as Ref<HTMLElement>
 

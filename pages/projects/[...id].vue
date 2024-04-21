@@ -1,6 +1,6 @@
 <template>
     <main ref="wrapperRef">
-        <span class="back-index" v-if="breakpoint === 'desktop'" @click="navigateTo('/projects')" v-leave
+        <span class="back-index" v-if="breakpoint === 'desktop'" @click="navigateTo('/projects')" v-leave-text
             v-streamed-text2>
             Back to index
         </span>
@@ -20,7 +20,7 @@
 import { usePageFlow } from '~/waterflow/composables/usePageFlow';
 import { defaultFlowIn, defaultFlowOut, flowInMap, flowOutMap } from '~/pages_transitions/default.transition';
 import { useFlowProvider } from '~/waterflow/FlowProvider';
-import { vLeave } from '~/directives/leave';
+import { vLeave, vLeaveText } from '~/directives/leave';
 import { vStreamedText2 } from '~/directives/streamedText';
 
 const { currentImage, currentImageShow } = useStoreProjectImage()
@@ -68,7 +68,6 @@ main {
     font-size: 1.2rem;
     line-height: 1.5rem;
     // position: relative;
-    padding-top: $main-margin;
 }
 
 

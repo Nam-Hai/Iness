@@ -137,7 +137,7 @@ $showSum: $showDuration + $showTransition;
 
         display: flex;
         flex-direction: column;
-        text-transform: capitalize;
+        // text-transform: capitalize;
     }
 
     .info__wrapper,

@@ -1,7 +1,7 @@
 <template>
     <NuxtLink @click="toClipboard()" class="link__wrapper" :class="{ copied, font }" ref="wrapperRef" :to="href"
-        :disable="copy" target="_blank" @mouseenter="trigger">
-        <span v-streamed-text>
+        :disable="!!copy" target="_blank" @mouseenter="trigger">
+        <span v-streamed-text v-leave-text>
             {{ text }}
         </span>
 
@@ -13,6 +13,7 @@
 
 <script lang="ts" setup>
 import { vStreamedText } from '~/directives/streamedText';
+import { vLeaveText } from '~/directives/leave';
 
 const { href = "#", copy = "", text, font } = defineProps<{ href?: string, copy?: string, text: string, font: boolean }>()
 const wrapperRef = ref() as Ref<HTMLElement>

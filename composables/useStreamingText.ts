@@ -20,7 +20,7 @@ export function useStreamingText(elRef: Ref<HTMLElement>, options: { breakpoint:
     function computeTimeline() {
         tl.reset()
         const el = elRef.value
-        if(!el) return
+        if (!el) return
         const text = elRef.value.innerText
         const char = text.split('')
         el.innerHTML = ""
@@ -85,4 +85,60 @@ export function useStreamingText(elRef: Ref<HTMLElement>, options: { breakpoint:
     }
 
     return { trigger, computeTimeline }
+}
+
+export function useLeaveText(elRef: Ref<HTMLElement>) {
+    const tl = useTL()
+
+    onMounted(() => {
+        computeTimeline()
+    })
+    function computeTimeline() {
+
+    }
+
+    function trigger() {
+        tl.reset()
+        const wordMax = 30
+        const el = elRef.value
+        const text = el.innerText
+        const char = text.split('')
+
+        const wordLength = char.length
+        const ratio = Math.min(wordMax, wordLength) / wordMax
+        const spans = N.getAll('span', el)
+        for (let index = 0; index < spans.length; index++) {
+            const span = spans[index] as HTMLElement
+            const letter = char[index]
+            let i = 0
+            tl.from({
+                el: span,
+                p: {
+                    o: [1, 0]
+                },
+                d: 50,
+                delay: N.Ease.o2(Math.min(index, wordLength) / wordLength) * ratio * SPEED_MS + 200 + 800,
+            }).from({
+                update: (t) => {
+                    i++
+                    if (letter === " ") {
+                        return
+                    }
+                    if (i < 4) return
+                    i = 0
+                    span.innerText = map[Math.floor(N.Rand.range(0, map.length - 1, 1))]
+                },
+                d: 200,
+                delay: N.Ease.o2(Math.min(index, wordLength) / wordLength) * ratio * SPEED_MS + 800,
+                cb() {
+                    span.innerText = letter
+                },
+            })
+        }
+        tl.play()
+    }
+    return {
+        trigger,
+        computeTimeline
+    }
 }

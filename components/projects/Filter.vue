@@ -1,8 +1,8 @@
 <template>
     <div class="filter__wrapper" ref="wrapperRef" @mouseenter="!isMobile && (filterOpen = true)"
         @mouseleave="!isMobile && (filterOpen = false)" :class="{ open: filterOpen }" v-if="breakpoint === 'desktop'">
-        <button :style="{ cursor: 'default', color: '#AB0000' }" v-streamed-text="5" :class="{ open: filterOpen }"
-            @click="filterOpen = !filterOpen">
+        <button :style="{ cursor: 'default', color: '#AB0000' }" v-streamed-text="5" v-leave-text
+            :class="{ open: filterOpen }" @click="filterOpen = !filterOpen">
             Filter
         </button>
 
@@ -20,6 +20,7 @@
 
 <script lang="ts" setup>
 import { vStreamedText } from '~/directives/streamedText';
+import { vLeaveText } from '~/directives/leave';
 
 const wrapperRef = ref() as Ref<HTMLElement>
 

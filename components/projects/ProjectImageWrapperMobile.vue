@@ -12,16 +12,15 @@
     </div>
 
     <div class="project-info" v-if="breakpoint === 'mobile'">
-        <NuxtLink to="/projects" class="back" v-streamed-text>Back to index</NuxtLink>
+        <NuxtLink to="/projects" class="back" v-streamed-text v-leave-text>Back to index</NuxtLink>
 
         <div class="info__wrapper">
-            {{ breakpoint }}
-            <span v-streamed-text>{{ props.title }}</span>
-            <span v-streamed-text>{{ props.client }}</span>
-            <span v-streamed-text>{{ props.type }}</span>
-            <span v-streamed-text>{{ props.date }}</span>
+            <span v-streamed-text v-leave-text>{{ props.title }}</span>
+            <span v-streamed-text v-leave-text>{{ props.client }}</span>
+            <span v-streamed-text v-leave-text>{{ props.type }}</span>
+            <span v-streamed-text v-leave-text>{{ props.date }}</span>
         </div>
-        <div class="description" v-streamed-text v-if="currentImageShow !== -1">
+        <div class="description" v-streamed-text v-leave-text v-if="currentImageShow !== -1">
             {{ props.project_images_mobile[currentImage]?.description || "" }}
         </div>
     </div>
@@ -29,7 +28,7 @@
 
 <script lang="ts" setup>
 import { vStreamedText } from '~/directives/streamedText';
-import { vLeave } from '~/directives/leave'
+import { vLeave, vLeaveText } from '~/directives/leave'
 
 const { props } = defineProps<{ props: ProjectData }>()
 const wrapperRef = ref() as Ref<HTMLElement>
@@ -122,7 +121,7 @@ $showSum: $showDuration + $showTransition;
             pointer-events: none;
         }
 
-        margin-top: calc(3 * $grid-cell-height);
+        margin-top: calc(3 * $grid-cell-height + $main-margin);
         display: flex;
         flex-direction: column;
 
@@ -133,7 +132,7 @@ $showSum: $showDuration + $showTransition;
 
         display: flex;
         flex-direction: column;
-        text-transform: capitalize;
+        // text-transform: capitalize;
     }
 
     .info__wrapper,

@@ -1,17 +1,17 @@
 <template>
-  <main ref="wrapperRef" v-leave>
+  <main ref="wrapperRef">
 
     <div class="contact__grid-item__wrapper">
       <div class="contact__wrapper">
-        <span v-streamed-text>
+        <span v-streamed-text v-leave-text>
           You can contact me on
         </span>
         <ILink copy="copy email" text="Contact@in.e.studio" :font="false" v-if="!isMobile" />
-        <NuxtLink class="link-hover" to="mailto:contact@in.e.studio" v-streamed-text v-else>Contact@in.e.studio
+        <NuxtLink class="link-hover" to="mailto:contact@in.e.studio" v-streamed-text v-leave-text v-else>Contact@in.e.studio
         </NuxtLink>
 
         <ILink copy="copy phone number" text="+ 33 7 88 25 67 07" :font="false" v-if="!isMobile" />
-        <NuxtLink class="link-hover" to="tel:+33788256707" v-streamed-text v-else>+ 33 7 88 25 67 07</NuxtLink>
+        <NuxtLink class="link-hover" to="tel:+33788256707" v-streamed-text v-leave-text v-else>+ 33 7 88 25 67 07</NuxtLink>
       </div>
     </div>
 
@@ -29,7 +29,7 @@
 import { usePageFlow } from '~/waterflow/composables/usePageFlow';
 import { defaultFlowIn, defaultFlowOut } from '~/pages_transitions/default.transition';
 import { vStreamedText } from '~/directives/streamedText';
-import { vLeave } from '~/directives/leave';
+import { vLeave, vLeaveText } from '~/directives/leave';
 
 const { copy } = useStoreInfo()
 const wrapperRef = ref() as Ref<HTMLElement>

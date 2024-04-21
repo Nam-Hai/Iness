@@ -184,7 +184,6 @@ export const usePreloader = createStore(() => {
                         }
                     })
                 })
-                console.log(info);
 
                 return {
                     overview,

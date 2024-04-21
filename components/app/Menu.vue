@@ -6,7 +6,8 @@
             </span>
         </NuxtLink>
         <NuxtLink to="/projects" :class="{ 'menu__active': routeRef.path === '/index', hideMenu: delayedHideMenu }">
-            <span ref="indexRef" :style="{ display: routeRef.name === 'projects-id' ? 'none' : 'unset' }">
+            <span ref="indexRef"
+                :style="{ display: routeRef.name === 'projects-id' && breakpoint === 'desktop' ? 'none' : 'unset' }">
                 Index
             </span>
         </NuxtLink>
@@ -15,8 +16,14 @@
                 Info
             </span>
         </NuxtLink>
-        <div :class="{ hideMenu: delayedHideMenu }" disable ref="shopRef">
-            Shop
+        <div :class="{ hideMenu: delayedHideMenu }">
+            <div ref="shopRef" @mouseenter="shopHoverTrigger">
+                Shop
+            </div>
+
+            <span class="hover-text" ref="shopHoverRef">
+                Coming Soon
+            </span>
         </div>
 
         <NuxtLink to="#" @mouseenter="trigger">
@@ -107,6 +114,12 @@ const { trigger: overviewTrigger } = useStreamingText(overviewRef)
 const { trigger: indexTrigger } = useStreamingText(indexRef)
 const { trigger: infoTrigger } = useStreamingText(infoRef)
 const { trigger: shopTrigger } = useStreamingText(shopRef)
+const { trigger: shopTriggerLeave } = useLeaveText(shopRef)
+const { trigger: infoTriggerLeave } = useLeaveText(infoRef)
+const { trigger: indexTriggerLeave } = useLeaveText(indexRef)
+const { trigger: overviewTriggerLeave } = useLeaveText(overviewRef)
+const shopHoverRef = ref()
+const { trigger: shopHoverTrigger } = useStreamingText(shopHoverRef)
 
 onMounted(() => {
     overviewTrigger()
@@ -122,6 +135,12 @@ watch(routeRef, (routeTo, routeFrom) => {
         indexTrigger()
         infoTrigger()
         shopTrigger()
+    }
+    else if (routeTo.name === "projects-id" && routeFrom.name !== "projects-id" && breakpoint.value === 'mobile') {
+        shopTriggerLeave()
+        infoTriggerLeave()
+        indexTriggerLeave()
+        overviewTriggerLeave()
     }
 })
 
@@ -167,16 +186,31 @@ watch(routeRef, (routeTo, routeFrom) => {
         pointer-events: all;
         position: relative;
 
-        &::after {
-            position: absolute;
-            content: "Coming soon";
-            left: 0;
-            top: 0;
+        .hover-text {
             color: $neutral-text;
-            opacity: 0;
-            transition: opacity 250ms;
+            left: 0;
+            bottom: 0;
+            position: absolute;
             width: max-content;
+            pointer-events: none;
+            font-size: 100%;
+            opacity: 0;
         }
+
+        &:hover .hover-text {
+            opacity: 1;
+        }
+
+        // &::after {
+        //     position: absolute;
+        //     content: "Coming soon";
+        //     left: 0;
+        //     top: 0;
+        //     color: $neutral-text;
+        //     opacity: 0;
+        //     transition: opacity 250ms;
+        //     width: max-content;
+        // }
 
         &:hover {
             color: $discard-text;
@@ -264,6 +298,7 @@ watch(routeRef, (routeTo, routeFrom) => {
             align-self: end;
 
             top: 0.3rem;
+
             svg {
                 width: 13.792px;
                 height: 14.498px;
@@ -288,7 +323,7 @@ watch(routeRef, (routeTo, routeFrom) => {
         }
     }
 
-    .hover-text {
+    >.hover-text {
         opacity: 0;
         color: $neutral-text;
         left: 1.9rem;
@@ -301,6 +336,6 @@ watch(routeRef, (routeTo, routeFrom) => {
 }
 
 .hideMenu {
-    display: none !important;
+    // display: none !important;
 }
 </style>
