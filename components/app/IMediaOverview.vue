@@ -32,8 +32,15 @@ const wrapperRef = ref() as Ref<HTMLElement>
 
     .container {
         display: flex;
-        height: fit-content;
-        width: fit-content;
+
+        @include breakpoint(mobile) {
+            height: 100%;
+        }
+
+        @include breakpoint(desktop) {
+            width: 100%;
+        }
+
         background-color: $discard-text;
     }
 
