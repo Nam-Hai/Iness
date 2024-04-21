@@ -35,7 +35,8 @@ export default defineNuxtConfig({
             charset: 'utf-8',
             viewport: 'width=device-width, initial-scale=1',
             htmlAttrs: {
-                lang: 'fr'
+                lang: 'fr',
+                style: "#FBFBFB"
             },
             meta: [
                 {
@@ -93,7 +94,7 @@ export default defineNuxtConfig({
             link: [
                 {
                     rel: "manifest",
-                    href: "/favicon/site.webmanifest"
+                    href: "iness.vercel.app/site.webmanifest"
                 },
                 {
                     rel: "icon",

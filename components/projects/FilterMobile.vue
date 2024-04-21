@@ -54,7 +54,6 @@ function toggleFilter(filter: string) {
 
 function filterHover(state: boolean) {
     const span = N.get("span:last-child", filterRef.value) as HTMLElement
-    console.log(span);
     span.innerText = state ? "-" : "+"
 }
 
