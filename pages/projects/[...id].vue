@@ -66,7 +66,7 @@ usePageFlow({
 
 main {
     font-size: 1.2rem;
-    line-height: 1.5rem;
+    line-height: 1.6rem;
     // position: relative;
 }
 

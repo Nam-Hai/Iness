@@ -15,7 +15,7 @@ const { text } = defineProps<{ text: string }>()
 @use "@/styles/shared.scss" as *;
 
 .streamed__wrapper {
-    line-height: 1.5rem;
+    line-height: 1.6rem;
     font-size: 1.2rem;
 }
 </style>

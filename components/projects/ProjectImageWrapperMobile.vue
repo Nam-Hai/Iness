@@ -74,7 +74,7 @@ $showSum: $showDuration + $showTransition;
     top: 0;
     right: 0;
     font-size: 12px;
-    line-height: 15px;
+    line-height: 1.6rem;
 
     width: calc(4 * $grid-cell-width + $main-margin);
     height: 100vh;
@@ -119,7 +119,7 @@ $showSum: $showDuration + $showTransition;
     }
 
     font-size: 12px;
-    line-height: 15px;
+    line-height: 1.6rem;
 
     .info__wrapper {
         @include breakpoint(mobile) {

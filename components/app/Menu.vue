@@ -171,7 +171,7 @@ watch(routeRef, (routeTo, routeFrom) => {
     top: 0;
     transform: translate(-50%);
     z-index: $z-menu;
-    line-height: 15px;
+    line-height: 1.6rem;
 
     @include mainGrid();
 

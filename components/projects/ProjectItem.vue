@@ -89,12 +89,12 @@ a {
     padding: 0.4rem;
     margin-left: -0.4rem;
     margin-top: -0.4rem;
-    line-height: 1.5rem;
+    line-height: 1.6rem;
     font-size: 1.2rem;
 
 
     @include breakpoint(mobile) {
-        line-height: 1.5rem;
+        line-height: 1.6rem;
         font-size: 1.2rem;
     }
 

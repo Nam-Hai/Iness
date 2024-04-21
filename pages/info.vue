@@ -141,7 +141,7 @@ main {
 
 .info-text {
   font-size: 1.2rem;
-  line-height: 1.5rem;
+  line-height: 1.6rem;
 }
 
 .link-hover {

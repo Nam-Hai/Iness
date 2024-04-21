@@ -83,9 +83,9 @@ function mute(e: Event) {
             display: flex;
             color: $primary;
             font-size: 12px;
-            line-height: 15px;
+            line-height: 1.6rem;
             position: absolute;
-            bottom: -1.2rem - 1.5rem;
+            bottom: -1.2rem - 1.6rem;
             right: 0;
             position: absolute;
 

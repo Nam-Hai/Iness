@@ -53,12 +53,12 @@ function getAnchor(span: Spans, text: string) {
 
 .rich-text__wrapper {
     font-size: 1.2rem;
-    line-height: 1.5rem;
+    line-height: 1.6rem;
 
     a {
         position: relative;
         font-size: 1.2rem;
-        line-height: 1.5rem;
+        line-height: 1.6rem;
     }
 
     a::after {

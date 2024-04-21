@@ -45,7 +45,7 @@ function toClipboard() {
     width: fit-content;
 
     &.font {
-        line-height: 1.5rem;
+        line-height: 1.6rem;
         font-size: 1.2rem;
     }
 
