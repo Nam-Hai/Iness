@@ -1,7 +1,6 @@
 <template>
-    <div class="img__wrapper" ref="wrapperRef">
-        <img :src="props.url" :alt="props.name" onload="this.style.opacity = 1" v-leave-img
-            v-if="props.kind === 'image'">
+    <div class="img__wrapper" ref="wrapperRef" v-leave-img>
+        <img :src="props.url" :alt="props.name" onload="this.style.opacity = 1" v-if="props.kind === 'image'">
 
 
         <div class="video__wrapper" v-else>
@@ -79,6 +78,7 @@ function mute(e: Event) {
 
         width: 100%;
         height: 100%;
+
         .controller__wrapper {
             display: flex;
             color: $primary;
