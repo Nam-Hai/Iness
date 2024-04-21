@@ -15,9 +15,13 @@ export const vLeaveText = {
 
         const flowProvider = useFlowProvider()
         const { breakpoint } = useStoreView()
-        if (flowProvider.getRouteTo().name === "projects-id" && breakpoint.value === "desktop" || !flowProvider.flowIsHijacked.value && !(flowProvider.getRouteTo().name === "projects-id" && breakpoint.value === "mobile") || (flowProvider.getRouteTo().name === "projects" && flowProvider.getRouteFrom().name === "projects-id" && breakpoint.value === "desktop")) return
 
         onLeave(() => {
+            if (flowProvider.getRouteTo().name === "projects-id") {
+                el.style.transition = "opacity 150ms"
+                N.O(el, 0)
+                return
+            }
             const text = el.innerText
             const char = text.split('')
 

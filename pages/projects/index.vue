@@ -10,7 +10,7 @@
 
 <script lang="ts" setup>
 import { usePageFlow } from '~/waterflow/composables/usePageFlow';
-import { defaultFlowIn, defaultFlowOut } from '~/pages_transitions/default.transition';
+import { defaultFlowIn, defaultFlowOut, flowOutMap } from '~/pages_transitions/default.transition';
 
 const wrapperRef = ref() as Ref<HTMLElement>
 
@@ -18,7 +18,7 @@ usePageFlow({
     props: {
         wrapperRef,
     },
-    flowOut: defaultFlowOut,
+    flowOutMap: flowOutMap,
     flowInCrossfade: defaultFlowIn,
     enableCrossfade: 'TOP'
 })

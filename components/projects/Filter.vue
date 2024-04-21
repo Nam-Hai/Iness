@@ -1,18 +1,23 @@
 <template>
-    <div class="filter__wrapper" ref="wrapperRef" @mouseenter="!isMobile && (filterOpen = true)"
-        @mouseleave="!isMobile && (filterOpen = false)" :class="{ open: filterOpen }" v-if="breakpoint === 'desktop'">
+    <div class="filter__wrapper" ref="wrapperRef" @mouseenter="!isMobile && (filterOpen = true); filterHover(true)"
+        @mouseleave="!isMobile && (filterOpen = false); filterHover(false)" :class="{ open: filterOpen }"
+        v-if="breakpoint === 'desktop'">
         <button :style="{ cursor: 'default', color: '#AB0000' }" v-streamed-text="5" v-leave-text
-            :class="{ open: filterOpen }" @click="filterOpen = !filterOpen">
-            Filter
+            :class="{ open: filterOpen }" @click="filterOpen = !filterOpen" ref="filterRef">
+            Filter +
         </button>
 
         <button @click="toggleFilterAll()" :class="{ active: toggledAll, hide: !filterOpen }">
             All
         </button>
 
-        <button v-for="filter in prismicData.filters" :class="{ active: filterActive[filter], hide: !filterOpen }"
-            @click="toggleFilter(filter)">
+        <button v-for="(filter, index) in prismicData.filters"
+            :class="{ active: filterActive[filter], hide: !filterOpen }" @click="toggleFilter(filter, index)"
+            ref="buttonRefs" @mouseenter="() => triggers[index].trigger()">
             {{ filter }}
+            <span>
+                {{ filterActive[filter] ? "Unselect" : "Select" }}
+            </span>
         </button>
     </div>
     <FilterMobile v-else />
@@ -20,6 +25,7 @@
 
 <script lang="ts" setup>
 import { vStreamedText } from '~/directives/streamedText';
+import { computeTimeline } from "~/composables/useStreamingText"
 import { vLeaveText } from '~/directives/leave';
 
 const wrapperRef = ref() as Ref<HTMLElement>
@@ -27,22 +33,88 @@ const wrapperRef = ref() as Ref<HTMLElement>
 const { prismicData } = usePreloader()
 const { isMobile } = useStore()
 const { breakpoint } = useStoreView()
-const { filterOpen, filterActive, isEmpty } = useStoreFilter()
+const { filterOpen, countFilter, filterActive, isEmpty } = useStoreFilter()
+
+const filterRef = ref()
+function filterHover(state: boolean) {
+    const span = N.get("span:last-child", filterRef.value) as HTMLElement
+    span.innerText = state ? "-" : "+"
+}
+
+const buttonRefs = ref() as Ref<HTMLElement[]>
+const triggers: ({ trigger: () => void, compute: () => void })[] = []
+onMounted(() => {
+    computeCounter(countFilter.value, countFilter.value)
+    if (buttonRefs.value)
+        for (const el of buttonRefs.value) {
+            const span = N.get('span', el)!
+            const { trigger, compute } = computeTimeline(span as HTMLElement)
+            triggers.push({ trigger, compute })
+        }
+})
 
 const toggledAll = ref(false)
-function toggleFilterAll() {
+async function toggleFilterAll() {
     for (const filter in filterActive) {
         filterActive[filter] = !toggledAll.value
     }
 
     toggledAll.value = !toggledAll.value
+
+    let count = 0
+    for (const [key, value] of Object.entries(filterActive)) {
+        if (value) count++
+    }
+    countFilter.value = count
+    await nextTick()
+    for (const el of triggers) {
+        el.compute()
+        
+    }
 }
 
-function toggleFilter(filter: string) {
+async function toggleFilter(filter: string, index: number) {
     toggledAll.value = false
     filterActive[filter] = !filterActive[filter]
+    if (filterActive[filter]) {
+        countFilter.value++
+    } else {
+        countFilter.value--
+    }
+    await nextTick()
+    triggers[index].compute()
+    triggers[index].trigger()
 }
 
+function computeCounter(val: number, lastVal: number) {
+    const spans = [...N.getAll("span", filterRef.value)] as HTMLElement[]
+    if (spans.length === 0) {
+        const text = filterRef.value.innerText
+        filterRef.value.innerHTML = ""
+        for (const c of text) {
+            const span = N.Cr('span')
+            spans.push(span)
+            span.innerText = c
+            filterRef.value.appendChild(span)
+        }
+    }
+    const lastlastSpan = spans[spans.length - 2] as HTMLElement
+
+    if (val !== 0 && (lastlastSpan.innerText[0] !== "(" && lastlastSpan.innerText[1] !== "(")) {
+        const s = N.Cr('span')
+        s.innerText = ` (${val}) `;
+        lastlastSpan.insertAdjacentElement("afterend", s)
+    } else if (lastVal !== 0 && val !== 0) {
+        lastlastSpan.innerText = ` (${val}) `
+    } else {
+        if (lastlastSpan.innerText[0] === "(") {
+            lastlastSpan.remove()
+        }
+    }
+}
+watch(countFilter, (val, lastVal) => {
+    computeCounter(val, lastVal)
+})
 </script>
 
 <style lang="scss" scoped>
@@ -61,6 +133,7 @@ function toggleFilter(filter: string) {
 
     button:first-child {
         pointer-events: all;
+
     }
 
     &.open {
@@ -111,15 +184,14 @@ function toggleFilter(filter: string) {
 
     button {
         text-align: start;
-        text-transform: capitalize;
+        // text-transform: capitalize;
 
         // color: $discard-text;
         color: $primary;
 
         transition: opacity 200ms, color 200ms;
 
-        &::after {
-            content: "select";
+        >span {
             position: absolute;
             left: 1rem;
             top: 0.5rem;
@@ -127,10 +199,6 @@ function toggleFilter(filter: string) {
             pointer-events: none;
             opacity: 0;
             transition: opacity 200ms;
-        }
-
-        &:nth-child(1)::after {
-            display: none;
         }
 
         &.hide {
@@ -147,16 +215,8 @@ function toggleFilter(filter: string) {
             &:hover {
                 color: $discard-text;
 
-                &::after {
+                >span {
                     opacity: 1;
-                }
-
-                &.active {
-                    color: $neutral-text;
-
-                    &::after {
-                        opacity: 0;
-                    }
                 }
             }
         }

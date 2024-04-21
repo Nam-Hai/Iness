@@ -37,10 +37,12 @@ export const useStoreFilter = createStore(() => {
         //     filterActive[type] = false
         // }
     }
+    const countFilter = ref(0)
 
     return {
         filterActive,
         resetFilter,
+        countFilter,
         isEmpty,
         filterOpen
     }
