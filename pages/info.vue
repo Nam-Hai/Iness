@@ -97,7 +97,7 @@ main {
 
       @include breakpoint(mobile) {
         margin-top: -0.4rem;
-        width: 27.4rem;
+        width: 33.4rem;
       }
 
       display: flex;
