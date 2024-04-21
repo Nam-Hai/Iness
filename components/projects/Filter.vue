@@ -7,8 +7,11 @@
             Filter +
         </button>
 
-        <button @click="toggleFilterAll()" :class="{ active: toggledAll, hide: !filterOpen }">
+        <button @click="toggleFilterAll()" :class="{ active: toggledAll, hide: !filterOpen }" @mouseenter="()=> triggers[triggers.length -1].trigger()">
             All
+            <span ref="allSpanRef" >
+                {{ toggledAll ? "Unselect" : "Select" }}
+            </span>
         </button>
 
         <button v-for="(filter, index) in prismicData.filters"
@@ -36,6 +39,7 @@ const { breakpoint } = useStoreView()
 const { filterOpen, countFilter, filterActive, isEmpty } = useStoreFilter()
 
 const filterRef = ref()
+const allSpanRef = ref()
 function filterHover(state: boolean) {
     const span = N.get("span:last-child", filterRef.value) as HTMLElement
     span.innerText = state ? "-" : "+"
@@ -44,18 +48,27 @@ function filterHover(state: boolean) {
 const buttonRefs = ref() as Ref<HTMLElement[]>
 const triggers: ({ trigger: () => void, compute: () => void })[] = []
 
-useRO(({breakpoint}) => {
+useRO(({ breakpoint }) => {
     if (breakpoint === 'desktop') {
         computeCounter(countFilter.value, countFilter.value)
     }
 })
 onMounted(() => {
-    if (buttonRefs.value)
+    if (buttonRefs.value) {
         for (const el of buttonRefs.value) {
             const span = N.get('span', el)!
             const { trigger, compute } = computeTimeline(span as HTMLElement)
             triggers.push({ trigger, compute })
         }
+    }
+
+    if (buttonRefs.value) {
+        const { trigger, compute } = computeTimeline(allSpanRef.value)
+        triggers.push({ trigger, compute })
+    }
+    console.log(triggers);
+
+
 })
 
 const toggledAll = ref(false)
@@ -74,8 +87,8 @@ async function toggleFilterAll() {
     await nextTick()
     for (const el of triggers) {
         el.compute()
-
     }
+    triggers[triggers.length - 1].trigger()
 }
 
 async function toggleFilter(filter: string, index: number) {
