@@ -2,11 +2,9 @@
 
 export default defineNuxtConfig({
     ssr: false,
-
-    // nitro: {
-    //     preset: "vercel",
-    // },
-
+    devtools: {
+        enabled: false,
+    },
     css: ["@/styles/core.scss", "@/styles/app/index.scss"],
     modules: [
         "@nuxtjs/prismic"
@@ -16,9 +14,6 @@ export default defineNuxtConfig({
         preview: false,
         toolbar: false
     },
-    // image: {
-    //     format: ['webp']
-    // },
     components: {
         global: true,
         dirs: [
@@ -26,19 +21,24 @@ export default defineNuxtConfig({
             "~/components/app/",
             "~/components/index/",
             "~/components/projects/",
-
         ],
     },
 
     app: {
         head: {
-            charset: 'utf-8',
-            viewport: 'width=device-width, initial-scale=1',
-            htmlAttrs: {
-                lang: 'fr',
-                style: "#FBFBFB"
-            },
+            // htmlAttrs: {
+            //     lang: 'fr',
+            //     style: "#FBFBFB"
+            // },
             meta: [
+                {
+                    charset: "utf-8",
+                },
+                {
+                    name: "viewport",
+                    content:
+                        "width=device-width initial-scale=1 maximum-scale=1 user-scalable=no",
+                },
                 {
                     name: "theme-color",
                     content: "#FBFBFB",
@@ -94,7 +94,7 @@ export default defineNuxtConfig({
             link: [
                 {
                     rel: "manifest",
-                    href: "iness.vercel.app/site.webmanifest"
+                    href: "/site.webmanifest"
                 },
                 {
                     rel: "icon",
