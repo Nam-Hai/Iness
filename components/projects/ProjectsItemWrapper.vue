@@ -36,12 +36,13 @@ const mobileProjectItemRef = ref() as Ref<HTMLElement>
 const { mobileShow } = useStoreProjectImage()
 const enter = onEnter({
     el: mobileProjectItemRef,
-    vStart: 1,
+    vStart: -10,
     enterCb: () => {
     },
 })
 
 watch(enter, val => {
+    console.log(val);
     mobileShow.value = !val
 })
 

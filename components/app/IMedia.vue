@@ -28,6 +28,7 @@ const wrapperRef = ref() as Ref<HTMLElement>
     height: 100%;
     display: flex;
     background-color: $discard-text;
+    pointer-events: all;
 
     img,
     video {
