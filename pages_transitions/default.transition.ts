@@ -13,6 +13,11 @@ export const defaultFlowOut: FlowFunction<defaultTransitionProps> = (props, reso
         resolve()
     })
 }
+export const fastOut: FlowFunction<defaultTransitionProps> = (props, resolve, provider) => {
+    const { filterOpen } = useStoreFilter()
+    filterOpen.value = false
+    resolve()
+}
 
 export const defaultFlowIn: FlowFunction<defaultTransitionProps> = ({ wrapperRef }, resolve,) => {
     const { resetFilter } = useStoreFilter()
@@ -35,6 +40,9 @@ export const projectProjectFlowIn: FlowFunction<defaultTransitionProps> = async 
 
 export const flowOutMap = new Map([
     ['default', defaultFlowOut],
+    ['projects-id => projects-id', fastOut],
+    ['overview => projects', fastOut],
+    ['overview => info', fastOut],
 ])
 export const flowInMap = new Map([
     ['default', defaultFlowIn],

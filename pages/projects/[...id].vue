@@ -41,7 +41,7 @@ usePageFlow({
     props: {
         wrapperRef,
     },
-    flowOut: defaultFlowOut,
+    flowOutMap: flowOutMap,
     flowInCrossfadeMap: flowInMap,
     enableCrossfade: 'TOP'
 })
