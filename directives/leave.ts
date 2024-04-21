@@ -29,7 +29,7 @@ export const vLeaveText = {
             const ratio = Math.min(wordMax, wordLength) / wordMax
             const spans = N.getAll('span', el)
             const tl = useTL()
-            for (let index = 0; index < spans.length; index++) {
+            for (let index = spans.length - 1; index >= 0; index--) {
                 const span = spans[index] as HTMLElement
                 const letter = char[index]
                 let i = 0
