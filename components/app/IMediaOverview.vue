@@ -1,11 +1,14 @@
 <template>
     <div class="lib-media" ref="wrapperRef" v-leave-img>
-        <img :src="props.url" :alt="props.name" v-if="props.kind === 'image'" />
+        <div class="container">
 
-        <video v-else-if="props.kind === 'video'" playsinline disableremoteplayback="true"
-            disable-picture-in-picture="true" muted loop autoplay>
-            <source :src="props.url">
-        </video>
+            <img :src="props.url" :alt="props.name" v-if="props.kind === 'image'" />
+
+            <video v-else-if="props.kind === 'video'" playsinline disableremoteplayback="true"
+                disable-picture-in-picture="true" muted loop autoplay>
+                <source :src="props.url">
+            </video>
+        </div>
     </div>
 </template>
 
@@ -26,6 +29,11 @@ const wrapperRef = ref() as Ref<HTMLElement>
 .lib-media {
     width: 100%;
     height: 100%;
+
+    .container {
+        display: flex;
+        background-color: $discard-text;
+    }
 
     @include breakpoint(mobile) {
         display: flex;

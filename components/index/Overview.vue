@@ -1,7 +1,8 @@
 <template>
     <div class="project__wrapper" ref="wrapperRef">
-        <div class="column__wrapper" v-for="(d, index) in data.slice(0, 9).sort((a, b)=> a.order - b.order)" :key="d.image.name + '_' + index"
-            @mouseenter="() => { currentImage = index }" :class="{ show: currentImageShow === index, loaded: true }">
+        <div class="column__wrapper" v-for="(d, index) in data.slice(0, 9).sort((a, b) => a.order - b.order)"
+            :key="d.image.name + '_' + index" @mouseenter="() => { currentImage = index }"
+            :class="{ show: currentImageShow === index, loaded: true }">
             <IMediaOverview :props="d.image"></IMediaOverview>
             <!-- <img :src="img.src" :class="{ show: currentImageShow === index, loaded: img.load }" @load="() => {
                 img.load.value = true
@@ -37,7 +38,7 @@ useEventListeneer(wrapperRef, 'touchmove', (e) => {
 function onTouch({ x, y }: { x: number, y: number }) {
     const r = N.Clamp((y - 16) / (vh.value - 32), 0, 1)
 
-    currentImage.value = N.Clamp(N.mod(Math.floor(r * 8), 8), 0, data.length - 1)
+    currentImage.value = N.Clamp(Math.floor(r * 8), 0, Math.min(data.length - 1, 7))
 }
 
 const currentImage = ref(0)
@@ -66,7 +67,7 @@ $showSum: $showDuration + $showTransition;
     inset: 0;
 
     @include breakpoint(desktop) {
-        @include gridColumn();
+        @include gridColumnNoGap();
     }
 
     padding-top: $main-margin;
@@ -93,6 +94,12 @@ $showSum: $showDuration + $showTransition;
         height: calc(100% - $main-margin);
 
         opacity: 0;
+
+        @include breakpoint(mobile) {
+            &:nth-child(9) {
+                display: none;
+            }
+        }
 
         &.loaded.show {
             opacity: 1;

@@ -52,6 +52,12 @@
   grid-column-gap: var(--grid-column-gap);
   justify-content: center;
 }
+@mixin gridColumnNoGap() {
+  @include mainContainer;
+  display: grid;
+  grid-template-columns: repeat(var(--grid-columns), 1fr);
+  justify-content: center;
+}
 
 @mixin gridRow() {
   display: grid;
