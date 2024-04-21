@@ -70,7 +70,7 @@ export const vStreamedText = {
     }
 }
 // const MAP = ["A", "B", "c", "#", "3", "/", "9", "5", "2", "e", "o","P", "p",'O',"y", "q", "W", ",", "@", "7", "&", "{", "}", "|","<", ">", "x", "c", "D", "E", "H"]
-const map = "$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\\h\|()1{}[]?-_+~<>i!lI;:,^'."
+const map = "$B%8&#*oahkbddvpqwmZO0QCJUYXzcvunxrjft/\\h\|()1{}[]?-+~<>i!lI;:,^'."
 export const vStreamedText2 = {
     mounted: (el: HTMLElement) => {
         const { count } = useStoreTransition()

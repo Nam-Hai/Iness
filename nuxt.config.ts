@@ -34,6 +34,10 @@ export default defineNuxtConfig({
         head: {
             meta: [
                 {
+                    name: "msapplication-TileColor",
+                    content: "#da532c"
+                },
+                {
                     name: "viewport",
                     content:
                         "width=device-width initial-scale=1 maximum-scale=1.2 user-scalable=no",
@@ -47,92 +51,79 @@ export default defineNuxtConfig({
                 },
                 {
                     key: "description", name: "description",
-                    content: "Insert description"
+                    content: "TODO"
                 },
-                { key: "og:title", property: "og:title", content: "Oscar Pico — Digital Designer" },
+                { key: "og:title", property: "og:title", content: "TODO" },
                 {
                     key: "og:url",
                     property: "og:url",
-                    content: "lorem.com",
+                    content: "TODO",
                 },
                 {
                     key: "og:description",
                     property: "og:description",
-                    content: "Insert description",
+                    content: "TODO",
                 },
                 {
                     key: "og:image",
                     property: "og:image",
-                    content: "/2.jpg",
+                    content: "TODO",
                 },
                 // twitter card
                 {
                     key: "twitter:title",
                     name: "twitter:title",
-                    content: "Iness portfolio",
+                    content: "TODO",
                 },
                 {
                     key: "twitter:url",
                     name: "twitter:url",
-                    content: "lorem.com",
+                    content: "TODO",
                 },
                 {
                     key: "twitter:description",
                     name: "twitter:description",
-                    content: "Iness portfolio",
+                    content: "TODO",
                 },
                 {
                     key: "twitter:image",
                     name: "twitter:image",
-                    content: "2.jpg",
+                    content: "TODO",
                 },
                 {
                     key: "twitter:card",
                     name: "twitter:card",
-                    content: "summary_large_image",
+                    content: "TODO",
                 }
             ],
             title: "Iness - Portfolio",
             link: [
-
-                // {
-                //     rel: "icon",
-                //     type: "image/png",
-                //     sizes: "32x32",
-                //     href: "/favicon/favicon-32x32.png",
-                //     class: "dark",
-                // },
-                // {
-                //     rel: "icon",
-                //     type: "image/png",
-                //     sizes: "16x16x",
-                //     href: "/favicon/favicon-16x16.png",
-                //     class: "dark",
-                // },
-                // {
-                //     rel: "icon",
-                //     type: "image/png",
-                //     sizes: "32x32",
-                //     href: "/favicon/favicon-32x32_light.png",
-                //     class: "light",
-                // },
-                // {
-                //     rel: "icon",
-                //     type: "image/png",
-                //     sizes: "16x16x",
-                //     href: "/favicon/favicon-16x16_light.png",
-                //     class: "light",
-                // },
-                // {
-                //     rel: "apple-touch-icon",
-                //     sizes: "180x180",
-                //     href: "/favicon/apple-touch-icon.png"
-                // },
-                // {
-                //     rel: "mask-icon",
-                //     href: "/favicon/safari-pinned-tab.svg",
-                //     color: "#292929"
-                // }
+                {
+                    rel: "manifest",
+                    href: "/favicon/site.manifest"
+                },
+                {
+                    rel: "icon",
+                    type: "image/png",
+                    sizes: "32x32",
+                    href: "/favicon/favicon-32x32.png",
+                },
+                {
+                    rel: "icon",
+                    type: "image/png",
+                    sizes: "16x16x",
+                    href: "/favicon/favicon-16x16.png",
+                },
+                {
+                    rel: "apple-touch-icon",
+                    sizes: "180x180",
+                    href: "/favicon/apple-touch-icon.png"
+                },
+                {
+                    rel: "mask-icon",
+                    href: "/favicon/safari-pinned-tab.svg",
+                    color: "#292929"
+                }
             ],
         },
     },
