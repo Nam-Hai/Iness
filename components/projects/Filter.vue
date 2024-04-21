@@ -43,8 +43,13 @@ function filterHover(state: boolean) {
 
 const buttonRefs = ref() as Ref<HTMLElement[]>
 const triggers: ({ trigger: () => void, compute: () => void })[] = []
+
+useRO(({breakpoint}) => {
+    if (breakpoint === 'desktop') {
+        computeCounter(countFilter.value, countFilter.value)
+    }
+})
 onMounted(() => {
-    computeCounter(countFilter.value, countFilter.value)
     if (buttonRefs.value)
         for (const el of buttonRefs.value) {
             const span = N.get('span', el)!
@@ -69,7 +74,7 @@ async function toggleFilterAll() {
     await nextTick()
     for (const el of triggers) {
         el.compute()
-        
+
     }
 }
 
@@ -113,6 +118,7 @@ function computeCounter(val: number, lastVal: number) {
     }
 }
 watch(countFilter, (val, lastVal) => {
+    if (breakpoint.value !== 'desktop') return
     computeCounter(val, lastVal)
 })
 </script>

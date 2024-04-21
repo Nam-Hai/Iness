@@ -62,8 +62,10 @@ watch(filterOpen, val => {
     filterHover(val)
 })
 
-onMounted(() => {
-    computeCounter(countFilter.value, countFilter.value)
+useRO(({breakpoint}) => {
+    if (breakpoint === 'mobile') {
+        computeCounter(countFilter.value, countFilter.value)
+    }
 })
 const filterRef = ref()
 function computeCounter(val: number, lastVal: number) {
@@ -79,7 +81,6 @@ function computeCounter(val: number, lastVal: number) {
         }
     }
     const lastlastSpan = spans[spans.length - 2] as HTMLElement
-    console.log(lastlastSpan, spans[spans.length - 1]);
 
     if (val !== 0 && (lastlastSpan.innerText[0] !== "(" && lastlastSpan.innerText[1] !== "(")) {
         const s = N.Cr('span')
@@ -94,6 +95,7 @@ function computeCounter(val: number, lastVal: number) {
     }
 }
 watch(countFilter, (val, lastVal) => {
+    if (breakpoint.value !== "mobile") return
     computeCounter(val, lastVal)
 })
 
@@ -163,7 +165,7 @@ watch(countFilter, (val, lastVal) => {
 
     .filter-item__wrapper {
         button::after {
-            content: "select";
+            content: "Select";
             position: absolute;
             left: 1rem;
             top: 0.5rem;
@@ -171,6 +173,9 @@ watch(countFilter, (val, lastVal) => {
             pointer-events: none;
             opacity: 0;
             transition: opacity 200ms;
+        }
+        button.active::after {
+            content: "Unselect";
         }
     }
 
