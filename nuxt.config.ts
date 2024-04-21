@@ -100,7 +100,7 @@ export default defineNuxtConfig({
             link: [
                 {
                     rel: "manifest",
-                    href: "/favicon/site.manifest"
+                    href: "/favicon/site.webmanifest"
                 },
                 {
                     rel: "icon",
