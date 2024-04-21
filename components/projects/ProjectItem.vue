@@ -16,10 +16,11 @@
         </div>
 
         <div class="project-preview" v-if="routeTo.name !== 'projects-id'"
-            :class="{ 'scroll-show': previewShow, hide: routeTo.name === 'projects-id' && routeTo.fullPath === '/projects/' + props.route }">
-            <IMedia :props="props.cover" @click="navigateTo('project/' + props.route)" v-if="breakpoint === 'desktop'">
+            :class="{ 'scroll-show': previewShow, hide: routeTo.name === 'projects-id' && routeTo.fullPath === '/projects/' + props.route }"
+            @click="navigateTo('/projects/' + props.route)">
+            <IMedia :props="props.cover" v-if="breakpoint === 'desktop'">
             </IMedia>
-            <IMedia :props="props.cover_mobile" @click="navigateTo('project/' + props.route)" v-else></IMedia>
+            <IMedia :props="props.cover_mobile" v-else></IMedia>
         </div>
     </NuxtLink>
 </template>
@@ -30,6 +31,7 @@ import { useFlowProvider } from '~/waterflow/FlowProvider';
 import { onLeave } from '~/waterflow/composables/onFlow';
 
 const { props } = defineProps<{ props: ProjectData }>()
+console.log(props.route);
 
 const wrapperRef = ref() as Ref<HTMLElement>
 const textRef = ref() as Ref<HTMLElement>
@@ -178,6 +180,7 @@ a {
         left: calc($grid-cell-width * 2 + $main-margin);
 
         &.scroll-show {
+            pointer-events: all;
             opacity: 1;
         }
     }

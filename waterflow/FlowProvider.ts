@@ -73,7 +73,9 @@ export class FlowProvider {
     this.currentPageRef = currentPageRef
     this.swapWrapper = swapWrapper
     // this.currentPageRef.value = this.routeFrom.
-    this.currentPageRef.value = this.routerMap.get(this.routeTo.name!.toString())
+    // console.log(this.routeTo, this.routeTo.name?.toString());
+    const to = this.routeTo.name?.toString()
+    this.currentPageRef.value = this.routerMap.get(to || "index")
   }
 
   // to add global props, like layout component or a webGL context
