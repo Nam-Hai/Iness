@@ -26,10 +26,10 @@ export default defineNuxtConfig({
 
     app: {
         head: {
-            // htmlAttrs: {
-            //     lang: 'fr',
-            //     style: "#FBFBFB"
-            // },
+            htmlAttrs: {
+                lang: 'fr',
+                style: "#FBFBFB"
+            },
             meta: [
                 {
                     charset: "utf-8",
