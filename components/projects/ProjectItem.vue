@@ -31,7 +31,6 @@ import { useFlowProvider } from '~/waterflow/FlowProvider';
 import { onLeave } from '~/waterflow/composables/onFlow';
 
 const { props } = defineProps<{ props: ProjectData }>()
-console.log(props.route);
 
 const wrapperRef = ref() as Ref<HTMLElement>
 const textRef = ref() as Ref<HTMLElement>

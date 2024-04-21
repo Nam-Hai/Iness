@@ -34,6 +34,7 @@ const { breakpoint } = useStoreView()
 const mobileProjectItemRef = ref() as Ref<HTMLElement>
 
 const { mobileShow } = useStoreProjectImage()
+mobileShow.value = true
 const enter = onEnter({
     el: mobileProjectItemRef,
     vStart: -10,
