@@ -90,7 +90,7 @@ export default defineNuxtConfig({
                     content: "TODO",
                 }
             ],
-            title: "Iness - Portfolio",
+            title: "Ines - Portfolio",
             link: [
                 {
                     rel: "manifest",
