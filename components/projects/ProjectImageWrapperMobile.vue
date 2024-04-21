@@ -37,8 +37,12 @@ const { breakpoint } = useStoreView()
 currentImage.value = 0
 currentImageShow.value = 0
 
-watch(currentImage, (to) => {
-    currentImageShow.value = -1
+watch(currentImage, (to, from) => {
+    const toI = props.project_images[to]
+    const fromI = props.project_images[from]
+    if (toI.description !== fromI.description) {
+        currentImageShow.value = -1
+    }
     useDelay(100, () => {
         currentImageShow.value = to
     })
