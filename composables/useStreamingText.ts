@@ -20,8 +20,10 @@ export function useStreamingText(elRef: Ref<HTMLElement>, options: { breakpoint:
     function computeTimeline() {
         tl.reset()
         const el = elRef.value
+        console.log(el);
         if (!el) return
         const text = elRef.value.innerText
+        console.log(text);
         const char = text.split('')
         el.innerHTML = ""
         const spans: HTMLElement[] = []

@@ -10,7 +10,7 @@
 
             <div class="controller__wrapper" v-if="controller">
                 <button class="play__btn" @click="pause">
-                    {{ isPaused ? "Play" : "Pause" }}
+                    {{ isPaused ? "Pause" : "Play" }}
                 </button>
                 /
                 <button class="mute__btn" @click="mute">

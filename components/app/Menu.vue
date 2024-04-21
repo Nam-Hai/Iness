@@ -93,8 +93,17 @@ const shopRef = ref()
 const { breakpoint } = useStoreView()
 
 const { routeRef } = useFlowProvider()
+const { prismicData, preloaderComplete } = usePreloader()
+const text = ref("")
+watch([breakpoint, preloaderComplete], async () => {
+    if (!prismicData.value) return
+    if (!prismicData.value.bottomText) return
+    const bottomText = prismicData.value.bottomText
+    text.value = breakpoint.value === "desktop" ? bottomText.desktop : bottomText.mobile
+    await nextTick()
+    computeTimeline()
+}, { immediate: true })
 
-const text = computed(() => breakpoint.value === 'desktop' ? `dependant creative, working in every type of studio and collaboration, as long as the project is cool` : `dependent creative`)
 const delayedHideMenu = ref(false)
 
 const hideMenu = ref(false)
@@ -108,7 +117,7 @@ watch([routeRef, breakpoint], () => {
 }, { immediate: true })
 
 const hoverTextRef = ref() as Ref<HTMLElement>
-const { trigger } = useStreamingText(hoverTextRef, { breakpoint: true })
+const { trigger, computeTimeline } = useStreamingText(hoverTextRef)
 
 const { trigger: overviewTrigger } = useStreamingText(overviewRef)
 const { trigger: indexTrigger } = useStreamingText(indexRef)
@@ -309,7 +318,7 @@ watch(routeRef, (routeTo, routeFrom) => {
             grid-column: 6 / 9;
             grid-row: 4 / 5;
             align-self: end;
-            top: 0.4rem;
+            top: 0.28rem;
 
             svg {
                 width: 74.731px;

@@ -58,6 +58,7 @@ export type PrismicData = {
     projects: ProjectData[],
     filters: FilterData,
     info: RichText[][],
+    bottomText: { mobile: string, desktop: string }
 }
 
 export const usePreloader = createStore(() => {
@@ -124,7 +125,12 @@ export const usePreloader = createStore(() => {
                 }`
                 })
 
-                const [overviewData, projectData, filterData, infoData] = await Promise.all([overviewPromise, projectPromise, filterPromise, infoPromise])
+                const bottomTextPromise = client.getByType("bottom_text")
+                const [overviewData, projectData, filterData, infoData, bottomTextData] = await Promise.all([overviewPromise, projectPromise, filterPromise, infoPromise, bottomTextPromise])
+                const bottomText: { mobile: string, desktop: string } = {
+                    mobile: bottomTextData.results[0].data.mobile || "",
+                    desktop: bottomTextData.results[0].data.desktop || ""
+                }
 
                 const placeholderMedia: PrismicMedia = {
                     id: "-1",
@@ -147,7 +153,7 @@ export const usePreloader = createStore(() => {
                 const projects: ProjectData[] = projectData.map(d => {
                     return {
                         title: d.data.title || "Projet",
-                        route: (d.data.title || "Project" ).replace(/\s/g, '-'),
+                        route: (d.data.title || "Project").replace(/\s/g, '-'),
                         client: d.data.client || "",
                         type: d.data.type.id ? d.data.type.data.filter : "Filter placeholder",
                         date: d.data.date || "2024",
@@ -190,9 +196,10 @@ export const usePreloader = createStore(() => {
                     projects,
                     filters,
                     info,
+                    bottomText
                 }
             })
-            prismicData.value = data.value || { overview: [], info: [], filters: [], projects: [] }
+            prismicData.value = data.value || { overview: [], info: [], filters: [], projects: [], bottomText: { mobile: "", desktop: "" } }
 
             const { filterActive } = useStoreFilter()
             for (const f of prismicData.value.filters) {
