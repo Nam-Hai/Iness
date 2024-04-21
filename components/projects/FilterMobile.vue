@@ -1,9 +1,9 @@
 <template>
-    <div class="filter-modal" v-if="filterOpen" @click="filterOpen = false">
-    </div>
     <div class="filter__wrapper" ref="wrapperRef" :class="{ open: filterOpen }">
-        <button :style="{ cursor: 'pointer', color: '#AB0000' }" v-streamed-text="5" v-leave-text :class="{ open: filterOpen }"
-            @click="filterOpen = !filterOpen">
+        <div class="filter-modal" v-if="filterOpen" @click="console.log('click modal'); filterOpen = false">
+        </div>
+        <button :style="{ cursor: 'pointer', color: '#AB0000' }" v-streamed-text="5" v-leave-text
+            :class="{ open: filterOpen }" @click="filterOpen = !filterOpen">
             Filter
         </button>
 
@@ -53,6 +53,7 @@ function toggleFilter(filter: string) {
 .filter-modal {
     position: fixed;
     inset: 0;
+    z-index: 1;
 }
 
 .filter__wrapper {
@@ -65,6 +66,11 @@ function toggleFilter(filter: string) {
     // height: 2rem;
     height: $grid-cell-height;
     pointer-events: none;
+
+    >button,
+    >div {
+        z-index: 2;
+    }
 
     button:first-child {
         pointer-events: all;
@@ -96,6 +102,11 @@ function toggleFilter(filter: string) {
         height: $grid-cell-height;
         justify-content: space-between;
         flex-direction: column;
+        pointer-events: none;
+
+        button {
+            pointer-events: all;
+        }
     }
 
     button {
