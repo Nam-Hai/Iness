@@ -335,7 +335,7 @@ watch(routeRef, (routeTo, routeFrom) => {
     >.hover-text {
         opacity: 0;
         color: $neutral-text;
-        left: 1.9rem;
+        // left: 1.9rem;
         bottom: 1.9rem;
         position: fixed;
         width: max-content;
