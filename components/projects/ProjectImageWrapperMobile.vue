@@ -21,7 +21,7 @@
             <span v-streamed-text v-leave-text>{{ props.date }}</span>
         </div>
         <div class="description" v-streamed-text v-leave-text v-if="currentImageShow !== -1">
-            {{ props.project_images_mobile[currentImage]?.description || "" }}
+            {{ props.project_images_mobile[currentImage].description || "" }}
         </div>
     </div>
 </template>
@@ -38,8 +38,8 @@ currentImage.value = 0
 currentImageShow.value = 0
 
 watch(currentImage, (to, from) => {
-    const toI = props.project_images[to]
-    const fromI = props.project_images[from]
+    const toI = props.project_images_mobile[to]
+    const fromI = props.project_images_mobile[from]
     if (toI.description !== fromI.description) {
         currentImageShow.value = -1
     }
