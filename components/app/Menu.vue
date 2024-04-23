@@ -19,7 +19,7 @@
             </span>
         </NuxtLink>
         <div :class="{ hideMenu: delayedHideMenu }" class="noselect shop">
-            <div ref="shopRef" @mouseenter="shopHoverTrigger">
+            <div ref="shopRef" @mouseenter="shopHoverTrigger" @click="true">
                 Shop
             </div>
 

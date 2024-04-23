@@ -9,7 +9,7 @@ export type defaultTransitionProps = {
 export const defaultFlowOut: FlowFunction<defaultTransitionProps> = (props, resolve, provider) => {
     const { filterOpen } = useStoreFilter()
     filterOpen.value = false
-    useDelay(2000, () => {
+    useDelay(1500, () => {
         resolve()
     })
 }
