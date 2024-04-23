@@ -6,7 +6,7 @@
         <div class="container" ref="textRef">
             <span v-streamed-text v-leave-text>{{ props.title }}</span>
             <span v-streamed-text v-leave-text>{{ props.client }}</span>
-            <span v-streamed-text v-leave-text>{{ props.type }}</span>
+            <span v-streamed-text v-leave-text v-if="props.type !== 'false'">{{ props.type }}</span>
             <span v-streamed-text v-leave-text>{{ props.date }}</span>
 
             <div class="description" v-if="routeTo.fullPath === '/projects/' + props.route && currentImageShow !== -1"

@@ -173,7 +173,7 @@ export const usePreloader = createStore(() => {
                         title: d.data.title || "Projet",
                         route: (d.data.title || "Project").replace(/\s/g, '-'),
                         client: d.data.client_name || "",
-                        type: d.data.type.id ? d.data.type.data.filter : "Filter placeholder",
+                        type: d.data.type.id ? d.data.type.data.filter : "false",
                         date: d.data.date || "2024",
                         order: +d.data.order || 0,
                         cover: d.data.cover.id ? d.data.cover : placeholderMedia,
