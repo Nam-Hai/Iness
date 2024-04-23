@@ -9,7 +9,7 @@ export type defaultTransitionProps = {
 export const defaultFlowOut: FlowFunction<defaultTransitionProps> = (props, resolve, provider) => {
     const { filterOpen } = useStoreFilter()
     filterOpen.value = false
-    useDelay(1500, () => {
+    useDelay(2000, () => {
         resolve()
     })
 }
@@ -23,7 +23,7 @@ export const fastProjectsOut: FlowFunction<defaultTransitionProps> = (props, res
     filterOpen.value = false
     const { breakpoint } = useStoreView()
     if (breakpoint.value == "mobile") {
-        useDelay(1500, () => {
+        useDelay(2000, () => {
             resolve()
 
         })
@@ -35,7 +35,7 @@ export const fastProjectsOut: FlowFunction<defaultTransitionProps> = (props, res
 export const defaultFlowIn: FlowFunction<defaultTransitionProps> = ({ wrapperRef }, resolve,) => {
     const { resetFilter } = useStoreFilter()
     resetFilter()
-    useDelay(1000, () => {
+    useDelay(2000, () => {
         resolve()
     })
     // resolve()
@@ -46,16 +46,16 @@ export const projectProjectFlowIn: FlowFunction<defaultTransitionProps> = async 
         // return defaultFlowIn({ wrapperRef }, resolve, provider)
     }
     resolve()
-    useDelay(1000, () => {
+    useDelay(2000, () => {
         // resolve()
     })
 }
 
 export const flowOutMap = new Map([
     ['default', defaultFlowOut],
-    ['projects-id => projects-id', fastOut],
-    ['projects-id => projects', fastOut],
-    ['projects => projects-id', fastOut],
+    ['projects-id => projects-id', defaultFlowOut],
+    ['projects-id => projects', defaultFlowOut],
+    ['projects => projects-id', defaultFlowOut],
     ['overview => projects', fastOut],
     ['overview => info', fastOut],
 ])

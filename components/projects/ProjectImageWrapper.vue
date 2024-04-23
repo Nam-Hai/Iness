@@ -3,29 +3,30 @@
         @click="$event.stopPropagation(); currentImage = N.mod(currentImage + 1, props.project_images.length)">
         <div class="image__wrapper noselect" :data-column="project.column"
             v-for="(project, index) in props.project_images" :class="{ show: index === currentImageShow }"
-            :key="project.image.id + '__' + index" v-leave>
+            :key="project.image.id + '__' + index">
 
-            <div class="image">
+            <div class="image" v-leave>
                 <ImgWrapper :props="project.image" :controller="project.controller" v-if="currentImageShow === index" />
             </div>
 
             <span class="overflow"
-                v-if="currentImageShow !== -1 && props.project_images.length > 1 && breakpoint === 'desktop'">
-                <span>{{ index + 1 }}</span>/{{ props.project_images.length }}
+                v-if="currentImageShow !== -1 && props.project_images.length > 1 && breakpoint === 'desktop'"
+                v-leave-text>
+                <span>{{ index + 1 }}</span><span>/</span><span>{{ props.project_images.length }}</span>
             </span>
         </div>
     </div>
 
     <div class="project-info" v-if="breakpoint === 'mobile'">
-        <NuxtLink to="/projects" class="back" v-streamed-text>Back to index</NuxtLink>
+        <NuxtLink to="/projects" class="back" v-streamed-text v-leave-text>Back to index</NuxtLink>
 
         <div class="info__wrapper">
-            <span v-streamed-text>{{ props.title }}</span>
-            <span v-streamed-text>{{ props.client }}</span>
-            <span v-streamed-text>{{ props.type }}</span>
-            <span v-streamed-text>{{ props.date }}</span>
+            <span v-streamed-text v-leave-text>{{ props.title }}</span>
+            <span v-streamed-text v-leave-text>{{ props.client }}</span>
+            <span v-streamed-text v-leave-text>{{ props.type }}</span>
+            <span v-streamed-text v-leave-text>{{ props.date }}</span>
         </div>
-        <div class="description" v-streamed-text v-if="currentImageShow !== -1">
+        <div class="description" v-streamed-text v-if="currentImageShow !== -1" v-leave-text>
             {{ props.project_images[currentImage]?.description || "" }}
         </div>
     </div>
@@ -33,7 +34,7 @@
 
 <script lang="ts" setup>
 import { vStreamedText } from '~/directives/streamedText';
-import { vLeave } from '~/directives/leave'
+import { vLeave, vLeaveText } from '~/directives/leave'
 
 const { props } = defineProps<{ props: ProjectData }>()
 const wrapperRef = ref() as Ref<HTMLElement>

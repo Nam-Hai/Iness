@@ -51,7 +51,7 @@ export default defineNuxtConfig({
                 {
                     key: "og:url",
                     property: "og:url",
-                    content: "TODO",
+                    content: "https://www.in-e-studio.com",
                 },
                 {
                     key: "og:description",
@@ -87,7 +87,7 @@ export default defineNuxtConfig({
                 {
                     key: "twitter:card",
                     name: "twitter:card",
-                    content: "TODO",
+                    content: "sumary",
                 }
             ],
             title: "Ines - Portfolio",

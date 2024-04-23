@@ -17,11 +17,11 @@ export const vLeaveText = {
         const { breakpoint } = useStoreView()
 
         onLeave(() => {
-            if (flowProvider.getRouteTo().name === "projects-id") {
-                el.style.transition = "opacity 150ms"
-                N.O(el, 0)
-                return
-            }
+            // if (flowProvider.getRouteTo().name === "projects-id") {
+            //     el.style.transition = "opacity 150ms"
+            //     N.O(el, 0)
+            //     return
+            // }
             const text = el.innerText
             const char = text.split('')
 
