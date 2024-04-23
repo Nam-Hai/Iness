@@ -19,7 +19,7 @@
             </span>
         </NuxtLink>
         <div :class="{ hideMenu: delayedHideMenu }" class="noselect shop">
-            <div ref="shopRef" @mouseenter="shopHoverTrigger" @click="true">
+            <div ref="shopRef" @mouseenter="shopHoverTrigger" @click="shopHoverTrigger">
                 Shop
             </div>
 
@@ -355,7 +355,7 @@ watch(routeRef, (routeTo, routeFrom) => {
     position: relative;
     z-index: 200;
     pointer-events: all;
-    color: blue;
+    color: green;
 }
 
 .hideMenu {
