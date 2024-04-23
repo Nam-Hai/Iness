@@ -46,7 +46,6 @@ export const useStoreScroll = createStore(() => {
 				virtualScroll = container.value.scrollTop
 				scroll.value = virtualScroll
 			}
-			console.log(virtualScroll);
 			ticking = false
 
 		}, RafPriority.FIRST).run()
