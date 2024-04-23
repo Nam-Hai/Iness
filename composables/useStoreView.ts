@@ -39,18 +39,21 @@ export const useStoreScroll = createStore(() => {
 	let ticking = false
 	function init() {
 		const app = N.get("#app")!
-		container.value = app
 		useRafR(({ delta, elapsed }) => {
 			if (!ticking) return
 			if (container.value) {
+
 				virtualScroll = container.value.scrollTop
 				scroll.value = virtualScroll
 			}
-
+			console.log(virtualScroll);
 			ticking = false
 
 		}, RafPriority.FIRST).run()
 
+		window.addEventListener("wheel", () => {
+			ticking = true
+		})
 		window.addEventListener("scroll", () => {
 			ticking = true
 		})
@@ -69,8 +72,9 @@ export const useStoreScroll = createStore(() => {
 	const { isMobile } = useStore()
 	watch(isMobile, (val) => {
 		container.value = val ? N.get("#app")! : document.body
+		console.log("=========>", val, container.value);
 		resize()
-	})
+	}, {immediate: true})
 	function resize() {
 		if (!container.value) return
 		dimension.value = container.value.scrollHeight - vh.value

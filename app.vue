@@ -63,6 +63,8 @@ useRO(() => {
 
   if (m) {
     N.Class.add(document.body, "is-mobile")
+  } else {
+    N.Class.remove(document.body, "is-mobile")
   }
 })
 </script>
