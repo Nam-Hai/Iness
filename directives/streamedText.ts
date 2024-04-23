@@ -16,7 +16,7 @@ export const vStreamedText = {
 
         const flowProvider = useFlowProvider()
         const { breakpoint } = useStoreView()
-        if (!flowProvider.flowIsHijacked.value && !(flowProvider.getRouteTo().name === "projects-id" && breakpoint.value === "mobile")) return
+        // if (!flowProvider.flowIsHijacked.value && !(flowProvider.getRouteTo().name === "projects-id" && breakpoint.value === "mobile")) return
         const text = el.innerText
         const char = text.split('')
 
