@@ -20,7 +20,7 @@ export type ProjectImage = {
 export type RichText = {
 
     text: string,
-    spans: {
+    spans: ({
         type: "hyperlink",
         end: number,
         start: number,
@@ -29,7 +29,11 @@ export type RichText = {
             url: string,
             target: "_blank"
         }
-    }[]
+    } | {
+        type: "newline",
+        start: number
+        end: number
+    })[]
 }
 
 export type PrismicMedia = {
@@ -88,7 +92,7 @@ export const usePreloader = createStore(() => {
                     }
                 }`
                 })
-                overviewPromise.then(el=>{
+                overviewPromise.then(el => {
                     console.log("overview then el", el);
                 })
 
@@ -169,7 +173,6 @@ export const usePreloader = createStore(() => {
                 console.log(overview);
 
                 const projects: ProjectData[] = projectData.map(d => {
-                    console.log(d);
                     return {
                         title: d.data.title || "Projet",
                         route: (d.data.title || "Project").replace(/\s/g, '-'),

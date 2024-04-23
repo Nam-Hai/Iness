@@ -3,6 +3,7 @@
 </template>
 
 <script lang="tsx" setup>
+import { formatWithOptions } from 'util';
 import ILink from './ILink.vue';
 import StreamedSpan from './StreamedSpan.vue';
 
@@ -11,11 +12,20 @@ const { props } = defineProps<{ props: RichText[] }>()
 type ExtractSpansType<T> = T extends { spans: infer S } ? S : never;
 type Spans = ExtractSpansType<RichText>[number];
 
+console.log(props);
 
 let nodeParent = <div>
     {
         props.map(richText => {
             let text = richText.text
+            for (let index = 0; index < text.length; index++) {
+                const char = text[index]
+                if (char == "\n") {
+                    richText.spans.push({ type: "newline", start: index, end: index + 1 })
+                }
+            }
+
+            richText.spans.sort((a, b) => a.start - b.start)
             if (richText.spans.length === 0) {
 
                 return <>
@@ -25,11 +35,12 @@ let nodeParent = <div>
             else {
                 return richText.spans.map((span, index) => {
                     const spanText = text.slice(span.start, span.end)
+                    console.log(spanText);
                     return <>
                         {/* <span v-streamed-text>{text.slice(props.spans[index - 1]?.end || 0, span.start)}</span> */}
                         <StreamedSpan text={text.slice(richText.spans[index - 1]?.end || 0, span.start)} />
                         {getAnchor(span, spanText)}
-                        {index === richText.spans.length - 1 && <><StreamedSpan text={text.slice(span.end, text.length)} />\n<br></br></>}
+                        {index === richText.spans.length - 1 && <><StreamedSpan text={text.slice(span.end, text.length)} /><br></br></>}
                     </>
                 })
             }
@@ -42,6 +53,10 @@ function getAnchor(span: Spans, text: string) {
     if (span.type === "hyperlink") {
         // return <a href={span.data.url} target="_blank">{text}</a>
         return <ILink font={true} text={text} href={span.data.url} />
+    } else if (span.type === "newline") {
+        return <>
+            <br />
+        </>
     }
     return undefined
 }
