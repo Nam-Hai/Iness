@@ -10,8 +10,8 @@
         <NuxtLink class="link-hover" to="mailto:contact@in-e-studio.com" v-streamed-text v-leave-text v-else>Contact@in-e-studio.com
         </NuxtLink>
 
-        <ILink copy="copy phone number" text="+ 33 7 88 25 6707" :font="false" v-if="!isMobile" />
-        <NuxtLink class="link-hover" to="tel:+33788256707" v-streamed-text v-leave-text v-else>+ 33 7 88 25 6707</NuxtLink>
+        <ILink copy="copy phone number" text="+ 33 7 88 25 67 07" :font="false" v-if="!isMobile" />
+        <NuxtLink class="link-hover" to="tel:+33788256707" v-streamed-text v-leave-text v-else>+ 33 7 88 25 67 07</NuxtLink>
       </div>
     </div>
 
