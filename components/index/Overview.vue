@@ -1,6 +1,6 @@
 <template>
     <div class="project__wrapper" ref="wrapperRef">
-        <div class="column__wrapper" v-for="(d, index) in data.slice(0, 9).sort((a, b) => a.order - b.order)"
+        <div class="column__wrapper" v-for="(d, index) in data.slice(0, 9)"
             :key="d.image.name + '_' + index" @mouseenter="() => { currentImage = index }"
             :class="{ show: currentImageShow === index, loaded: true }">
             <IMediaOverview :props="d.image"></IMediaOverview>

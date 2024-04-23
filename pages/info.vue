@@ -7,16 +7,19 @@
           You can contact me on
         </span>
         <ILink copy="copy email" text="ines@in-e-studio.com" :font="false" v-if="!isMobile" />
-        <NuxtLink class="link-hover" to="mailto:contact@in-e-studio.com" v-streamed-text v-leave-text v-else>Contact@in-e-studio.com
+        <NuxtLink class="link-hover" to="mailto:contact@in-e-studio.com" v-streamed-text v-leave-text v-else>
+          Contact@in-e-studio.com
         </NuxtLink>
 
         <ILink copy="copy phone number" text="+ 33 7 88 25 67 07" :font="false" v-if="!isMobile" />
-        <NuxtLink class="link-hover" to="tel:+33788256707" v-streamed-text v-leave-text v-else>+ 33 7 88 25 67 07</NuxtLink>
+        <NuxtLink class="link-hover" to="tel:+33788256707" v-streamed-text v-leave-text v-else>+ 33 7 88 25 67 07
+        </NuxtLink>
       </div>
     </div>
 
     <div class="info-text__wrapper">
-      <RichText :props="richText" v-for="richText, index in prismicData.info" :key="'info-text-' + index"></RichText>
+      <RichText :props="text" v-for="{ order, text }, index in prismicData.info" :key="'info-text-' + index">
+      </RichText>
       <!-- <div class="info-text" v-for="(text, index) in [...copy, ...copy]" v-streamed-text="index * 5"
         :key="'info-text-' + index">
         {{ text }}

@@ -4,6 +4,7 @@ export type ProjectData = {
     client: string,
     type: string,
     date: string,
+    order: number,
     cover: PrismicMedia,
     cover_mobile: PrismicMedia,
     project_images: ProjectImage[]
@@ -51,13 +52,18 @@ export type FilterData = string[]
 
 type OverviewData = {
     image: PrismicMedia,
+    image_mobile: PrismicMedia,
     order: number
 }
 export type PrismicData = {
     overview: OverviewData[],
     projects: ProjectData[],
     filters: FilterData,
-    info: RichText[][],
+    info: {
+        text: RichText[],
+        order: number
+    }[]
+    // info: RichText[][],
     bottomText: { mobile: string, desktop: string }
 }
 
@@ -76,6 +82,7 @@ export const usePreloader = createStore(() => {
                     graphQuery: `{
                     overview {
                         overview-video-image
+                        overview-mobile-video-image
                         order
                     }
                 }`
@@ -89,6 +96,7 @@ export const usePreloader = createStore(() => {
                         date
                         cover
                         cover_mobile
+                        order
                         project_images {
                             project_image
                             description
@@ -114,6 +122,7 @@ export const usePreloader = createStore(() => {
                     graphQuery: `{
                     info {
                         info-text
+                        order
                     }
                 }`
                 })
@@ -146,9 +155,10 @@ export const usePreloader = createStore(() => {
                 const overview: OverviewData[] = overviewData.map(d => {
                     return {
                         image: d.data["overview-video-image"].id ? d.data["overview-video-image"] : placeholderMedia,
-                        order: +d.data.order || 1
+                        image_mobile: d.data["overview-mobile-video-image"].id ? d.data["overview-mobile-video-image"] : placeholderMedia,
+                        order: +d.data.order || 0
                     }
-                })
+                }).sort((a, b) => a.order - b.order)
 
                 const projects: ProjectData[] = projectData.map(d => {
                     return {
@@ -157,6 +167,7 @@ export const usePreloader = createStore(() => {
                         client: d.data.client_name || "",
                         type: d.data.type.id ? d.data.type.data.filter : "Filter placeholder",
                         date: d.data.date || "2024",
+                        order: +d.data.order || 0,
                         cover: d.data.cover.id ? d.data.cover : placeholderMedia,
                         cover_mobile: d.data.cover_mobile.id ? d.data.cover_mobile : placeholderMedia,
                         project_images: d.data.project_images.map((el: any) => {
@@ -176,20 +187,23 @@ export const usePreloader = createStore(() => {
                             }
                         })
                     }
-                })
+                }).sort((a, b) => a.order - b.order)
 
                 const filters: FilterData = filterData.map(d => {
                     return d.data.filter
                 })
 
-                const info: RichText[][] = infoData.map(d => {
-                    return d.data['info-text'].map((richText: any) => {
-                        return {
-                            text: richText.text,
-                            spans: richText.spans
-                        }
-                    })
-                })
+                const info: { order: number, text: RichText[] }[] = infoData.map(d => {
+                    return {
+                        order: +d.data.order || 0,
+                        text: d.data['info-text'].map((richText: any) => {
+                            return {
+                                text: richText.text,
+                                spans: richText.spans
+                            }
+                        })
+                    }
+                }).sort((a, b) => a.order - b.order)
 
                 return {
                     overview,
