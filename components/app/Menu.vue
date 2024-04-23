@@ -1,17 +1,19 @@
 <template>
     <div class="menu__wrapper" ref="wrapperRef" :class="{ filterOpen }">
-        <NuxtLink to="/" :class="{ 'menu__active': routeRef.path === '/', hideMenu: delayedHideMenu && hideMenu }">
+        <NuxtLink to="/"
+            :class="{ 'menu__active': routeRef.path === '/', hideMenu: delayedHideMenu && hideMenu, 'current-page': routeRef.name === 'index' }">
             <span ref="overviewRef">
                 Overview
             </span>
         </NuxtLink>
-        <NuxtLink to="/projects" :class="{ 'menu__active': routeRef.path === '/index', hideMenu: delayedHideMenu }">
+        <NuxtLink to="/projects"
+            :class="{ 'menu__active': routeRef.path === '/index', hideMenu: delayedHideMenu, 'current-page': routeRef.name === 'projects' || routeRef.name === 'projects-id' }">
             <span ref="indexRef"
                 :style="{ display: routeRef.name === 'projects-id' && breakpoint === 'desktop' ? 'none' : 'unset' }">
                 Index
             </span>
         </NuxtLink>
-        <NuxtLink to="/info" :class="{ hideMenu: delayedHideMenu }">
+        <NuxtLink to="/info" :class="{ hideMenu: delayedHideMenu, 'current-page': routeRef.name === 'info' }">
             <span ref="infoRef">
                 Info
             </span>
@@ -181,6 +183,9 @@ watch(routeRef, (routeTo, routeFrom) => {
         color: $neutral-text;
     }
 
+    .current-page {
+        color: $neutral-text;
+    }
 
     pointer-events: none;
 

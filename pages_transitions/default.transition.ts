@@ -23,7 +23,7 @@ export const fastProjectsOut: FlowFunction<defaultTransitionProps> = (props, res
     filterOpen.value = false
     const { breakpoint } = useStoreView()
     if (breakpoint.value == "mobile") {
-        useDelay(2000, () => {
+        useDelay(1500, () => {
             resolve()
 
         })
