@@ -355,6 +355,7 @@ watch(routeRef, (routeTo, routeFrom) => {
     position: relative;
     z-index: 200;
     pointer-events: all;
+    color: blue;
 }
 
 .hideMenu {

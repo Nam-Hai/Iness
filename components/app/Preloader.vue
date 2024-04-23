@@ -32,7 +32,9 @@ onMounted(() => {
 
 async function endPreloader() {
     preloaderComplete.value = true
-    N.Class.add(wrapperRef.value, 'hide')
+    if (wrapperRef.value) {
+        N.Class.add(wrapperRef.value, 'hide')
+    }
 
     await nextTick()
     flowProvider.flowIsHijacked.value = false
