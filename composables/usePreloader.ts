@@ -76,6 +76,7 @@ export const usePreloader = createStore(() => {
     const loadPrismic = async () => {
         return new Promise<void>(async (res) => {
             const { client } = usePrismic()
+            console.log(client);
             const { data } = await useAsyncData('prismic', async () => {
 
                 const overviewPromise = client.getAllByType('overview', {
@@ -86,6 +87,9 @@ export const usePreloader = createStore(() => {
                         order
                     }
                 }`
+                })
+                overviewPromise.then(el=>{
+                    console.log("overview then el", el);
                 })
 
                 const projectPromise = client.getAllByType('project', {
@@ -133,9 +137,11 @@ export const usePreloader = createStore(() => {
                     }
                 }`
                 })
+                console.log('test', overviewPromise);
 
                 const bottomTextPromise = client.getByType("bottom_text")
                 const [overviewData, projectData, filterData, infoData, bottomTextData] = await Promise.all([overviewPromise, projectPromise, filterPromise, infoPromise, bottomTextPromise])
+                console.log(overviewData);
                 const bottomText: { mobile: string, desktop: string } = {
                     mobile: bottomTextData.results[0].data.mobile || "",
                     desktop: bottomTextData.results[0].data.desktop || ""
@@ -152,6 +158,7 @@ export const usePreloader = createStore(() => {
 
                 }
 
+                console.log('test');
                 const overview: OverviewData[] = overviewData.map(d => {
                     return {
                         image: d.data["overview-video-image"].id ? d.data["overview-video-image"] : placeholderMedia,
@@ -159,6 +166,7 @@ export const usePreloader = createStore(() => {
                         order: +d.data.order || 0
                     }
                 }).sort((a, b) => a.order - b.order)
+                console.log(overview);
 
                 const projects: ProjectData[] = projectData.map(d => {
                     return {
