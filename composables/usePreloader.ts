@@ -169,6 +169,7 @@ export const usePreloader = createStore(() => {
                 console.log(overview);
 
                 const projects: ProjectData[] = projectData.map(d => {
+                    console.log(d);
                     return {
                         title: d.data.title || "Projet",
                         route: (d.data.title || "Project").replace(/\s/g, '-'),
