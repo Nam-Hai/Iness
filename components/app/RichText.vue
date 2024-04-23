@@ -29,7 +29,7 @@ let nodeParent = <div>
                         {/* <span v-streamed-text>{text.slice(props.spans[index - 1]?.end || 0, span.start)}</span> */}
                         <StreamedSpan text={text.slice(richText.spans[index - 1]?.end || 0, span.start)} />
                         {getAnchor(span, spanText)}
-                        {index === richText.spans.length - 1 && <><StreamedSpan text={text.slice(span.end, text.length)} /><br></br></>}
+                        {index === richText.spans.length - 1 && <><StreamedSpan text={text.slice(span.end, text.length)} />\n<br></br></>}
                     </>
                 })
             }
