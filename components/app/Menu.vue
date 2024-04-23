@@ -294,6 +294,14 @@ watch(routeRef, (routeTo, routeFrom) => {
             }
         }
 
+        &:hover {
+            // color: $discard-text;
+            // transition: color 250ms;
+            &::after {
+                opacity: 1;
+            }
+        }
+
         &:nth-child(5) {
             grid-column: 1 / 9;
             grid-row: 4 / 5;
