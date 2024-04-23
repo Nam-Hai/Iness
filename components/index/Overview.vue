@@ -1,12 +1,9 @@
 <template>
     <div class="project__wrapper" ref="wrapperRef">
-        <div class="column__wrapper" v-for="(d, index) in data.slice(0, 9)"
-            :key="d.image.name + '_' + index" @mouseenter="() => { currentImage = index }"
-            :class="{ show: currentImageShow === index, loaded: true }">
-            <IMediaOverview :props="d.image"></IMediaOverview>
-            <!-- <img :src="img.src" :class="{ show: currentImageShow === index, loaded: img.load }" @load="() => {
-                img.load.value = true
-            }" ref="imageRef" v-leave-img /> -->
+        <div class="column__wrapper" v-for="(d, index) in data.slice(0, 9)" :key="d.image.name + '_' + index"
+            @mouseenter="() => { currentImage = index }" :class="{ show: currentImageShow === index, loaded: true }">
+            <IMediaOverview :props="d.image" v-if="breakpoint === 'desktop'"></IMediaOverview>
+            <IMediaOverview :props="d.image_mobile" v-else></IMediaOverview>
         </div>
     </div>
 </template>
