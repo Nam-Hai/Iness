@@ -18,14 +18,7 @@ let nodeParent = <div>
     {
         props.map(richText => {
             let text = richText.text
-            for (let index = 0; index < text.length; index++) {
-                const char = text[index]
-                if (char == "\n") {
-                    richText.spans.push({ type: "newline", start: index, end: index + 1 })
-                }
-            }
 
-            richText.spans.sort((a, b) => a.start - b.start)
             if (richText.spans.length === 0) {
 
                 return <>
