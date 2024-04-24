@@ -7,8 +7,8 @@
           You can contact me on
         </span>
         <ILink copy="copy email" text="ines@in-e-studio.com" :font="false" v-if="!isMobile" />
-        <NuxtLink class="link-hover email" to="mailto:contact@in-e-studio.com" v-streamed-text v-leave-text v-else>
-          Contact@in-e-studio.com
+        <NuxtLink class="link-hover email" to="mailto:ines@in-e-studio.com" v-streamed-text v-leave-text v-else>
+          ines@in-e-studio.com
         </NuxtLink>
 
         <ILink copy="copy phone number" text="+ 33 7 88 25 67 07" :font="false" v-if="!isMobile" />
@@ -164,6 +164,7 @@ main {
   &.email::after {
     content: "email me";
   }
+
   transition: color 250ms;
 
   &:hover {
