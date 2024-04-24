@@ -293,8 +293,16 @@ watch(routeRef, (routeTo, routeFrom) => {
             top: 0.3rem;
 
             img {
-                width: 15.792px;
-                height: 23.498px;
+                width: 14.792px;
+                height: 21.498px;
+                object-fit: unset;
+            }
+
+            @include breakpoint(mobile) {
+                img {
+                    width: 13.792px;
+                    height: 20.498px;
+                }
             }
         }
 
