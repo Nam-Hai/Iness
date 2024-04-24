@@ -220,15 +220,15 @@ $showSum: $showDuration + $showTransition;
         }
 
         &[data-column="2"] {
-            width: calc($grid-cell-width * 2);
+            width: calc($grid-cell-width * 2 - var(--grid-column-gap) * 0.5);
         }
 
         &[data-column="3"] {
-            width: calc($grid-cell-width * 3);
+            width: calc($grid-cell-width * 3 - var(--grid-column-gap) * 0.5);
         }
 
         &[data-column="4"] {
-            width: calc($grid-cell-width * 4);
+            width: calc($grid-cell-width * 4 - var(--grid-column-gap) * 0.5);
         }
     }
 
