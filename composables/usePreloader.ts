@@ -38,18 +38,12 @@ export type RichText = {
 
 export type PrismicMedia = {
     id: string,
-    kind: 'image',
+    kind: 'image' | 'video',
     name: string,
     size: string,
     url: string,
-    width: string,
-    height: string
-} | {
-    id: string,
-    kind: 'video',
-    name: string,
-    size: string,
-    url: string,
+    width?: number,
+    height?: number
 }
 
 export type FilterData = string[]
@@ -57,7 +51,7 @@ export type FilterData = string[]
 type OverviewData = {
     image: PrismicMedia,
     image_mobile: PrismicMedia,
-    order: number
+    order: number,
 }
 export type PrismicData = {
     overview: OverviewData[],
@@ -88,6 +82,8 @@ export const usePreloader = createStore(() => {
                         overview-video-image
                         overview-mobile-video-image
                         order
+                        video_height
+                        video_width
                     }
                 }`
                 })
@@ -106,12 +102,16 @@ export const usePreloader = createStore(() => {
                             description
                             controller
                             width_column
+                            video_width
+                            video_height
                         }
                         project_images_mobile {
                             project_image
                             description
                             controller
                             width_column
+                            video_width
+                            video_height
                         }
                         type {
                             ...on filter {
@@ -149,16 +149,34 @@ export const usePreloader = createStore(() => {
                     id: "-1",
                     kind: "image",
                     name: "placeholder",
-                    width: "392",
-                    height: "476",
+                    width: 392,
+                    height: 476,
                     size: "2000",
                     url: "/Assets/2.png"
 
                 }
 
                 const overview: OverviewData[] = overviewData.map(d => {
+                    let image = placeholderMedia
+                    const overviewVideoImage = d.data["overview-video-image"]
+                    if (overviewVideoImage.id) {
+                        image = overviewVideoImage.project_image
+                        if (overviewVideoImage.kind === 'video') {
+                            image.height = +d.data.video_height || undefined
+                            image.width = +d.data.video_width || undefined
+                        }
+                    }
+                    let image_mobile = placeholderMedia
+                    const overviewMobileVideoImage = d.data["overview-mobile-video-image"]
+                    if (overviewMobileVideoImage.id) {
+                        image = overviewMobileVideoImage.project_image
+                        if (overviewMobileVideoImage.kind === 'video') {
+                            image.height = +d.data.video_mobile_height || undefined
+                            image.width = +d.data.video_mobile_width || undefined
+                        }
+                    }
                     return {
-                        image: d.data["overview-video-image"].id ? d.data["overview-video-image"] : placeholderMedia,
+                        image,
                         image_mobile: d.data["overview-mobile-video-image"].id ? d.data["overview-mobile-video-image"] : placeholderMedia,
                         order: +d.data.order || 0
                     }
@@ -175,19 +193,35 @@ export const usePreloader = createStore(() => {
                         cover: d.data.cover.id ? d.data.cover : placeholderMedia,
                         cover_mobile: d.data.cover_mobile.id ? d.data.cover_mobile : placeholderMedia,
                         project_images: d.data.project_images.map((el: any) => {
+                            let image = placeholderMedia
+                            if (el.project_image.id) {
+                                image = el.project_image
+                                if (el.kind === 'video') {
+                                    image.height = +el.video_height || undefined
+                                    image.width = +el.video_width || undefined
+                                }
+                            }
                             return {
                                 controller: el.controller || false,
                                 description: el.description || "",
                                 column: el.width_column || 4,
-                                image: el.project_image.id ? el.project_image : placeholderMedia
+                                image
                             }
                         }),
                         project_images_mobile: d.data.project_images_mobile.map((el: any) => {
+                            let image = placeholderMedia
+                            if (el.project_image.id) {
+                                image = el.project_image
+                                if (el.kind === 'video') {
+                                    image.height = +el.video_height || undefined
+                                    image.width = +el.video_width || undefined
+                                }
+                            }
                             return {
                                 controller: el.controller || false,
                                 description: el.description || "",
                                 column: el.width_column || 4,
-                                image: el.project_image.id ? el.project_image : placeholderMedia
+                                image
                             }
                         })
                     }

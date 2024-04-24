@@ -5,7 +5,8 @@
 
         <div class="video__wrapper" v-else>
             <video disable-remote-playback="true" disable-picture-in-picture="true" autoplay="true" playsinline="true"
-                loop="true" onloadstart="this.style.opacity = 1;" :muted="!controller">
+                loop="true" onloadstart="this.style.opacity = 1;" :muted="!controller"
+                :style="{ aspectRatio: props.height && props.width ? 'props.width / props.height' : '' }">
                 <source :src="props.url">
             </video>
 
