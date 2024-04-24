@@ -276,6 +276,16 @@ watch(routeRef, (routeTo, routeFrom) => {
             max-width: 10rem;
             position: relative;
 
+            &::after {
+                content: "";
+                height: 3rem;
+                width: calc($grid-cell-width * 6);
+                display: block;
+                position: fixed;
+                bottom: 1.2rem;
+                z-index: 2;
+            }
+
 
             img {
                 width: 1.9388rem;
