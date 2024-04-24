@@ -6,7 +6,7 @@
 
             <video v-else-if="props.kind === 'video'" playsinline disableremoteplayback="true"
                 disable-picture-in-picture="true" muted loop autoplay
-                :style="{ aspectRatio: props.height && props.width ? 'props.width / props.height' : '' }">
+                :style="{ aspectRatio: props.height && props.width ? `${props.width} / ${props.height}` : '' }">
                 <source :src="props.url">
             </video>
         </div>

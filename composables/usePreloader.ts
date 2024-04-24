@@ -160,8 +160,8 @@ export const usePreloader = createStore(() => {
                     let image = placeholderMedia
                     const overviewVideoImage = d.data["overview-video-image"]
                     if (overviewVideoImage.id) {
-                        image = overviewVideoImage.project_image
-                        if (overviewVideoImage.kind === 'video') {
+                        image = overviewVideoImage
+                        if (image.kind === 'video') {
                             image.height = +d.data.video_height || undefined
                             image.width = +d.data.video_width || undefined
                         }
@@ -169,15 +169,15 @@ export const usePreloader = createStore(() => {
                     let image_mobile = placeholderMedia
                     const overviewMobileVideoImage = d.data["overview-mobile-video-image"]
                     if (overviewMobileVideoImage.id) {
-                        image = overviewMobileVideoImage.project_image
-                        if (overviewMobileVideoImage.kind === 'video') {
-                            image.height = +d.data.video_mobile_height || undefined
-                            image.width = +d.data.video_mobile_width || undefined
+                        image_mobile = overviewMobileVideoImage
+                        if (image_mobile.kind === 'video') {
+                            image_mobile.height = +d.data.video_mobile_height || undefined
+                            image_mobile.width = +d.data.video_mobile_width || undefined
                         }
                     }
                     return {
                         image,
-                        image_mobile: d.data["overview-mobile-video-image"].id ? d.data["overview-mobile-video-image"] : placeholderMedia,
+                        image_mobile,
                         order: +d.data.order || 0
                     }
                 }).sort((a, b) => a.order - b.order)
@@ -196,7 +196,7 @@ export const usePreloader = createStore(() => {
                             let image = placeholderMedia
                             if (el.project_image.id) {
                                 image = el.project_image
-                                if (el.kind === 'video') {
+                                if (image.kind === 'video') {
                                     image.height = +el.video_height || undefined
                                     image.width = +el.video_width || undefined
                                 }
@@ -212,7 +212,7 @@ export const usePreloader = createStore(() => {
                             let image = placeholderMedia
                             if (el.project_image.id) {
                                 image = el.project_image
-                                if (el.kind === 'video') {
+                                if (image.kind === 'video') {
                                     image.height = +el.video_height || undefined
                                     image.width = +el.video_width || undefined
                                 }
