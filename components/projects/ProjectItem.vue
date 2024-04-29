@@ -4,13 +4,13 @@
             filterOpen: filterOpen, highlight: filterActive[props.type], empty: isEmpty, 'disable-route': disableRoute, 'scroll-out': !previewShow, 'mobileShow': mobileShow && breakpoint === 'mobile',
         }" @click="onClick">
         <div class="container" ref="textRef">
-            <span v-streamed-text v-leave-text>{{ props.title }}</span>
-            <span v-streamed-text v-leave-text>{{ props.client }}</span>
+            <span v-streamed-text v-leave-text v-if="props.title !== ''">{{ props.title }}</span>
+            <span v-streamed-text v-leave-text v-if="props.client !== ''">{{ props.client }}</span>
             <span v-streamed-text v-leave-text v-if="props.type !== 'false'">{{ props.type }}</span>
-            <span v-streamed-text v-leave-text>{{ props.date }}</span>
+            <span v-streamed-text v-leave-text v-if="props.date !== ''">{{ props.date }}</span>
 
             <div class="description" v-if="routeTo.fullPath === '/projects/' + props.route && currentImageShow !== -1"
-                v-streamed-text2 v-leave-text>
+                v-streamed-text v-leave-text>
                 {{ props.project_images[currentImage]?.description || "" }}
             </div>
         </div>

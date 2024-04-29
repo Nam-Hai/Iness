@@ -15,10 +15,10 @@
         <NuxtLink to="/projects" class="back" v-streamed-text v-leave-text>Back to index</NuxtLink>
 
         <div class="info__wrapper">
-            <span v-streamed-text v-leave-text>{{ props.title }}</span>
-            <span v-streamed-text v-leave-text>{{ props.client }}</span>
-            <span v-streamed-text v-leave-text>{{ props.type }}</span>
-            <span v-streamed-text v-leave-text>{{ props.date }}</span>
+            <span v-streamed-text v-leave-text v-if="props.title !== ''">{{ props.title }}</span>
+            <span v-streamed-text v-leave-text v-if="props.client !== ''">{{ props.client }}</span>
+            <span v-streamed-text v-leave-text v-if="props.type !== 'false'">{{ props.type }}</span>
+            <span v-streamed-text v-leave-text v-if="props.date !== ''">{{ props.date }}</span>
         </div>
         <div class="description" v-streamed-text v-leave-text v-if="currentImageShow !== -1">
             {{ props.project_images_mobile[currentImage].description || "" }}
@@ -112,6 +112,7 @@ $showSum: $showDuration + $showTransition;
 
 .project-info {
     height: calc(2 * $grid-cell-height + $main-margin);
+
     .back {
         position: fixed;
         top: calc(2 * $grid-cell-height + $main-margin);

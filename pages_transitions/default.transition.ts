@@ -32,7 +32,11 @@ export const fastProjectsOut: FlowFunction<defaultTransitionProps> = (props, res
     resolve()
 }
 
-export const defaultFlowIn: FlowFunction<defaultTransitionProps> = ({ wrapperRef }, resolve,) => {
+export const defaultFlowIn: FlowFunction<defaultTransitionProps> = ({ wrapperRef }, resolve) => {
+
+    const { resetCount } = useStoreTransition()
+    resetCount()
+
     const { resetFilter } = useStoreFilter()
     resetFilter()
     useDelay(2000, () => {
@@ -41,14 +45,14 @@ export const defaultFlowIn: FlowFunction<defaultTransitionProps> = ({ wrapperRef
     // resolve()
 }
 export const projectProjectFlowIn: FlowFunction<defaultTransitionProps> = async ({ wrapperRef }, resolve, provider) => {
+    const { resetCount } = useStoreTransition()
+    await resetCount()
+
     const { breakpoint } = useStoreView()
     if (breakpoint.value == "mobile") {
         // return defaultFlowIn({ wrapperRef }, resolve, provider)
     }
     resolve()
-    useDelay(2000, () => {
-        // resolve()
-    })
 }
 
 export const flowOutMap = new Map([

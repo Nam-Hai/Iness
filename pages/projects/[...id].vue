@@ -1,7 +1,7 @@
 <template>
     <main ref="wrapperRef">
         <span class="back-index" v-if="breakpoint === 'desktop'" @click="navigateTo('/projects')" v-leave-text
-            v-streamed-text2>
+            v-streamed-text-2>
             Back to index
         </span>
         <ProjectsItemWrapper v-if="breakpoint == 'desktop'" />
@@ -9,9 +9,16 @@
         <ProjectImageWrapper :props="currentProject" v-if="breakpoint === 'desktop'" />
         <ProjectImageWrapperMobile :props="currentProject" v-else />
 
-        <span class="counter" v-if="currentProject.project_images_mobile.length > 1 && breakpoint === 'mobile'" v-streamed-text v-leave-text>
+        <span class="counter" v-if="currentProject.project_images_mobile.length > 1 && breakpoint === 'mobile'"
+            v-streamed-text v-leave-text>
             <span>{{ currentImage + 1 }}</span><span>/</span><span>{{ currentProject.project_images_mobile.length
                 }}</span>
+        </span>
+        <span class="next" v-if="currentProject.project_images_mobile.length > 1 && breakpoint === 'mobile'"
+            v-streamed-text v-leave-text>
+            <span>
+                Next image
+            </span>
         </span>
     </main>
 </template>
@@ -22,7 +29,7 @@ import { usePageFlow } from '~/waterflow/composables/usePageFlow';
 import { defaultFlowIn, defaultFlowOut, flowInMap, flowOutMap } from '~/pages_transitions/default.transition';
 import { useFlowProvider } from '~/waterflow/FlowProvider';
 import { vLeave, vLeaveText } from '~/directives/leave';
-import { vStreamedText2 } from '~/directives/streamedText';
+import { vStreamedText } from '~/directives/streamedText';
 
 const { currentImage, currentImageShow } = useStoreProjectImage()
 
@@ -63,6 +70,12 @@ usePageFlow({
     position: fixed;
     top: calc(3 * $grid-cell-height + $main-margin);
     left: $main-margin;
+}
+.next {
+    position: fixed;
+    top: calc(3 * $grid-cell-height + $main-margin);
+    left: calc($main-margin + $grid-cell-width * 2);
+
 }
 
 main {

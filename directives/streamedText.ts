@@ -1,6 +1,15 @@
 import { useFlowProvider } from "~/waterflow/FlowProvider";
 import { onLeave } from "~/waterflow/composables/onFlow";
 
+function isElementInViewport(el: HTMLElement) {
+    var rect = el.getBoundingClientRect();
+
+    const vh = (window.innerHeight || document.documentElement.clientHeight)
+    const vw = (window.innerWidth || document.documentElement.clientWidth)
+    return (
+        rect.top < vh || rect.bottom < 0
+    );
+}
 
 const STAGGER_MS = 20
 const SPEED_MS = 500
@@ -9,13 +18,14 @@ const wordMax = 30
 export const vStreamedText = {
     mounted: (el: HTMLElement, binding: any) => {
 
-        const { count } = useStoreTransition()
+
+        const inViewport = isElementInViewport(el)
+        const { count, getResolver } = useStoreTransition()
+        console.log(count.value);
 
         const delayCount = binding.value || count.value
 
 
-        const flowProvider = useFlowProvider()
-        const { breakpoint } = useStoreView()
         // if (!flowProvider.flowIsHijacked.value && !(flowProvider.getRouteTo().name === "projects-id" && breakpoint.value === "mobile")) return
         const text = el.innerText
         const char = text.split('')
@@ -26,12 +36,18 @@ export const vStreamedText = {
         const spans: HTMLElement[] = []
         for (const c of char) {
             const span = N.Cr('span')
-            spans.push(span)
             span.innerText = c
-            N.O(span, 0)
             el.appendChild(span)
+            spans.push(span)
+            if (inViewport) {
+                N.O(span, 0)
+            }
+        }
+        if (!inViewport) {
+            return
         }
 
+        const _count = count.value
         const tl = useTL()
         for (let index = 0; index < spans.length; index++) {
             const span = spans[index]
@@ -61,6 +77,11 @@ export const vStreamedText = {
                 delay: N.Ease.linear(Math.min(index, wordLength) / wordLength) * ratio * SPEED_MS + delayCount * STAGGER_MS,
                 cb() {
                     span.innerText = letter
+
+                    if (count.value === _count) {
+                        console.log('test');
+                        getResolver()()
+                    }
                 },
             })
         }
@@ -73,7 +94,7 @@ export const vStreamedText = {
 const map = "$B%8&#*oahkbddvpqwmZO0QCJUYXzcvunxrjft/\\h\|()1{}[]?-+~<>i!lI;:,^'."
 export const vStreamedText2 = {
     mounted: (el: HTMLElement) => {
-        const { count } = useStoreTransition()
+        const { count, getResolver } = useStoreTransition()
         const flowProvider = useFlowProvider()
         const text = el.innerText
         const char = text.split('')
@@ -89,6 +110,7 @@ export const vStreamedText2 = {
             el.appendChild(span)
         }
 
+        const _count = count.value
         const tl = useTL()
         for (let index = 0; index < spans.length; index++) {
             const span = spans[index]
@@ -115,65 +137,11 @@ export const vStreamedText2 = {
                 delay: N.Ease.linear(Math.min(index, wordLength) / wordLength) * ratio * SPEED_MS + count.value * STAGGER_MS,
                 cb() {
                     span.innerText = letter
-                },
-            })
-        }
-        count.value++
 
-        tl.play()
-    }
-}
-
-export const vStreamedTextMenu = {
-    mounted: (el: HTMLElement) => {
-        const { count } = useStoreTransition()
-        const flowProvider = useFlowProvider()
-        const { breakpoint } = useStoreView()
-
-        if (flowProvider.getRouteTo().name === "projects-id" && breakpoint.value === "desktop" || !flowProvider.flowIsHijacked.value && !(flowProvider.getRouteTo().name === "projects-id" && breakpoint.value === "mobile")) return
-
-
-        const text = el.innerText
-        const char = text.split('')
-        const wordLength = char.length
-        const ratio = Math.min(wordMax, wordLength) / wordMax
-
-        el.innerHTML = ""
-        const spans: HTMLElement[] = []
-        for (const c of char) {
-            const span = N.Cr('span')
-            spans.push(span)
-            span.innerText = c
-            N.O(span, 0)
-            el.appendChild(span)
-        }
-
-        const tl = useTL()
-        for (let index = 0; index < spans.length; index++) {
-            const span = spans[index]
-            const letter = char[index]
-            let i = 0
-            tl.from({
-                el: span,
-                p: {
-                    o: [0, 1]
-                },
-                d: 50,
-                delay: N.Ease.linear(Math.min(index, wordLength) / wordLength) * ratio * SPEED_MS + count.value * STAGGER_MS,
-            }).from({
-                update: (t) => {
-                    if (letter === " ") {
-                        return
+                    if (count.value === _count) {
+                        console.log('test');
+                        getResolver()()
                     }
-                    i++
-                    if (i < 4) return
-                    i = 0
-                    span.innerText = map[Math.floor(N.Rand.range(0, map.length - 1, 1))]
-                },
-                d: 200,
-                delay: N.Ease.linear(Math.min(index, wordLength) / wordLength) * ratio * SPEED_MS + count.value * STAGGER_MS,
-                cb() {
-                    span.innerText = letter
                 },
             })
         }

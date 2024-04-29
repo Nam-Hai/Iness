@@ -12,7 +12,9 @@
             <span class="overflow"
                 v-if="currentImageShow !== -1 && props.project_images.length > 1 && breakpoint === 'desktop'"
                 v-leave-text>
-                <span>{{ index + 1 }}</span><span>/</span><span>{{ props.project_images.length }}</span>
+                <span v-streamed-text>{{ index + 1 }}</span><span v-streamed-text>/</span><span v-streamed-text>{{ props.project_images.length }}</span>
+
+                <span style="margin-left: 1rem;"  v-streamed-text>Next image</span>
             </span>
         </div>
     </div>
