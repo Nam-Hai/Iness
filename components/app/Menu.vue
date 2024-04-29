@@ -319,11 +319,11 @@ watch(routeRef, (routeTo, routeFrom) => {
             grid-row: 4 / 5;
             align-self: end;
 
-            top: 0.3rem;
+            top: 0.44rem;
 
             img {
-                width: 14.792px;
-                height: 21.498px;
+                width: 14px;
+                height: 19.798px;
                 object-fit: unset;
             }
 
@@ -339,7 +339,7 @@ watch(routeRef, (routeTo, routeFrom) => {
             grid-column: 6 / 9;
             grid-row: 4 / 5;
             align-self: end;
-            top: 0.28rem;
+            top: 0.4rem;
 
             img {
                 width: 74.731px;
@@ -353,7 +353,7 @@ watch(routeRef, (routeTo, routeFrom) => {
         opacity: 0;
         color: $neutral-text;
         // left: 1.9rem;
-        bottom: 1.9rem;
+        bottom: 1.75rem;
         position: fixed;
         width: max-content;
         font-size: 2.6rem;
