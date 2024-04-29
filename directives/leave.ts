@@ -11,6 +11,8 @@ export const vLeaveText = {
         const { leaveCount, getResolverLeave, getPromise } = useStoreTransition()
 
         onLeave(async () => {
+            const _count = leaveCount.value
+            leaveCount.value++
             await getPromise()
 
             const text = el.innerText
@@ -20,7 +22,6 @@ export const vLeaveText = {
             const ratio = Math.min(wordMax, wordLength) / wordMax
             const spans = N.getAll('span', el)
             const tl = useTL()
-            const _count = leaveCount.value
             for (let index = 0; index < spans.length; index++) {
                 const span = spans[index] as HTMLElement
                 const letter = char[index]
@@ -57,7 +58,6 @@ export const vLeaveText = {
                     },
                 })
             }
-            leaveCount.value++
 
             tl.play()
         })

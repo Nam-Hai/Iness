@@ -7,23 +7,35 @@ export type defaultTransitionProps = {
 
 
 export const defaultFlowOut: FlowFunction<defaultTransitionProps> = async (props, resolve, provider) => {
-    const { resetCount, getPromise, getPromiseLeave } = useStoreTransition()
+    const { resetCount, leaveCount, getPromiseLeave, getResolverLeave } = useStoreTransition()
+    console.log('default out');
     resetCount()
     const { filterOpen } = useStoreFilter()
     filterOpen.value = false
+
+    useDelay(100, () => {
+        if (leaveCount.value === 0) {
+            console.log(leaveCount.value);
+            console.log("ya r");
+            getResolverLeave()()
+        }
+    })
 
     await getPromiseLeave()
     resolve()
 
 }
 export const fastOut: FlowFunction<defaultTransitionProps> = (props, resolve, provider) => {
+    console.log('fast out');
     const { resetCount, getPromise } = useStoreTransition()
     resetCount()
     const { filterOpen } = useStoreFilter()
     filterOpen.value = false
+    console.log("out resolve");
     resolve()
 }
 export const fastProjectsOut: FlowFunction<defaultTransitionProps> = async (props, resolve, provider) => {
+    console.log('fast project out');
     const { resetCount, getPromiseLeave } = useStoreTransition()
     resetCount()
     const { filterOpen } = useStoreFilter()
@@ -71,8 +83,8 @@ export const flowOutMap = new Map([
     ['projects-id => projects-id', defaultFlowOut],
     ['projects-id => projects', defaultFlowOut],
     ['projects => projects-id', defaultFlowOut],
-    ['overview => projects', fastOut],
-    ['overview => info', fastOut],
+    ['index => projects', fastOut],
+    ['index => info', fastOut],
 ])
 export const flowInMap = new Map([
     ['default', defaultFlowIn],
