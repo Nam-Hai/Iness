@@ -1,5 +1,8 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 
+const title = "in e Studio"
+const description = "Ines Jaïbi's design studio and space, where creation and experimentation take center stage."
+
 export default defineNuxtConfig({
     ssr: false,
     devtools: {
@@ -45,9 +48,9 @@ export default defineNuxtConfig({
                 },
                 {
                     key: "description", name: "description",
-                    content: "TODO"
+                    content: description
                 },
-                { key: "og:title", property: "og:title", content: "TODO" },
+                { key: "og:title", property: "og:title", content: title },
                 {
                     key: "og:url",
                     property: "og:url",
@@ -56,7 +59,7 @@ export default defineNuxtConfig({
                 {
                     key: "og:description",
                     property: "og:description",
-                    content: "TODO",
+                    content: description,
                 },
                 {
                     key: "og:image",
@@ -67,17 +70,17 @@ export default defineNuxtConfig({
                 {
                     key: "twitter:title",
                     name: "twitter:title",
-                    content: "TODO",
+                    content: title,
                 },
                 {
                     key: "twitter:url",
                     name: "twitter:url",
-                    content: "TODO",
+                    content: "https://www.in-e-studio.com",
                 },
                 {
                     key: "twitter:description",
                     name: "twitter:description",
-                    content: "TODO",
+                    content: description,
                 },
                 {
                     key: "twitter:image",
@@ -90,7 +93,7 @@ export default defineNuxtConfig({
                     content: "sumary",
                 }
             ],
-            title: "Ines - Portfolio",
+            title,
             link: [
                 {
                     rel: "manifest",
