@@ -1,5 +1,5 @@
 <template>
-    <div class="lib-media" ref="wrapperRef" v-leave-img>
+    <div class="lib-media" ref="wrapperRef" v-leave-img v-if="props.id !== '-1'">
         <img :src="props.url" :alt="props.name" v-if="props.kind === 'image'" />
 
         <video v-else-if="props.kind === 'video'" playsinline disableremoteplayback="true"

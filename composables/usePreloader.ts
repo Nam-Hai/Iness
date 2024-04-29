@@ -148,7 +148,7 @@ export const usePreloader = createStore(() => {
                 const placeholderMedia: PrismicMedia = {
                     id: "-1",
                     kind: "image",
-                    name: "placeholder",
+                    name: "",
                     width: 392,
                     height: 476,
                     size: "2000",
@@ -184,11 +184,11 @@ export const usePreloader = createStore(() => {
 
                 const projects: ProjectData[] = projectData.map(d => {
                     return {
-                        title: d.data.title || "Projet",
+                        title: d.data.title || "",
                         route: (d.data.title || "Project").replace(/\s/g, '-'),
                         client: d.data.client_name || "",
                         type: d.data.type.id ? d.data.type.data.filter : "false",
-                        date: d.data.date || "2024",
+                        date: d.data.date || "",
                         order: +d.data.order || 0,
                         cover: d.data.cover.id ? d.data.cover : placeholderMedia,
                         cover_mobile: d.data.cover_mobile.id ? d.data.cover_mobile : placeholderMedia,

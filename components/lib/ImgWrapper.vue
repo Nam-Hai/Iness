@@ -1,5 +1,6 @@
 <template>
-    <div class="img__wrapper" ref="wrapperRef" v-leave-img>
+    <div class="img__wrapper" ref="wrapperRef" v-leave-img v-if="props.id !== '-1'">
+        {{ props.id }}
         <img :src="props.url" :alt="props.name" onload="this.style.opacity = 1" v-if="props.kind === 'image'">
 
 

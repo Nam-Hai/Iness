@@ -1,5 +1,5 @@
 <template>
-    <div class="project__wrapper" ref="wrapperRef">
+    <div class="project__wrapper" ref="wrapperRef" :class="{ desktop: !isMobile }">
         <div class="column__wrapper" v-for="(d, index) in data.slice(0, 9)" :key="d.image.name + '_' + index"
             @mouseenter="() => { currentImage = index }" :class="{ show: currentImageShow === index, loaded: true }">
             <IMediaOverview :props="d.image" v-if="breakpoint === 'desktop'"></IMediaOverview>
@@ -14,6 +14,7 @@ const wrapperRef = ref() as Ref<HTMLElement>
 
 const { prismicData } = usePreloader()
 const { vh, breakpoint } = useStoreView()
+const { isMobile } = useStore()
 const data = prismicData.value.overview
 
 useEventListeneer(wrapperRef, 'touchstart', (e: Event) => {
@@ -53,11 +54,6 @@ watch(currentImage, index => {
 
 <style lang="scss" scoped>
 @use "@/styles/shared.scss" as *;
-
-$showDuration: 0ms;
-$showTransition: 0ms;
-$showSum: $showDuration + $showTransition;
-
 
 .project__wrapper {
     position: fixed;
@@ -100,6 +96,17 @@ $showSum: $showDuration + $showTransition;
 
         &.loaded.show {
             opacity: 1;
+        }
+    }
+
+    &.desktop {
+
+        .column__wrapper {
+            transition: opacity 0ms 1000ms;
+
+            &.loaded.show {
+                transition: opacity 0ms 0ms;
+            }
         }
     }
 

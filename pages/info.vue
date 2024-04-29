@@ -3,9 +3,9 @@
 
     <div class="contact__grid-item__wrapper">
       <div class="contact__wrapper">
-        <span v-streamed-text v-leave-text>
+        <!-- <span v-streamed-text v-leave-text>
           You can contact me on
-        </span>
+        </span> -->
         <ILink copy="copy email" text="ines@in-e-studio.com" :font="false" v-if="!isMobile" />
         <NuxtLink class="link-hover email" to="mailto:ines@in-e-studio.com" v-streamed-text v-leave-text v-else>
           ines@in-e-studio.com
