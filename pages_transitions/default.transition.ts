@@ -29,7 +29,7 @@ export const fastProjectsOut: FlowFunction<defaultTransitionProps> = async (prop
     const { filterOpen } = useStoreFilter()
     filterOpen.value = false
 
-    await getPromiseLeave()
+    // await getPromiseLeave()
     resolve()
     return
 }
@@ -38,14 +38,25 @@ export const defaultFlowIn: FlowFunction<defaultTransitionProps> = async ({ wrap
     const { resetFilter } = useStoreFilter()
     resetFilter()
 
-    const { resetCount, getPromise } = useStoreTransition()
+    const { resetCount, getPromise, getResolver, count } = useStoreTransition()
+    useDelay(100, () => {
+        if (count.value === 0) {
+            console.log("ya r");
+            getResolver()()
+        }
+    })
     await getPromise()
 
     console.log("RESOVE ==========");
     resolve()
 }
 export const projectProjectFlowIn: FlowFunction<defaultTransitionProps> = async ({ wrapperRef }, resolve, provider) => {
-    const { resetCount, getPromise } = useStoreTransition()
+    const { resetCount, getPromise, getResolver, count } = useStoreTransition()
+    useDelay(100, () => {
+        if (count.value === 0) {
+            getResolver()()
+        }
+    })
     await getPromise()
 
     const { breakpoint } = useStoreView()

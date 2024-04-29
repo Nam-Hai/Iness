@@ -165,6 +165,16 @@ watch(routeRef, (routeTo, routeFrom) => {
 
     .current-page {
         color: $neutral-text;
+
+        >span {
+            pointer-events: none;
+        }
+
+        pointer-events: none!important;
+
+        &:hover .hover-text {
+            opacity: 0;
+        }
     }
 
     pointer-events: none;
