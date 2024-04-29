@@ -8,20 +8,11 @@ const map = "$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\\h\|()1{}[]?-_+~<>i!lI;:,
 export const vLeaveText = {
     mounted: (el: HTMLElement, binding: any) => {
 
-        const { leaveCount } = useStoreTransition()
+        const { leaveCount, getResolverLeave, getPromise } = useStoreTransition()
 
-        const delayCount = 0
+        onLeave(async () => {
+            await getPromise()
 
-
-        const flowProvider = useFlowProvider()
-        const { breakpoint } = useStoreView()
-
-        onLeave(() => {
-            // if (flowProvider.getRouteTo().name === "projects-id") {
-            //     el.style.transition = "opacity 150ms"
-            //     N.O(el, 0)
-            //     return
-            // }
             const text = el.innerText
             const char = text.split('')
 
@@ -29,7 +20,8 @@ export const vLeaveText = {
             const ratio = Math.min(wordMax, wordLength) / wordMax
             const spans = N.getAll('span', el)
             const tl = useTL()
-            for (let index = spans.length - 1; index >= 0; index--) {
+            const _count = leaveCount.value
+            for (let index = 0; index < spans.length; index++) {
                 const span = spans[index] as HTMLElement
                 const letter = char[index]
                 let i = 0
@@ -39,7 +31,13 @@ export const vLeaveText = {
                         o: [1, 0]
                     },
                     d: 50,
-                    delay: N.Ease.o2(Math.min(index, wordLength) / wordLength) * ratio * SPEED_MS + delayCount * STAGGER_MS + 200 + 800,
+                    delay: N.Ease.linear(Math.min(index, wordLength) / wordLength) * ratio * SPEED_MS + 200,
+                    cb() {
+                        if (leaveCount.value - 1 === _count && index === spans.length - 1) {
+                            console.log("RESOLVE YEAHHHHH");
+                            getResolverLeave()()
+                        }
+                    },
                 }).from({
                     update: (t) => {
                         i++
@@ -48,12 +46,14 @@ export const vLeaveText = {
                         }
                         if (i < 4) return
                         i = 0
-                        span.innerText = map[Math.floor(N.Rand.range(0, map.length - 1, 1))]
+                        if (span)
+                            span.innerText = map[Math.floor(N.Rand.range(0, map.length - 1, 1))]
                     },
                     d: 200,
-                    delay: N.Ease.o2(Math.min(index, wordLength) / wordLength) * ratio * SPEED_MS + delayCount * STAGGER_MS + 800,
+                    delay: N.Ease.linear(Math.min(index, wordLength) / wordLength) * ratio * SPEED_MS,
                     cb() {
                         span.innerText = letter
+
                     },
                 })
             }

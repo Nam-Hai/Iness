@@ -27,7 +27,6 @@ watch(flowProvider.flowIsHijacked, (flow) => {
   flowIsHijacked.value = flow
 })
 
-
 onBeforeMount(() => {
   useStoreView().init()
 
@@ -60,5 +59,10 @@ useRO(() => {
   } else {
     N.Class.remove(document.body, "is-mobile")
   }
+})
+const { breakpoint } = useStoreView()
+watch(breakpoint, () => {
+  const { resetCount } = useStoreTransition()
+  resetCount()
 })
 </script>

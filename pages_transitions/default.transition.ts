@@ -6,47 +6,47 @@ export type defaultTransitionProps = {
 
 
 
-export const defaultFlowOut: FlowFunction<defaultTransitionProps> = (props, resolve, provider) => {
+export const defaultFlowOut: FlowFunction<defaultTransitionProps> = async (props, resolve, provider) => {
+    const { resetCount, getPromise, getPromiseLeave } = useStoreTransition()
+    resetCount()
     const { filterOpen } = useStoreFilter()
     filterOpen.value = false
-    useDelay(2000, () => {
-        resolve()
-    })
+
+    await getPromiseLeave()
+    resolve()
+
 }
 export const fastOut: FlowFunction<defaultTransitionProps> = (props, resolve, provider) => {
-    const { filterOpen } = useStoreFilter()
-    filterOpen.value = false
-    resolve()
-}
-export const fastProjectsOut: FlowFunction<defaultTransitionProps> = (props, resolve, provider) => {
-    const { filterOpen } = useStoreFilter()
-    filterOpen.value = false
-    const { breakpoint } = useStoreView()
-    if (breakpoint.value == "mobile") {
-        useDelay(2000, () => {
-            resolve()
-
-        })
-        return
-    }
-    resolve()
-}
-
-export const defaultFlowIn: FlowFunction<defaultTransitionProps> = ({ wrapperRef }, resolve) => {
-
-    const { resetCount } = useStoreTransition()
+    const { resetCount, getPromise } = useStoreTransition()
     resetCount()
+    const { filterOpen } = useStoreFilter()
+    filterOpen.value = false
+    resolve()
+}
+export const fastProjectsOut: FlowFunction<defaultTransitionProps> = async (props, resolve, provider) => {
+    const { resetCount, getPromiseLeave } = useStoreTransition()
+    resetCount()
+    const { filterOpen } = useStoreFilter()
+    filterOpen.value = false
 
+    await getPromiseLeave()
+    resolve()
+    return
+}
+
+export const defaultFlowIn: FlowFunction<defaultTransitionProps> = async ({ wrapperRef }, resolve) => {
     const { resetFilter } = useStoreFilter()
     resetFilter()
-    useDelay(2000, () => {
-        resolve()
-    })
-    // resolve()
+
+    const { resetCount, getPromise } = useStoreTransition()
+    await getPromise()
+
+    console.log("RESOVE ==========");
+    resolve()
 }
 export const projectProjectFlowIn: FlowFunction<defaultTransitionProps> = async ({ wrapperRef }, resolve, provider) => {
-    const { resetCount } = useStoreTransition()
-    await resetCount()
+    const { resetCount, getPromise } = useStoreTransition()
+    await getPromise()
 
     const { breakpoint } = useStoreView()
     if (breakpoint.value == "mobile") {

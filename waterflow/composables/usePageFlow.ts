@@ -54,7 +54,6 @@ export function usePageFlow<T>({
     N.Class.add(document.body, 'flowIsHijacked')
     // }
 
-    provider.onChangeRoute(to)
 
     let flowInPromise = crossfade ? provider.hijackFlow() : null
     // mount next page
@@ -62,6 +61,7 @@ export function usePageFlow<T>({
     crossfade && provider.setCrossfadeMode(crossfade)
 
     let promiseOut = createFlow<T>(provider, flowOutMap, flowOut, props)
+    provider.onChangeRoute(to)
 
     await Promise.all([promiseOut, flowInPromise])
     // swap buffer

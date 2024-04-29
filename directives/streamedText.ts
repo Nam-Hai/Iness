@@ -20,8 +20,7 @@ export const vStreamedText = {
 
 
         const inViewport = isElementInViewport(el)
-        const { count, getResolver } = useStoreTransition()
-        console.log(count.value);
+        const { count, getCount, getResolver } = useStoreTransition()
 
         const delayCount = binding.value || count.value
 
@@ -77,9 +76,15 @@ export const vStreamedText = {
                 delay: N.Ease.linear(Math.min(index, wordLength) / wordLength) * ratio * SPEED_MS + delayCount * STAGGER_MS,
                 cb() {
                     span.innerText = letter
+                },
+            }).from({
+                update() {
 
-                    if (count.value === _count) {
-                        console.log('test');
+                },
+                d: 0,
+                delay: N.Ease.linear(Math.min(index, wordLength) / wordLength) * ratio * SPEED_MS + _count * STAGGER_MS + 200,
+                cb() {
+                    if (getCount() - 1 === _count && index === spans.length - 1) {
                         getResolver()()
                     }
                 },
@@ -94,7 +99,7 @@ export const vStreamedText = {
 const map = "$B%8&#*oahkbddvpqwmZO0QCJUYXzcvunxrjft/\\h\|()1{}[]?-+~<>i!lI;:,^'."
 export const vStreamedText2 = {
     mounted: (el: HTMLElement) => {
-        const { count, getResolver } = useStoreTransition()
+        const { count, getResolver, getCount } = useStoreTransition()
         const flowProvider = useFlowProvider()
         const text = el.innerText
         const char = text.split('')
@@ -122,7 +127,7 @@ export const vStreamedText2 = {
                     o: [0, 1]
                 },
                 d: 50,
-                delay: N.Ease.linear(Math.min(index, wordLength) / wordLength) * ratio * SPEED_MS + count.value * STAGGER_MS,
+                delay: N.Ease.linear(Math.min(index, wordLength) / wordLength) * ratio * SPEED_MS + _count * STAGGER_MS,
             }).from({
                 update: (t) => {
                     if (letter === " ") {
@@ -134,12 +139,10 @@ export const vStreamedText2 = {
                     span.innerText = map[Math.floor(N.Rand.range(0, map.length - 1, 1))]
                 },
                 d: 200,
-                delay: N.Ease.linear(Math.min(index, wordLength) / wordLength) * ratio * SPEED_MS + count.value * STAGGER_MS,
+                delay: N.Ease.linear(Math.min(index, wordLength) / wordLength) * ratio * SPEED_MS + _count * STAGGER_MS,
                 cb() {
                     span.innerText = letter
-
-                    if (count.value === _count) {
-                        console.log('test');
+                    if (getCount() - 1 === _count && index === spans.length - 1) {
                         getResolver()()
                     }
                 },

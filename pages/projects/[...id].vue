@@ -29,7 +29,7 @@ import { usePageFlow } from '~/waterflow/composables/usePageFlow';
 import { defaultFlowIn, defaultFlowOut, flowInMap, flowOutMap } from '~/pages_transitions/default.transition';
 import { useFlowProvider } from '~/waterflow/FlowProvider';
 import { vLeave, vLeaveText } from '~/directives/leave';
-import { vStreamedText } from '~/directives/streamedText';
+import { vStreamedText, vStreamedText2 } from '~/directives/streamedText';
 
 const { currentImage, currentImageShow } = useStoreProjectImage()
 
