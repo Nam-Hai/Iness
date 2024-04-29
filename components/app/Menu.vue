@@ -2,20 +2,30 @@
     <div class="menu__wrapper" ref="wrapperRef" :class="{ filterOpen }">
         <NuxtLink to="/"
             :class="{ 'menu__active': routeRef.path === '/', hideMenu: delayedHideMenu && hideMenu, 'current-page': routeRef.name === 'index' }">
-            <span ref="overviewRef">
+            <span ref="overviewRef" @mouseenter="overviewHoverTrigger" @touchstart="overviewHoverTrigger">
                 Overview
+            </span>
+            <span class="hover-text" ref="overviewHoverRef">
+                Enter
             </span>
         </NuxtLink>
         <NuxtLink to="/projects"
             :class="{ 'menu__active': routeRef.path === '/index', hideMenu: delayedHideMenu, 'current-page': routeRef.name === 'projects' || routeRef.name === 'projects-id' }">
             <span ref="indexRef"
-                :style="{ display: routeRef.name === 'projects-id' && breakpoint === 'desktop' ? 'none' : 'unset' }">
+                :style="{ display: routeRef.name === 'projects-id' && breakpoint === 'desktop' ? 'none' : 'unset' }"
+                @mouseenter="indexHoverTrigger" @touchstart="indexHoverTrigger">
                 Index
+            </span>
+            <span class="hover-text" ref="indexHoverRef">
+                Enter
             </span>
         </NuxtLink>
         <NuxtLink to="/info" :class="{ hideMenu: delayedHideMenu, 'current-page': routeRef.name === 'info' }">
-            <span ref="infoRef">
+            <span ref="infoRef" @mouseenter="infoHoverTrigger" @touchstart="infoHoverTrigger">
                 Info
+            </span>
+            <span class="hover-text" ref="infoHoverRef">
+                Enter
             </span>
         </NuxtLink>
         <div :class="{ hideMenu: delayedHideMenu }" class="noselect shop">
@@ -94,7 +104,13 @@ const { trigger: infoTriggerLeave } = useLeaveText(infoRef)
 const { trigger: indexTriggerLeave } = useLeaveText(indexRef)
 const { trigger: overviewTriggerLeave } = useLeaveText(overviewRef)
 const shopHoverRef = ref()
+const infoHoverRef = ref()
+const overviewHoverRef = ref()
+const indexHoverRef = ref()
 const { trigger: shopHoverTrigger } = useStreamingText(shopHoverRef)
+const { trigger: infoHoverTrigger } = useStreamingText(infoHoverRef)
+const { trigger: overviewHoverTrigger } = useStreamingText(overviewHoverRef)
+const { trigger: indexHoverTrigger } = useStreamingText(indexHoverRef)
 
 onMounted(() => {
     overviewTrigger()
@@ -153,16 +169,11 @@ watch(routeRef, (routeTo, routeFrom) => {
 
     pointer-events: none;
 
-    div:nth-child(1),
-    div:nth-child(2),
-    div:nth-child(3),
+    a:nth-child(1),
+    a:nth-child(2),
+    a:nth-child(3),
     div:nth-child(4) {
         transition: opacity 100ms;
-    }
-
-    div:nth-child(4) {
-        grid-column: 1 / 3;
-        grid-row: 4/5;
         cursor: pointer;
         font-size: 1.2rem;
         font-weight: 500;
@@ -170,6 +181,10 @@ watch(routeRef, (routeTo, routeFrom) => {
         width: fit-content;
         pointer-events: all;
         position: relative;
+
+        &:hover .hover-text {
+            opacity: 1;
+        }
 
         .hover-text {
             color: $neutral-text;
@@ -182,30 +197,24 @@ watch(routeRef, (routeTo, routeFrom) => {
             opacity: 0;
         }
 
-        &:hover .hover-text {
-            opacity: 1;
-        }
-
-        // &::after {
-        //     position: absolute;
-        //     content: "Coming soon";
-        //     left: 0;
-        //     top: 0;
-        //     color: $neutral-text;
-        //     opacity: 0;
-        //     transition: opacity 250ms;
-        //     width: max-content;
-        // }
-
         &:hover {
             color: $discard-text;
             transition: color 250ms;
-
-            &::after {
-                opacity: 1;
-            }
-
         }
+    }
+
+    a:nth-child(1),
+    a:nth-child(2),
+    a:nth-child(3) {
+        .hover-text {
+            left: 1rem;
+            bottom: 0.5rem;
+        }
+    }
+
+    div:nth-child(4) {
+        grid-column: 1 / 3;
+        grid-row: 4/5;
     }
 
     a {
