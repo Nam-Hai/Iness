@@ -11,8 +11,9 @@
 
             <span class="overflow" v-if="!next && props.project_images.length > 1 && breakpoint === 'desktop'"
                 v-leave-text>
-                <span v-streamed-text="1">{{ index + 1 }}</span><span v-streamed-text="1">/</span><span v-streamed-text="1">{{
-                    props.project_images.length }}</span>
+                <span v-streamed-text="1">{{ index + 1 }}</span><span v-streamed-text="1">/</span><span
+                    v-streamed-text="1">{{
+                        props.project_images.length }}</span>
 
                 <span style="margin-left: 1rem;" v-streamed-text="1">Next image</span>
             </span>
@@ -54,8 +55,10 @@ watch(currentImage, async (to, from) => {
     }
     next.value = true
     await nextTick()
-    currentImageShow.value = to
-    next.value = false
+    useDelay(100, () => {
+        currentImageShow.value = to
+        next.value = false
+    })
 })
 
 </script>

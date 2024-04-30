@@ -22,7 +22,6 @@ export const vStreamedText = {
         const inViewport = isElementInViewport(el)
         const { count, getCount, getResolver } = useStoreTransition()
 
-        console.log(binding.value, count.value);
         const delayCount = binding.value || count.value
 
 

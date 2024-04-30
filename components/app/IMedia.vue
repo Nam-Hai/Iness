@@ -3,8 +3,8 @@
         <img :src="props.url" :alt="props.name" v-if="props.kind === 'image'" />
 
         <video v-else-if="props.kind === 'video'" playsinline disableremoteplayback="true"
-            disable-picture-in-picture="true" muted loop autoplay
-                :style="{ aspectRatio: props.height && props.width ? `${props.width} / ${props.height}` : '' }">
+            disable-picture-in-picture="true" muted loop autoplay disablepictureinpicture
+            :style="{ aspectRatio: props.height && props.width ? `${props.width} / ${props.height}` : '' }">
             <source :src="props.url">
         </video>
     </div>
