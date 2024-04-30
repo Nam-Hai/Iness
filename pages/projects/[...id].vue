@@ -71,6 +71,7 @@ usePageFlow({
     top: calc(3 * $grid-cell-height + $main-margin);
     left: $main-margin;
 }
+
 .next {
     position: fixed;
     top: calc(3 * $grid-cell-height + $main-margin);
@@ -82,6 +83,7 @@ main {
     font-size: 1.2rem;
     line-height: 1.6rem;
     // position: relative;
+    // min-height: 100vh;
 }
 
 

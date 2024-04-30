@@ -5,9 +5,8 @@
                 <ProjectItem :props="prismicData.projects[0]" />
             </div>
         </div>
-        <div class="projects__wrapper">
-            <div class="project__wrapper"
-                v-for="project, index in prismicData.projects.slice(1)"
+        <div class="projects__wrapper" :class="{'min-grid': prismicData.projects.length <= 10}">
+            <div class="project__wrapper" v-for="project, index in prismicData.projects.slice(1)"
                 :class="{ gridFlow: index > 12 }">
                 <ProjectItem :props="project" />
             </div>
@@ -76,7 +75,10 @@ watch(enter, val => {
 
     grid-column-gap: var(--grid-column-gap);
     grid-template-columns: repeat(3, var(--grid-column-width));
-    // grid-template-rows: repeat(4, 1fr);
+
+    &.min-grid {
+        grid-template-rows: repeat(4, 1fr);
+    }
 
     grid-auto-flow: row;
     padding-top: $main-margin;

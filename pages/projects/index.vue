@@ -32,6 +32,7 @@ main {
 
     font-weight: 500;
     // height: 100vh;
+    // min-height: 100vh;
 }
 
 
