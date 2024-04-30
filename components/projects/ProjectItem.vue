@@ -4,13 +4,13 @@
             filterOpen: filterOpen, highlight: filterActive[props.type], empty: isEmpty, 'disable-route': disableRoute, 'scroll-out': !previewShow, 'mobileShow': mobileShow && breakpoint === 'mobile',
         }" @click="onClick">
         <div class="container" ref="textRef">
-            <span v-streamed-text v-leave-text v-if="props.title !== ''">{{ props.title }}</span>
-            <span v-streamed-text v-leave-text v-if="props.client !== ''">{{ props.client }}</span>
-            <span v-streamed-text v-leave-text v-if="props.type !== 'false'">{{ props.type }}</span>
-            <span v-streamed-text v-leave-text v-if="props.date !== ''">{{ props.date }}</span>
+            <span v-streamed-text-project v-leave-text-project-item v-if="props.title !== ''">{{ props.title }}</span>
+            <span v-streamed-text-project v-leave-text-project-item v-if="props.client !== ''">{{ props.client }}</span>
+            <span v-streamed-text-project v-leave-text-project-item v-if="props.type !== 'false'">{{ props.type }}</span>
+            <span v-streamed-text-project v-leave-text-project-item v-if="props.date !== ''">{{ props.date }}</span>
 
             <div class="description" v-if="routeTo.fullPath === '/projects/' + props.route && currentImageShow !== -1"
-                v-streamed-text v-leave-text>
+                v-streamed-text-project v-leave-text-project-item>
                 {{ props.project_images[currentImage]?.description || "" }}
             </div>
         </div>
@@ -25,8 +25,8 @@
     </NuxtLink>
 </template>
 <script lang="ts" setup>
-import { vStreamedText, vStreamedText2 } from '~/directives/streamedText';
-import { vLeave, vLeaveText } from "~/directives/leave"
+import { vStreamedText, vStreamedText2, vStreamedTextProject } from '~/directives/streamedText';
+import { vLeave, vLeaveText, vLeaveTextProjectItem } from "~/directives/leave"
 import { useFlowProvider } from '~/waterflow/FlowProvider';
 import { onLeave } from '~/waterflow/composables/onFlow';
 

@@ -12,7 +12,6 @@ export const vLeaveText = {
 
         onLeave(async () => {
             const _count = leaveCount.value
-            console.log(el, leaveCount.value);
             leaveCount.value++
             await getPromise()
 
@@ -20,7 +19,7 @@ export const vLeaveText = {
             const char = text.split('')
 
             const wordLength = char.length
-            const ratio = Math.min(wordMax, wordLength) / wordMax
+            const ratio = 1
             const spans = N.getAll('span', el)
             const tl = useTL()
             for (let index = spans.length - 1; index >= 0; index--) {
@@ -28,6 +27,7 @@ export const vLeaveText = {
                 const letter = char[index]
                 let i = 0
                 const delayIndex = (spans.length - 1 - index) / (spans.length > wordLength ? spans.length - 1 : wordLength)
+                console.log(delayIndex);
                 tl.from({
                     el: span,
                     p: {
@@ -43,6 +43,7 @@ export const vLeaveText = {
                         }
                         if (i < 2) return
                         i = 0
+                        console.log('test');
                         if (span) span.innerText = map[Math.floor(N.Rand.range(0, map.length - 1, 1))]
                     },
                     d: 200,
@@ -99,5 +100,79 @@ export const vLeaveImg = {
             N.O(el, 0)
 
         }, { once: true })
+    }
+}
+export const vLeaveTextProjectItem = {
+    mounted: (el: HTMLElement, binding: any) => {
+
+        const { leaveCount, getResolverLeave, getPromise } = useStoreTransition()
+
+        onLeave(async () => {
+            const flowProvider = useFlowProvider()
+            const { scroll } = useStoreScroll()
+            const { breakpoint } = useStoreView()
+            if ((flowProvider.getRouteTo().name === "projects" || flowProvider.getRouteTo().name === "projects-id") && (flowProvider.getRouteFrom().name === 'projects' || flowProvider.getRouteFrom().name === 'projects-id') && scroll.value === 0 && breakpoint.value === 'desktop') {
+                getResolverLeave()()
+                return
+            }
+            const _count = leaveCount.value
+            leaveCount.value++
+            await getPromise()
+
+            const text = el.innerText
+            const char = text.split('')
+
+            const wordLength = char.length
+            const ratio = 1
+            const spans = N.getAll('span', el)
+            const tl = useTL()
+            for (let index = spans.length - 1; index >= 0; index--) {
+                const span = spans[index] as HTMLElement
+                const letter = char[index]
+                let i = 0
+                const delayIndex = (spans.length - 1 - index) / (spans.length > wordLength ? spans.length - 1 : wordLength)
+                console.log(delayIndex);
+                tl.from({
+                    el: span,
+                    p: {
+                        o: [1, 0]
+                    },
+                    d: 50,
+                    delay: N.Ease.linear(delayIndex) * ratio * SPEED_MS + 150,
+                }).from({
+                    update: (t) => {
+                        i++
+                        if (letter === " ") {
+                            return
+                        }
+                        if (i < 2) return
+                        i = 0
+                        console.log('test');
+                        if (span) span.innerText = map[Math.floor(N.Rand.range(0, map.length - 1, 1))]
+                    },
+                    d: 200,
+                    delay: N.Ease.linear(delayIndex) * ratio * SPEED_MS,
+                    cb() {
+                        if (span) span.innerText = letter
+                    },
+                })
+            }
+            tl.from({
+                delay: ratio * SPEED_MS + 200,
+                update({ prog, progE }) {
+                },
+                e: "io3",
+                d: 0,
+                cb() {
+                    if (_count === 0) {
+                        console.log("RESOLVE YEAHHHHH");
+                        getResolverLeave()()
+                    }
+                }
+            })
+
+            tl.play()
+        }, { once: true })
+
     }
 }
