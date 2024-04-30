@@ -12,6 +12,7 @@ export const vLeaveText = {
 
         onLeave(async () => {
             const _count = leaveCount.value
+            console.log(el, leaveCount.value);
             leaveCount.value++
             await getPromise()
 
@@ -22,45 +23,51 @@ export const vLeaveText = {
             const ratio = Math.min(wordMax, wordLength) / wordMax
             const spans = N.getAll('span', el)
             const tl = useTL()
-            for (let index = 0; index < spans.length; index++) {
+            for (let index = spans.length - 1; index >= 0; index--) {
                 const span = spans[index] as HTMLElement
                 const letter = char[index]
                 let i = 0
+                const delayIndex = (spans.length - 1 - index) / (spans.length > wordLength ? spans.length - 1 : wordLength)
                 tl.from({
                     el: span,
                     p: {
                         o: [1, 0]
                     },
                     d: 50,
-                    delay: N.Ease.linear(Math.min(index, wordLength) / wordLength) * ratio * SPEED_MS + 200,
-                    cb() {
-                        if (leaveCount.value - 1 === _count && index === spans.length - 1) {
-                            console.log("RESOLVE YEAHHHHH");
-                            getResolverLeave()()
-                        }
-                    },
+                    delay: N.Ease.linear(delayIndex) * ratio * SPEED_MS + 150,
                 }).from({
                     update: (t) => {
                         i++
                         if (letter === " ") {
                             return
                         }
-                        if (i < 4) return
+                        if (i < 2) return
                         i = 0
-                        if (span)
-                            span.innerText = map[Math.floor(N.Rand.range(0, map.length - 1, 1))]
+                        if (span) span.innerText = map[Math.floor(N.Rand.range(0, map.length - 1, 1))]
                     },
                     d: 200,
-                    delay: N.Ease.linear(Math.min(index, wordLength) / wordLength) * ratio * SPEED_MS,
+                    delay: N.Ease.linear(delayIndex) * ratio * SPEED_MS,
                     cb() {
-                        span.innerText = letter
-
+                        if (span) span.innerText = letter
                     },
                 })
             }
+            tl.from({
+                delay: ratio * SPEED_MS + 200,
+                update({ prog, progE }) {
+                },
+                e: "io3",
+                d: 0,
+                cb() {
+                    if (_count === 0) {
+                        console.log("RESOLVE YEAHHHHH");
+                        getResolverLeave()()
+                    }
+                }
+            })
 
             tl.play()
-        })
+        }, { once: true })
 
     }
 }

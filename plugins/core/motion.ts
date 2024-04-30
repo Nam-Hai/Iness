@@ -296,7 +296,7 @@ class Motion {
     }
 
     initRaf(lateToDelay: number = 0) {
-        this.raf.run({elapsed: lateToDelay})
+        this.raf.run({ elapsed: lateToDelay })
     }
 
     run(e: rafEvent) {
@@ -319,7 +319,9 @@ class Motion {
     }
 
     uProp() {
-        if (!this.v.el) throw "el not specified for prop motion"
+        if (!this.v.el) {
+            throw "el not specified for prop motion"
+        }
         const props = this.v.prop!;
         let t = this.v.propTable || {};
         if (props.length === 0) return
