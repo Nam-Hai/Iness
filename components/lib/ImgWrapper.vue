@@ -1,6 +1,7 @@
 <template>
     <div class="img__wrapper" ref="wrapperRef" v-leave-img v-if="props.id !== '-1'">
-        <img :src="props.url" :alt="props.name" onload="this.style.opacity = 1" v-if="props.kind === 'image'">
+        <img :src="props.url" :alt="props.name" onload="this.style.opacity = 1" v-if="props.kind === 'image'"
+            :style="{ 'aspect-ratio': (props.width! / props.height!) || 1 }">
 
 
         <div class="video__wrapper" v-else>
@@ -27,7 +28,6 @@
 import { vLeave, vLeaveImg } from '~/directives/leave';
 
 const { props, controller = true } = defineProps<{ props: PrismicMedia, controller: boolean }>()
-
 const wrapperRef = ref() as Ref<HTMLElement>
 
 const isPaused = ref(true)
@@ -66,7 +66,7 @@ function mute(e: Event) {
 
     img,
     video {
-        height: 100%;
+        // height: 100%;
         width: 100%;
         opacity: 0;
         // transition: opacity 500ms;

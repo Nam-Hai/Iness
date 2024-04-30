@@ -6,15 +6,15 @@
             :key="project.image.id + '__' + index">
 
             <div class="image" v-leave>
-                <ImgWrapper :props="project.image" :controller="project.controller" v-if="currentImageShow === index" />
+                <ImgWrapper :props="project.image" :controller="project.controller" v-if="currentImage === index" />
             </div>
 
-            <span class="overflow"
-                v-if="currentImageShow !== -1 && props.project_images.length > 1 && breakpoint === 'desktop'"
+            <span class="overflow" v-if="!next && props.project_images.length > 1 && breakpoint === 'desktop'"
                 v-leave-text>
-                <span v-streamed-text>{{ index + 1 }}</span><span v-streamed-text>/</span><span v-streamed-text>{{ props.project_images.length }}</span>
+                <span v-streamed-text>{{ index + 1 }}</span><span v-streamed-text>/</span><span v-streamed-text>{{
+                    props.project_images.length }}</span>
 
-                <span style="margin-left: 1rem;"  v-streamed-text>Next image</span>
+                <span style="margin-left: 1rem;" v-streamed-text>Next image</span>
             </span>
         </div>
     </div>
@@ -44,16 +44,18 @@ const { currentImage, currentImageShow } = useStoreProjectImage()
 const { breakpoint } = useStoreView()
 currentImage.value = 0
 currentImageShow.value = 0
+const next = ref(false)
 
-watch(currentImage, (to, from) => {
+watch(currentImage, async (to, from) => {
     const toI = props.project_images[to]
     const fromI = props.project_images[from]
     if (toI.description !== fromI.description) {
         currentImageShow.value = -1
     }
-    useDelay(100, () => {
-        currentImageShow.value = to
-    })
+    next.value = true
+    await nextTick()
+    currentImageShow.value = to
+    next.value = false
 })
 
 </script>
@@ -245,6 +247,7 @@ $showSum: $showDuration + $showTransition;
     }
 
     .overflow {
+
         @include breakpoint(mobile) {
             position: fixed;
             top: calc(3 * $grid-cell-height + $main-margin);
