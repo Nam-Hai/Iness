@@ -368,6 +368,8 @@ watch(routeRef, (routeTo, routeFrom) => {
 }
 
 .hideMenu {
+    // opacity: 0;
+    pointer-events: none!important;
     // display: none !important;
 }
 
