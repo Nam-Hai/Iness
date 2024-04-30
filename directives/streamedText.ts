@@ -22,7 +22,9 @@ export const vStreamedText = {
         const inViewport = isElementInViewport(el)
         const { count, getCount, getResolver } = useStoreTransition()
 
+        console.log(binding.value, count.value);
         const delayCount = binding.value || count.value
+
 
 
         // if (!flowProvider.flowIsHijacked.value && !(flowProvider.getRouteTo().name === "projects-id" && breakpoint.value === "mobile")) return
