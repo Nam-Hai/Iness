@@ -9,13 +9,15 @@
         <ProjectImageWrapper :props="currentProject" v-if="breakpoint === 'desktop'" />
         <ProjectImageWrapperMobile :props="currentProject" v-else />
 
-        <span class="counter" v-if="currentProject.project_images_mobile.length > 1 && breakpoint === 'mobile'"
+        <span class="counter"
+            v-if="currentImageShow !== -1 && currentProject.project_images_mobile.length > 1 && breakpoint === 'mobile'"
             v-streamed-text v-leave-text>
             <span>{{ currentImage + 1 }}</span><span>/</span><span>{{ currentProject.project_images_mobile.length
                 }}</span>
         </span>
         <span class="next" v-if="currentProject.project_images_mobile.length > 1 && breakpoint === 'mobile'"
-            v-streamed-text v-leave-text>
+            v-streamed-text v-leave-text
+            @click="$event.stopPropagation(); currentImage = N.mod(currentImage + 1, currentProject.project_images.length)">
             <span>
                 Next image
             </span>
