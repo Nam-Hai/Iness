@@ -6,7 +6,8 @@
         <div class="container" ref="textRef">
             <span v-streamed-text-project v-leave-text-project-item v-if="props.title !== ''">{{ props.title }}</span>
             <span v-streamed-text-project v-leave-text-project-item v-if="props.client !== ''">{{ props.client }}</span>
-            <span v-streamed-text-project v-leave-text-project-item v-if="props.type !== 'false'">{{ props.type }}</span>
+            <span v-streamed-text-project v-leave-text-project-item v-if="props.type !== 'false'">{{ props.type
+                }}</span>
             <span v-streamed-text-project v-leave-text-project-item v-if="props.date !== ''">{{ props.date }}</span>
 
             <div class="description" v-if="routeTo.fullPath === '/projects/' + props.route && currentImageShow !== -1"
@@ -17,7 +18,7 @@
 
         <div class="project-preview" v-if="routeTo.name !== 'projects-id'"
             :class="{ 'scroll-show': previewShow, hide: routeTo.name === 'projects-id' && routeTo.fullPath === '/projects/' + props.route }"
-            @click="navigateTo('/projects/' + props.route)">
+            >
             <IMedia :props="props.cover" v-if="breakpoint === 'desktop'">
             </IMedia>
             <IMedia :props="props.cover_mobile" v-else></IMedia>
@@ -135,6 +136,7 @@ a {
 
     @include breakpoint(mobile) {
         &.scroll-out {
+            pointer-events: all;
             // pointer-events: none;
             color: $neutral-text;
         }

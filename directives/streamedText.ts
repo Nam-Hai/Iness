@@ -23,9 +23,6 @@ export const vStreamedText = {
         const { count, getCount, getResolver } = useStoreTransition()
 
         const delayCount = binding.value ?? count.value
-        console.log("delay", delayCount, binding);
-
-
 
         // if (!flowProvider.flowIsHijacked.value && !(flowProvider.getRouteTo().name === "projects-id" && breakpoint.value === "mobile")) return
         const text = el.innerText
