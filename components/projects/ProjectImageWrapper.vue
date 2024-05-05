@@ -11,8 +11,8 @@
 
             <span class="overflow" v-if="!next && props.project_images.length > 1 && breakpoint === 'desktop'"
                 v-leave-text>
-                <span v-streamed-text="1">{{ index + 1 }}</span><span v-streamed-text="1">/</span><span
-                    v-streamed-text="1">{{
+                <span v-streamed-text="0">{{ index + 1 }}</span><span v-streamed-text="0">/</span><span
+                    v-streamed-text="0">{{
                         props.project_images.length }}</span>
 
                 <span style="margin-left: 1rem;" v-streamed-text="1">Next image</span>
@@ -29,7 +29,7 @@
             <span v-streamed-text v-leave-text>{{ props.type }}</span>
             <span v-streamed-text v-leave-text>{{ props.date }}</span>
         </div>
-        <div class="description" v-streamed-text v-if="currentImageShow !== -1" v-leave-text>
+        <div class="description" v-streamed-text="0" v-if="currentImageShow !== -1" v-leave-text>
             {{ props.project_images[currentImage]?.description || "" }}
         </div>
     </div>
@@ -41,7 +41,7 @@ import { vLeave, vLeaveText } from '~/directives/leave'
 
 const { props } = defineProps<{ props: ProjectData }>()
 const wrapperRef = ref() as Ref<HTMLElement>
-const { currentImage, currentImageShow } = useStoreProjectImage()
+const { currentImage, currentImageShow, currentImageDelay } = useStoreProjectImage()
 const { breakpoint } = useStoreView()
 currentImage.value = 0
 currentImageShow.value = 0
@@ -57,6 +57,7 @@ watch(currentImage, async (to, from) => {
     await nextTick()
     useDelay(100, () => {
         currentImageShow.value = to
+        console.log(to, props.project_images[to].description);
         next.value = false
     })
 })

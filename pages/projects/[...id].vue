@@ -10,7 +10,7 @@
         <ProjectImageWrapperMobile :props="currentProject" v-else />
 
         <span class="counter"
-            v-if="currentImageShow !== -1 && currentProject.project_images_mobile.length > 1 && breakpoint === 'mobile'"
+            v-if="currentImageDelay !== -1 && currentProject.project_images_mobile.length > 1 && breakpoint === 'mobile'"
             v-streamed-text v-leave-text>
             <span>{{ currentImage + 1 }}</span><span>/</span><span>{{ currentProject.project_images_mobile.length
                 }}</span>
@@ -33,7 +33,7 @@ import { useFlowProvider } from '~/waterflow/FlowProvider';
 import { vLeave, vLeaveText } from '~/directives/leave';
 import { vStreamedText, vStreamedText2 } from '~/directives/streamedText';
 
-const { currentImage, currentImageShow } = useStoreProjectImage()
+const { currentImage, currentImageDelay, currentImageShow } = useStoreProjectImage()
 
 const wrapperRef = ref() as Ref<HTMLElement>
 

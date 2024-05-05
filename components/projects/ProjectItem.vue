@@ -10,7 +10,7 @@
             <span v-streamed-text-project v-leave-text-project-item v-if="props.date !== ''">{{ props.date }}</span>
 
             <div class="description" v-if="routeTo.fullPath === '/projects/' + props.route && currentImageShow !== -1"
-                v-streamed-text v-leave-text-project-item>
+                v-streamed-text="0" v-leave-text-project-item>
                 {{ props.project_images[currentImage]?.description || "" }}
             </div>
         </div>

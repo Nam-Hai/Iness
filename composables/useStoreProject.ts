@@ -5,6 +5,7 @@ export const useStoreProjectImage = createStore(() => {
     const placeholderPosFrom = shallowRef({ x: 0, y: 0, width: 0, height: 0 })
     const bounds = ref() as Ref<DOMRect[]>
     const currentImage = ref(0)
+    const currentImageDelay = ref(0)
     const currentImageShow = ref(0)
     const mobileShow = ref(true)
 
@@ -12,6 +13,7 @@ export const useStoreProjectImage = createStore(() => {
         placeholderPos,
         placeholderPosFrom,
         currentImage,
+        currentImageDelay,
         currentImageShow,
         mobileShow
     }

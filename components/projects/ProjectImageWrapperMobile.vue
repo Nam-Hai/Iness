@@ -32,7 +32,7 @@ import { vLeave, vLeaveText } from '~/directives/leave'
 
 const { props } = defineProps<{ props: ProjectData }>()
 const wrapperRef = ref() as Ref<HTMLElement>
-const { currentImage, currentImageShow } = useStoreProjectImage()
+const { currentImage, currentImageDelay, currentImageShow } = useStoreProjectImage()
 const { breakpoint } = useStoreView()
 currentImage.value = 0
 currentImageShow.value = 0
@@ -43,7 +43,9 @@ watch(currentImage, (to, from) => {
     if (toI.description !== fromI.description) {
         currentImageShow.value = -1
     }
+    currentImageDelay.value = -1
     useDelay(100, () => {
+        currentImageDelay.value = to
         currentImageShow.value = to
     })
 })
