@@ -8,15 +8,12 @@ export type defaultTransitionProps = {
 
 export const defaultFlowOut: FlowFunction<defaultTransitionProps> = async (props, resolve, provider) => {
     const { resetCount, leaveCount, getPromiseLeave, getResolverLeave } = useStoreTransition()
-    console.log('default out');
     resetCount()
     const { filterOpen } = useStoreFilter()
     filterOpen.value = false
 
     useDelay(100, () => {
         if (leaveCount.value === 0) {
-            console.log(leaveCount.value);
-            console.log("ya r");
             getResolverLeave()()
         }
     })
@@ -26,16 +23,13 @@ export const defaultFlowOut: FlowFunction<defaultTransitionProps> = async (props
 
 }
 export const fastOut: FlowFunction<defaultTransitionProps> = (props, resolve, provider) => {
-    console.log('fast out');
     const { resetCount, getPromise } = useStoreTransition()
     resetCount()
     const { filterOpen } = useStoreFilter()
     filterOpen.value = false
-    console.log("out resolve");
     resolve()
 }
 export const fastProjectsOut: FlowFunction<defaultTransitionProps> = async (props, resolve, provider) => {
-    console.log('fast project out');
     const { resetCount, getPromiseLeave } = useStoreTransition()
     resetCount()
     const { filterOpen } = useStoreFilter()
@@ -53,13 +47,11 @@ export const defaultFlowIn: FlowFunction<defaultTransitionProps> = async ({ wrap
     const { resetCount, getPromise, getResolver, count } = useStoreTransition()
     useDelay(100, () => {
         if (count.value === 0) {
-            console.log("ya r");
             getResolver()()
         }
     })
     await getPromise()
 
-    console.log("RESOVE ==========");
     resolve()
 }
 export const projectProjectFlowIn: FlowFunction<defaultTransitionProps> = async ({ wrapperRef }, resolve, provider) => {

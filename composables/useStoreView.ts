@@ -71,7 +71,6 @@ export const useStoreScroll = createStore(() => {
 	const { isMobile } = useStore()
 	watch(isMobile, (val) => {
 		container.value = val ? N.get("#app")! : document.body
-		console.log("=========>", val, container.value);
 		resize()
 	}, {immediate: true})
 	function resize() {

@@ -27,7 +27,6 @@ export const vLeaveText = {
                 const letter = char[index]
                 let i = 0
                 const delayIndex = (spans.length - 1 - index) / (spans.length > wordLength ? spans.length - 1 : wordLength)
-                console.log(delayIndex);
                 tl.from({
                     el: span,
                     p: {
@@ -43,7 +42,6 @@ export const vLeaveText = {
                         }
                         if (i < 2) return
                         i = 0
-                        console.log('test');
                         if (span) span.innerText = map[Math.floor(N.Rand.range(0, map.length - 1, 1))]
                     },
                     d: 200,
@@ -61,7 +59,6 @@ export const vLeaveText = {
                 d: 0,
                 cb() {
                     if (_count === 0) {
-                        console.log("RESOLVE YEAHHHHH");
                         getResolverLeave()()
                     }
                 }
@@ -131,7 +128,6 @@ export const vLeaveTextProjectItem = {
                 const letter = char[index]
                 let i = 0
                 const delayIndex = (spans.length - 1 - index) / (spans.length > wordLength ? spans.length - 1 : wordLength)
-                console.log(delayIndex);
                 tl.from({
                     el: span,
                     p: {
@@ -147,7 +143,6 @@ export const vLeaveTextProjectItem = {
                         }
                         if (i < 2) return
                         i = 0
-                        console.log('test');
                         if (span) span.innerText = map[Math.floor(N.Rand.range(0, map.length - 1, 1))]
                     },
                     d: 200,
@@ -165,7 +160,6 @@ export const vLeaveTextProjectItem = {
                 d: 0,
                 cb() {
                     if (_count === 0) {
-                        console.log("RESOLVE YEAHHHHH");
                         getResolverLeave()()
                     }
                 }
