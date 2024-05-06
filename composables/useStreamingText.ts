@@ -4,6 +4,7 @@ const SPEED_MS = 5
 const test = 150
 
 export function useStreamingText(elRef: Ref<HTMLElement>, options: { breakpoint: boolean } = { breakpoint: false }) {
+    console.log(elRef);
 
     const tl = useTL()
 

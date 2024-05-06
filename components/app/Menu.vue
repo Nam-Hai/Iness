@@ -2,7 +2,8 @@
     <div class="menu__wrapper" ref="wrapperRef" :class="{ filterOpen }">
         <NuxtLink to="/"
             :class="{ 'menu__active': routeRef.path === '/', hideMenu: delayedHideMenu && hideMenu, 'current-page': routeRef.name === 'index' }">
-            <span ref="overviewRef" @mouseenter="overviewHoverTrigger" @touchstart="overviewHoverTrigger">
+            <span ref="overviewRef" @mouseenter="overviewHoverTrigger"
+                @touchstart="overviewHoverTrigger; addHoverTouch(overviewHoverRef)">
                 Overview
             </span>
             <span class="hover-text" ref="overviewHoverRef">
@@ -29,7 +30,7 @@
             </span>
         </NuxtLink>
         <div :class="{ hideMenu: delayedHideMenu }" class="noselect shop">
-            <div ref="shopRef" @mouseenter="shopHoverTrigger" @touchstart="shopHoverTrigger">
+            <div ref="shopRef" @mouseenter="()=> !isMobile && shopHoverTrigger()" @touchstart="shopHoverTrigger(); addHoverTouch(shopRef)">
                 Shop
             </div>
 
@@ -66,6 +67,7 @@ const indexRef = ref()
 const infoRef = ref()
 const shopRef = ref()
 
+const { isMobile } = useStore()
 const { breakpoint } = useStoreView()
 
 const { routeRef } = useFlowProvider()
@@ -142,6 +144,13 @@ watch(routeRef, (routeTo, routeFrom) => {
     }
 })
 
+function addHoverTouch(elRef: HTMLElement) {
+    console.log(elRef);
+    N.Class.add(elRef, "hover-touch")
+    useDelay(2000, () => {
+        elRef && N.Class.remove(elRef, "hover-touch")
+    })
+}
 </script>
 
 <style lang="scss" scoped>
@@ -170,10 +179,12 @@ watch(routeRef, (routeTo, routeFrom) => {
             pointer-events: none;
         }
 
-        pointer-events: none!important;
+        pointer-events: none !important;
 
-        &:hover .hover-text {
-            opacity: 0;
+        @media (hover: hover) and (pointer: fine) {
+            &:hover .hover-text {
+                opacity: 0;
+            }
         }
     }
 
@@ -192,8 +203,26 @@ watch(routeRef, (routeTo, routeFrom) => {
         pointer-events: all;
         position: relative;
 
-        &:hover .hover-text {
-            opacity: 1;
+        @media (hover: hover) and (pointer: fine) {
+            &:hover .hover-text {
+                opacity: 1;
+            }
+
+            &:hover {
+                color: $discard-text;
+                transition: color 250ms;
+            }
+        }
+
+        @media (pointer: coarse) {
+            .hover-touch {
+                color: $discard-text;
+                transition: color 250ms;
+
+                &~.hover-text {
+                    opacity: 1;
+                }
+            }
         }
 
         .hover-text {
@@ -205,12 +234,9 @@ watch(routeRef, (routeTo, routeFrom) => {
             pointer-events: none;
             font-size: 100%;
             opacity: 0;
+            transition: opacity 200ms;
         }
 
-        &:hover {
-            color: $discard-text;
-            transition: color 250ms;
-        }
     }
 
     a:nth-child(1),
@@ -270,21 +296,20 @@ watch(routeRef, (routeTo, routeFrom) => {
             cursor: pointer;
             width: fit-content;
 
-            &:hover {
-                &~.hover-text {
-                    opacity: 1;
+            @media (hover: hover) and (pointer: fine) {
+                &:hover {
+                    &~.hover-text {
+                        opacity: 1;
+                    }
+
+                    &::after {
+                        opacity: 1;
+                    }
                 }
             }
+
         }
 
-        &:hover {
-
-            // color: $discard-text;
-            // transition: color 250ms;
-            &::after {
-                opacity: 1;
-            }
-        }
 
         &:nth-child(5) {
             grid-column: 1 / 9;
@@ -369,7 +394,7 @@ watch(routeRef, (routeTo, routeFrom) => {
 
 .hideMenu {
     // opacity: 0;
-    pointer-events: none!important;
+    pointer-events: none !important;
     // display: none !important;
 }
 
