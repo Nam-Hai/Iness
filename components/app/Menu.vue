@@ -118,13 +118,13 @@ let delayShow: Delay;
 let delayHide: Delay;
 onMounted(() => {
 
-    delayShow = useDelay(5000, () => {
+    delayShow = useDelay(6000, () => {
         trigger()
         N.Class.add(hoverTextRef.value, "hover-touch")
         isShow = true
         delayHide.run()
     });
-    delayHide = useDelay(5000, () => {
+    delayHide = useDelay(2000, () => {
         // N.Class.remove(hoverTextRef.value, "hover-touch")
         hoverTriggerLeave()
         isShow = false
