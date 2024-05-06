@@ -42,7 +42,7 @@ const wrapperRef = ref() as Ref<HTMLElement>
             width: 100%;
         }
 
-        background-color: $discard-text;
+        // background-color: $discard-text;
     }
 
     @include breakpoint(mobile) {
