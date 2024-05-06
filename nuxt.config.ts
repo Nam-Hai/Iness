@@ -64,7 +64,7 @@ export default defineNuxtConfig({
                 {
                     key: "og:image",
                     property: "og:image",
-                    content: "TODO",
+                    content: "/card.png",
                 },
                 // twitter card
                 {
@@ -85,7 +85,7 @@ export default defineNuxtConfig({
                 {
                     key: "twitter:image",
                     name: "twitter:image",
-                    content: "TODO",
+                    content: "/card.png",
                 },
                 {
                     key: "twitter:card",
