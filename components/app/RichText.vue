@@ -12,8 +12,6 @@ const { props } = defineProps<{ props: RichText[] }>()
 type ExtractSpansType<T> = T extends { spans: infer S } ? S : never;
 type Spans = ExtractSpansType<RichText>[number];
 
-console.log(props);
-
 let nodeParent = <div>
     {
         props.map(richText => {
@@ -28,7 +26,6 @@ let nodeParent = <div>
             else {
                 return richText.spans.map((span, index) => {
                     const spanText = text.slice(span.start, span.end)
-                    console.log(spanText);
                     return <>
                         {/* <span v-streamed-text>{text.slice(props.spans[index - 1]?.end || 0, span.start)}</span> */}
                         <StreamedSpan text={text.slice(richText.spans[index - 1]?.end || 0, span.start)} />

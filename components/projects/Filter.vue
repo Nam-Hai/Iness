@@ -66,9 +66,6 @@ onMounted(() => {
         const { trigger, compute } = computeTimeline(allSpanRef.value)
         triggers.push({ trigger, compute })
     }
-    console.log(triggers);
-
-
 })
 
 const toggledAll = ref(false)

@@ -57,7 +57,6 @@ watch(currentImage, async (to, from) => {
     await nextTick()
     useDelay(100, () => {
         currentImageShow.value = to
-        console.log(to, props.project_images[to].description);
         next.value = false
     })
 })

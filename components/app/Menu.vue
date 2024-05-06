@@ -30,7 +30,8 @@
             </span>
         </NuxtLink>
         <div :class="{ hideMenu: delayedHideMenu }" class="noselect shop">
-            <div ref="shopRef" @mouseenter="()=> !isMobile && shopHoverTrigger()" @touchstart="shopHoverTrigger(); addHoverTouch(shopRef)">
+            <div ref="shopRef" @mouseenter="() => !isMobile && shopHoverTrigger()"
+                @touchstart="shopHoverTrigger(); addHoverTouch(shopRef)">
                 Shop
             </div>
 
@@ -39,13 +40,13 @@
             </span>
         </div>
 
-        <div @mouseenter="trigger" @touchstart="trigger">
+        <div @mouseenter="() => !isMobile && triggerWrapper()" @mouseleave="logoLeaveMouse">
             <img src="/Assets/logo-in.png" alt="logo-in">
         </div>
-        <div @mouseenter="trigger" @touchstart="trigger">
+        <div @mouseenter="() => !isMobile && triggerWrapper()">
             <img src="/Assets/logo-e.png" alt="logo-e">
         </div>
-        <div @mouseenter="trigger" @touchstart="trigger">
+        <div @mouseenter="() => !isMobile && triggerWrapper()">
             <img src="/Assets/logo-studio.png" alt="logo-studio">
         </div>
 
@@ -56,6 +57,7 @@
 </template>
 
 <script lang="ts" setup>
+import type { Delay } from '~/plugins/core/raf';
 import { useFlowProvider } from '~/waterflow/FlowProvider';
 
 const wrapperRef = ref() as Ref<HTMLElement>
@@ -95,7 +97,44 @@ watch([routeRef, breakpoint], () => {
 }, { immediate: true })
 
 const hoverTextRef = ref() as Ref<HTMLElement>
+
+let isShow = false
+const triggerWrapper = () => {
+    if (!isShow) {
+        trigger()
+        N.Class.add(hoverTextRef.value, "hover-touch")
+    }
+    isShow = true
+    delayShow.stop()
+    delayHide.stop()
+}
+const logoLeaveMouse = () => {
+    // N.Class.remove(hoverTextRef.value, "hover-touch")
+    hoverTriggerLeave()
+    isShow = false
+    delayShow.run()
+}
+let delayShow: Delay;
+let delayHide: Delay;
+onMounted(() => {
+
+    delayShow = useDelay(5000, () => {
+        trigger()
+        N.Class.add(hoverTextRef.value, "hover-touch")
+        isShow = true
+        delayHide.run()
+    });
+    delayHide = useDelay(5000, () => {
+        // N.Class.remove(hoverTextRef.value, "hover-touch")
+        hoverTriggerLeave()
+        isShow = false
+        delayShow.run()
+    })
+    delayHide.stop()
+})
+
 const { trigger, computeTimeline } = useStreamingText(hoverTextRef)
+const { trigger: hoverTriggerLeave } = useLeaveText(hoverTextRef)
 
 const { trigger: overviewTrigger } = useStreamingText(overviewRef)
 const { trigger: indexTrigger } = useStreamingText(indexRef)
@@ -145,7 +184,6 @@ watch(routeRef, (routeTo, routeFrom) => {
 })
 
 function addHoverTouch(elRef: HTMLElement) {
-    console.log(elRef);
     N.Class.add(elRef, "hover-touch")
     useDelay(2000, () => {
         elRef && N.Class.remove(elRef, "hover-touch")
@@ -301,11 +339,11 @@ function addHoverTouch(elRef: HTMLElement) {
                     &~.hover-text {
                         opacity: 1;
                     }
-
-                    &::after {
-                        opacity: 1;
-                    }
                 }
+            }
+
+            ~.hover-text.hover-touch {
+                opacity: 1;
             }
 
         }

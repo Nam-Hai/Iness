@@ -1,11 +1,9 @@
 const map = "$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\\h\|()1{}[]?-_+~<>i!lI;:,^'."
-const STAGGER_MS = 25
-const SPEED_MS = 5
-const test = 150
+const STAGGER_MS = 20
+const SPEED_MS = 250
+const wordMax = 30
 
 export function useStreamingText(elRef: Ref<HTMLElement>, options: { breakpoint: boolean } = { breakpoint: false }) {
-    console.log(elRef);
-
     const tl = useTL()
 
     onMounted(() => {
@@ -45,6 +43,8 @@ export function useStreamingText(elRef: Ref<HTMLElement>, options: { breakpoint:
                 }
             },
         })
+
+        const wordLength = char.length
         for (let index = 0; index < spans.length; index++) {
             const span = spans[index]
             const letter = char[index]
@@ -58,7 +58,7 @@ export function useStreamingText(elRef: Ref<HTMLElement>, options: { breakpoint:
                     o: [0, 1]
                 },
                 d: 50,
-                delay: N.Ease.linear(Math.min(index, test) / test) * test * SPEED_MS,
+                delay: N.Ease.linear(Math.min(index, wordLength) / wordLength) * 1 * SPEED_MS,
             }).from({
                 update: (t) => {
                     i++
@@ -70,7 +70,7 @@ export function useStreamingText(elRef: Ref<HTMLElement>, options: { breakpoint:
                     span.innerText = map[Math.floor(N.Rand.range(0, map.length - 1, 1))]
                 },
                 d: 200,
-                delay: N.Ease.linear(Math.min(index, test) / test) * test * SPEED_MS,
+                delay: N.Ease.linear(Math.min(index, wordLength) / wordLength) * 1 * SPEED_MS,
                 cb() {
                     span.innerText = letter
                 },
@@ -112,27 +112,29 @@ export function useLeaveText(elRef: Ref<HTMLElement>) {
             const span = spans[index] as HTMLElement
             const letter = char[index]
             let i = 0
+
+            const delayIndex = (spans.length - 1 - index) / (spans.length > wordLength ? spans.length - 1 : wordLength)
             tl.from({
                 el: span,
                 p: {
                     o: [1, 0]
                 },
                 d: 50,
-                delay: N.Ease.linear(Math.min(index, wordLength) / wordLength) * ratio * SPEED_MS + 200 + 800,
+                delay: N.Ease.linear(delayIndex) * ratio * SPEED_MS + 150,
             }).from({
                 update: (t) => {
                     i++
                     if (letter === " ") {
                         return
                     }
-                    if (i < 4) return
+                    if (i < 2) return
                     i = 0
-                    span.innerText = map[Math.floor(N.Rand.range(0, map.length - 1, 1))]
+                    if (span) span.innerText = map[Math.floor(N.Rand.range(0, map.length - 1, 1))]
                 },
                 d: 200,
-                delay: N.Ease.linear(Math.min(index, wordLength) / wordLength) * ratio * SPEED_MS + 800,
+                delay: N.Ease.linear(delayIndex) * ratio * SPEED_MS,
                 cb() {
-                    span.innerText = letter
+                    if (span) span.innerText = letter
                 },
             })
         }
@@ -175,6 +177,7 @@ export function computeTimeline(el: HTMLElement) {
                 }
             },
         })
+        const wordLength = char.length
         for (let index = 0; index < spans.length; index++) {
             const span = spans[index]
             const letter = char[index]
@@ -188,7 +191,7 @@ export function computeTimeline(el: HTMLElement) {
                     o: [0, 1]
                 },
                 d: 50,
-                delay: N.Ease.o2(Math.min(index, test) / test) * test * SPEED_MS,
+                delay: N.Ease.linear(Math.min(index, wordLength) / wordLength) * 1 * SPEED_MS,
             }).from({
                 update: (t) => {
                     i++
@@ -200,7 +203,7 @@ export function computeTimeline(el: HTMLElement) {
                     span.innerText = map[Math.floor(N.Rand.range(0, map.length - 1, 1))]
                 },
                 d: 200,
-                delay: N.Ease.o2(Math.min(index, test) / test) * test * SPEED_MS,
+                delay: N.Ease.linear(Math.min(index, wordLength) / wordLength) * 1 * SPEED_MS,
                 cb() {
                     span.innerText = letter
                 },
