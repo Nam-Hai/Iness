@@ -3,7 +3,6 @@
 </template>
 
 <script lang="tsx" setup>
-import { formatWithOptions } from 'util';
 import ILink from './ILink.vue';
 import StreamedSpan from './StreamedSpan.vue';
 

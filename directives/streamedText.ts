@@ -1,5 +1,4 @@
 import { useFlowProvider } from "~/waterflow/FlowProvider";
-import { onLeave } from "~/waterflow/composables/onFlow";
 
 function isElementInViewport(el: HTMLElement) {
     var rect = el.getBoundingClientRect();
@@ -76,19 +75,19 @@ export const vStreamedText = {
                 cb() {
                     span.innerText = letter
                 },
-            }).from({
-                update() {
-
-                },
-                d: 0,
-                delay: N.Ease.linear(Math.min(index, wordLength) / wordLength) * ratio * SPEED_MS + _count * STAGGER_MS + 200,
-                cb() {
-                    if (getCount() - 1 === _count && index === spans.length - 1) {
-                        getResolver()()
-                    }
-                },
             })
         }
+        tl.from({
+            update({ prog, progE }) {
+            },
+            d: 20,
+            delay: ratio * SPEED_MS + _count * STAGGER_MS + 200,
+            cb() {
+                if (getCount() - 1 === _count) {
+                    getResolver()()
+                }
+            },
+        })
         count.value++
 
         tl.play()
@@ -138,14 +137,20 @@ export const vStreamedText2 = {
                 },
                 d: 200,
                 delay: N.Ease.linear(Math.min(index, wordLength) / wordLength) * ratio * SPEED_MS + _count * STAGGER_MS,
-                cb() {
-                    span.innerText = letter
-                    if (getCount() - 1 === _count && index === spans.length - 1) {
-                        getResolver()()
-                    }
-                },
             })
         }
+        tl.from({
+            update({ prog, progE }) {
+            },
+            d: 20,
+            delay: ratio * SPEED_MS + _count * STAGGER_MS + 200,
+            cb() {
+
+                if (getCount() - 1 === _count) {
+                    getResolver()()
+                }
+            },
+        })
         count.value++
 
         tl.play()

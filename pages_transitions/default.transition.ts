@@ -12,7 +12,8 @@ export const defaultFlowOut: FlowFunction<defaultTransitionProps> = async (props
     const { filterOpen } = useStoreFilter()
     filterOpen.value = false
 
-    useDelay(100, () => {
+    useDelay(100, async () => {
+        await nextTick()
         if (leaveCount.value === 0) {
             getResolverLeave()()
         }
@@ -45,7 +46,8 @@ export const defaultFlowIn: FlowFunction<defaultTransitionProps> = async ({ wrap
     resetFilter()
 
     const { resetCount, getPromise, getResolver, count } = useStoreTransition()
-    useDelay(100, () => {
+    useDelay(100, async () => {
+        await nextTick()
         if (count.value === 0) {
             getResolver()()
         }
