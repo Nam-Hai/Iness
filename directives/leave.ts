@@ -59,7 +59,6 @@ export const vLeaveText = {
                 d: 0,
                 cb() {
                     if (_count === 0) {
-                        console.log("leave");
                         getResolverLeave()()
                     }
                 }
