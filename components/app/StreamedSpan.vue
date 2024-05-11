@@ -16,6 +16,6 @@ const { text } = defineProps<{ text: string }>()
 
 .streamed__wrapper {
     line-height: 1.6rem;
-    font-size: 1.2rem;
+    font-size: $font-size;
 }
 </style>

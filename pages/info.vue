@@ -143,7 +143,7 @@ main {
 }
 
 .info-text {
-  font-size: 1.2rem;
+  font-size: $font-size;
   line-height: 1.6rem;
 }
 

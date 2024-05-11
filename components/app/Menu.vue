@@ -234,7 +234,7 @@ function addHoverTouch(elRef: HTMLElement) {
     div:nth-child(4) {
         transition: opacity 100ms;
         cursor: pointer;
-        font-size: 1.2rem;
+        font-size: $font-size;
         font-weight: 500;
         height: fit-content;
         width: fit-content;
@@ -270,7 +270,6 @@ function addHoverTouch(elRef: HTMLElement) {
             position: absolute;
             width: max-content;
             pointer-events: none;
-            font-size: 100%;
             opacity: 0;
             transition: opacity 200ms;
         }
@@ -294,7 +293,7 @@ function addHoverTouch(elRef: HTMLElement) {
     a {
 
         pointer-events: all;
-        font-size: 1.2rem;
+        font-size: $font-size;
         font-weight: 500;
         height: fit-content;
         width: fit-content;

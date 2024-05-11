@@ -82,7 +82,7 @@ usePageFlow({
 }
 
 main {
-    font-size: 1.2rem;
+    font-size: $font-size;
     line-height: 1.6rem;
     // position: relative;
     // min-height: 100vh;

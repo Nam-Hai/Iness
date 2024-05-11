@@ -84,7 +84,7 @@ function mute(e: Event) {
         .controller__wrapper {
             display: flex;
             color: $primary;
-            font-size: 12px;
+            font-size: $font-size;
             line-height: 1.6rem;
             position: absolute;
             bottom: -1.2rem - 1.6rem;

@@ -57,12 +57,12 @@ function getAnchor(span: Spans, text: string) {
 @use "@/styles/shared.scss" as *;
 
 .rich-text__wrapper {
-    font-size: 1.2rem;
+    font-size: $font-size;
     line-height: 1.6rem;
 
     a {
         position: relative;
-        font-size: 1.2rem;
+        font-size: $font-size;
         line-height: 1.6rem;
     }
 
