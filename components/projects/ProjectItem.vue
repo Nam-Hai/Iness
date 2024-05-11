@@ -1,7 +1,7 @@
 <template>
     <NuxtLink :to="routeTo.path === '/projects/' + props.route ? '/projects' : /projects/ + props.route"
         class="project__item__wrapper" ref="wrapperRef" :class="{
-            filterOpen: filterOpen, highlight: filterActive[props.type], empty: isEmpty, 'disable-route': disableRoute, 'scroll-out': !previewShow, 'mobileShow': mobileShow && breakpoint === 'mobile',
+            filterOpen: filterOpen, highlight: filterActive[props.type], empty: isEmpty, 'disable-route': disableRoute, 'scroll-out': !previewShow, 'mobileShow': first && mobileShow && breakpoint === 'mobile',
         }" @click="onClick">
         <div class="container" ref="textRef">
             <span v-streamed-text-project v-leave-text-project-item v-if="props.title !== ''">{{ props.title }}</span>
@@ -31,7 +31,8 @@ import { vLeave, vLeaveText, vLeaveTextProjectItem } from "~/directives/leave"
 import { useFlowProvider } from '~/waterflow/FlowProvider';
 import { onLeave } from '~/waterflow/composables/onFlow';
 
-const { props } = defineProps<{ props: ProjectData }>()
+const { props, first = false } = defineProps<{ props: ProjectData, first?: boolean }>()
+console.log(first);
 
 const wrapperRef = ref() as Ref<HTMLElement>
 const textRef = ref() as Ref<HTMLElement>

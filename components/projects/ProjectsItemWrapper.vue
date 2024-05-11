@@ -15,8 +15,8 @@
 
     <div class="projects-item__wrapper projects-item__wrapper-mobile" ref="mobileProjectItemRef" v-else>
         <div class="projects__wrapper projects__wrapper-mobile">
-            <div class="project__wrapper" v-for="project in prismicData.projects">
-                <ProjectItem :props="project" />
+            <div class="project__wrapper" v-for="project, index in prismicData.projects">
+                <ProjectItem :props="project" :first="index === 0" />
             </div>
         </div>
 
@@ -98,8 +98,6 @@ watch(enter, val => {
 
         .project__wrapper {
             height: $grid-cell-height;
-
-
         }
     }
 
