@@ -1,12 +1,13 @@
 <template>
     <div class="img__wrapper" ref="wrapperRef" v-leave-img v-if="props.id !== '-1'">
-        <img :src="props.url" :alt="props.name" onload="this.style.opacity = 1" v-if="props.kind === 'image'"
+        <img :src="props.url" :alt="props.name" onload="this.style.opacity = 1; this.style.backgroundColor = 'unset'" v-if="props.kind === 'image'"
             :style="{ 'aspect-ratio': (props.width! / props.height!) || 1 }">
 
 
         <div class="video__wrapper" v-else>
-            <video disable-remote-playback="true" disableremoteplayback disablepictureinpicture disable-picture-in-picture="true" autoplay="true" playsinline="true"
-                loop="true" onloadstart="this.style.opacity = 1;" :muted="!controller"
+            <video disable-remote-playback="true" disableremoteplayback disablepictureinpicture
+                disable-picture-in-picture="true" autoplay="true" playsinline="true" loop="true"
+                onloadstart="this.style.opacity = 1;" :muted="!controller"
                 :style="{ aspectRatio: props.height && props.width ? `${props.width} / ${props.height}` : '' }">
                 <source :src="props.url">
             </video>
@@ -60,18 +61,18 @@ function mute(e: Event) {
     position: relative;
     display: flex;
 
-    background-color: $discard-text;
 
     display: flex;
 
     img,
     video {
+        background-color: $discard-text;
         // height: 100%;
         width: 100%;
         opacity: 0;
         // transition: opacity 500ms;
         object-fit: cover;
-        transition: opacity 100ms;
+        transition: opacity 100ms, background-color 100ms;
     }
 
     .video__wrapper {
@@ -84,7 +85,7 @@ function mute(e: Event) {
         .controller__wrapper {
             display: flex;
             color: $primary;
-            font-size: $font-size;
+            @include font-size;
             line-height: 1.6rem;
             position: absolute;
             bottom: -1.2rem - 1.6rem;

@@ -64,6 +64,10 @@ main {
   .info-text__wrapper {
     grid-column: 6 / 7;
 
+
+    @media screen and (max-width: 1400px) {
+      grid-column: 6 / 8;
+    }
     @include breakpoint(mobile) {
       grid-column: 6 / 10;
     }
@@ -143,7 +147,7 @@ main {
 }
 
 .info-text {
-  font-size: $font-size;
+  @include font-size;
   line-height: 1.6rem;
 }
 

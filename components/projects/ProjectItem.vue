@@ -91,12 +91,12 @@ a {
     margin-left: -0.4rem;
     margin-top: -0.4rem;
     line-height: 1.6rem;
-    font-size: $font-size;
+    @include font-size;
 
 
     @include breakpoint(mobile) {
         line-height: 1.6rem;
-        font-size: $font-size;
+        @include font-size;
     }
 
     .container {

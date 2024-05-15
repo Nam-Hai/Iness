@@ -154,16 +154,17 @@ const { trigger: overviewHoverTrigger } = useStreamingText(overviewHoverRef)
 const { trigger: indexHoverTrigger } = useStreamingText(indexHoverRef)
 
 onMounted(() => {
-    overviewTrigger()
-    indexTrigger()
-    infoTrigger()
-    shopTrigger()
 
     if (routeRef.value.name === 'projects-id' && breakpoint.value === 'mobile') {
         shopTriggerLeave()
         infoTriggerLeave()
         indexTriggerLeave()
         overviewTriggerLeave()
+    } else {
+        overviewTrigger()
+        indexTrigger()
+        infoTrigger()
+        shopTrigger()
     }
 })
 
@@ -234,7 +235,7 @@ function addHoverTouch(elRef: HTMLElement) {
     div:nth-child(4) {
         transition: opacity 100ms;
         cursor: pointer;
-        font-size: $font-size;
+        @include font-size;
         font-weight: 500;
         height: fit-content;
         width: fit-content;
@@ -293,7 +294,7 @@ function addHoverTouch(elRef: HTMLElement) {
     a {
 
         pointer-events: all;
-        font-size: $font-size;
+        @include font-size;
         font-weight: 500;
         height: fit-content;
         width: fit-content;
@@ -381,7 +382,7 @@ function addHoverTouch(elRef: HTMLElement) {
             grid-row: 4 / 5;
             align-self: end;
 
-            top: 0.44rem;
+            top: 0.38rem;
 
             img {
                 width: 14px;

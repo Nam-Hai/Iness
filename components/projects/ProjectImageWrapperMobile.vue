@@ -75,7 +75,7 @@ $showSum: $showDuration + $showTransition;
     position: fixed;
     top: 0;
     right: 0;
-    font-size: $font-size;
+    @include font-size;
     line-height: 1.6rem;
 
     width: calc(4 * $grid-cell-width + $main-margin);
@@ -121,7 +121,7 @@ $showSum: $showDuration + $showTransition;
         left: $main-margin;
     }
 
-    font-size: $font-size;
+    @include font-size;
     line-height: 1.6rem;
 
     .info__wrapper {

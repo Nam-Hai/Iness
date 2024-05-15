@@ -1,5 +1,6 @@
 @use "sass:math";
 @use "vh-property.scss" as *;
+@use "breakpoints.scss" as *;
 @use "./variables.module.scss" as *;
 
 
@@ -79,5 +80,12 @@
 
   >* {
     cursor: none;
+  }
+}
+
+@mixin font-size(){
+  font-size: 1.2rem;
+  @include breakpoint(mobile){
+    font-size: 1.3rem;
   }
 }

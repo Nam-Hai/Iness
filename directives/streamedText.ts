@@ -137,6 +137,10 @@ export const vStreamedText2 = {
                 },
                 d: 200,
                 delay: N.Ease.linear(Math.min(index, wordLength) / wordLength) * ratio * SPEED_MS + _count * STAGGER_MS,
+
+                cb() {
+                    span.innerText = letter
+                },
             })
         }
         tl.from({

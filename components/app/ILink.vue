@@ -46,7 +46,7 @@ function toClipboard() {
 
     &.font {
         line-height: 1.6rem;
-        font-size: $font-size;
+        @include font-size;
     }
 
     &.copied {

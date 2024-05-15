@@ -92,11 +92,10 @@ export function useLeaveText(elRef: Ref<HTMLElement>) {
     const tl = useTL()
 
     onMounted(() => {
-        computeTimeline()
+        // computeTimeline(elRef.value)
     })
-    function computeTimeline() {
-
-    }
+    // function computeTimeline() {
+    // }
 
     function trigger() {
         tl.reset()
@@ -134,10 +133,23 @@ export function useLeaveText(elRef: Ref<HTMLElement>) {
                 d: 200,
                 delay: N.Ease.linear(delayIndex) * ratio * SPEED_MS,
                 cb() {
-                    if (span) span.innerText = letter
+                    if (span) {
+                        span.innerText = letter
+                    }
                 },
             })
         }
+        // tl.from({
+        //     update({ prog, progE }) {
+        //     },
+        //     d: 0,
+        //     delay: SPEED_MS + 220,
+        //     cb() {
+        //         for (const span of (spans as unknown as HTMLElement[])) {
+        //             N.O(span, 0)
+        //         }
+        //     },
+        // })
         tl.play()
     }
     return {

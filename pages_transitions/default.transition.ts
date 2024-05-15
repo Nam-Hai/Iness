@@ -21,7 +21,6 @@ export const defaultFlowOut: FlowFunction<defaultTransitionProps> = async (props
 
     await getPromiseLeave()
     resolve()
-
 }
 export const fastOut: FlowFunction<defaultTransitionProps> = (props, resolve, provider) => {
     const { resetCount, getPromise } = useStoreTransition()
