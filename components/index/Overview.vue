@@ -45,7 +45,9 @@ useEventListeneer(wrapperRef, 'touchstart', (e: Event) => {
         x: (e as TouchEvent).touches[0].clientX,
         y: (e as TouchEvent).touches[0].clientY
     }
+    const a = Object.assign(e, { pageX: mouse.x, pageY: mouse.y }) as MouseEvent
     onTouch(mouse)
+    mediaMove(a, currentImage.value)
 })
 
 useEventListeneer(wrapperRef, 'touchmove', (e: Event) => {
