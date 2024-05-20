@@ -1,7 +1,8 @@
 <template>
     <div class="project__wrapper" ref="wrapperRef" :class="{ desktop: !isMobile }">
         <div class="column__wrapper" v-for="(d, index) in data.slice(0, 9)" :key="d.image.name + '_' + index"
-            @mouseenter="() => { currentImage = index }" :class="{ show: currentImageShow === index, loaded: true }">
+            @mouseenter="() => { currentImage = index }" @mousemove="mediaMove($event, index)"
+            :class="{ show: currentImageShow === index, loaded: true }" ref="mediaWrapperRef">
             <IMediaOverview :props="d.image" v-if="breakpoint === 'desktop'"></IMediaOverview>
             <IMediaOverview :props="d.image_mobile" v-else></IMediaOverview>
         </div>
@@ -9,13 +10,35 @@
 </template>
 
 <script lang="ts" setup>
-import { vLeave, vLeaveImg } from '~/directives/leave';
 const wrapperRef = ref() as Ref<HTMLElement>
 
 const { prismicData } = usePreloader()
-const { vh, breakpoint } = useStoreView()
+const { vh, vw, breakpoint, scale } = useStoreView()
 const { isMobile } = useStore()
 const data = prismicData.value.overview
+
+const medias: { value: HTMLElement[] } = { value: [] }
+onMounted(() => {
+    getMedia()
+})
+
+watch(breakpoint, async () => {
+    await nextTick()
+    getMedia()
+})
+
+function getMedia() {
+    medias.value = N.getAll(".lib-media .container", wrapperRef.value) as unknown as HTMLElement[]
+}
+
+function mediaMove(e: MouseEvent, index: number) {
+    const el = medias.value[index]
+    if (breakpoint.value === "desktop") {
+        el.style.transform = `translate(0, calc(${e.pageY}px - 50% - 2rem))`
+    } else {
+        el.style.transform = `translate(calc(${e.pageX - vw.value}px + 50% + 2rem), 0)`
+    }
+}
 
 useEventListeneer(wrapperRef, 'touchstart', (e: Event) => {
     const mouse = {
@@ -25,12 +48,14 @@ useEventListeneer(wrapperRef, 'touchstart', (e: Event) => {
     onTouch(mouse)
 })
 
-useEventListeneer(wrapperRef, 'touchmove', (e) => {
+useEventListeneer(wrapperRef, 'touchmove', (e: Event) => {
     const mouse = {
         x: (e as TouchEvent).touches[0].clientX,
         y: (e as TouchEvent).touches[0].clientY
     }
+    const a = Object.assign(e, { pageX: mouse.x, pageY: mouse.y }) as MouseEvent
     onTouch(mouse)
+    mediaMove(a, currentImage.value)
 })
 
 function onTouch({ x, y }: { x: number, y: number }) {
