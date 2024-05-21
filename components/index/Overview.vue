@@ -126,14 +126,11 @@ watch(currentImage, index => {
         }
     }
 
-    &.desktop {
+    .column__wrapper {
+        transition: opacity 0ms 1000ms;
 
-        .column__wrapper {
-            transition: opacity 0ms 1000ms;
-
-            &.loaded.show {
-                transition: opacity 0ms 0ms;
-            }
+        &.loaded.show {
+            transition: opacity 0ms 0ms;
         }
     }
 
