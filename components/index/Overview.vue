@@ -34,9 +34,12 @@ function getMedia() {
 function mediaMove(e: MouseEvent, index: number) {
     const el = medias.value[index]
     if (breakpoint.value === "desktop") {
-        el.style.transform = `translate(0, calc(${e.pageY}px - 50% - 2rem))`
+        const h = el.offsetHeight
+        el.style.transform = `translate(0, calc(${N.Clamp(e.pageY, h / 2 + 20, vh.value - h / 2 - 10)}px - 50% - 2rem))`
     } else {
-        el.style.transform = `translate(calc(${e.pageX - vw.value}px + 50% + 2rem), 0)`
+        const w = el.offsetWidth
+        console.log(e.pageX - vw.value);
+        el.style.transform = `translate(calc(${N.Clamp(e.pageX - vw.value, -vw.value + w / 2 + 10, -w / 2 - 20,)}px + 50% + 2rem), 0)`
     }
 }
 
