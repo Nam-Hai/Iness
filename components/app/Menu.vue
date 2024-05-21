@@ -4,7 +4,7 @@
             :class="{ 'menu__active': routeRef.path === '/', hideMenu: delayedHideMenu && hideMenu, 'current-page': routeRef.name === 'index' }">
             <span ref="overviewRef" @mouseenter="overviewHoverTrigger"
                 @touchstart="overviewHoverTrigger; addHoverTouch(overviewHoverRef)">
-                Overview
+                Intro
             </span>
             <span class="hover-text" ref="overviewHoverRef">
                 Enter
