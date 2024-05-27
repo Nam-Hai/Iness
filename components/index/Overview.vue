@@ -1,4 +1,5 @@
 <template>
+    {{ debug }}
     <div class="project__wrapper" ref="wrapperRef" :class="{ desktop: !isMobile }">
         <div class="column__wrapper" v-for="(d, index) in data.slice(0, 9)" :key="d.image.name + '_' + index"
             @mouseenter="() => { currentImage = index }" @mousemove="mediaMove($event, index)"
@@ -31,6 +32,7 @@ function getMedia() {
     medias.value = N.getAll(".lib-media .container", wrapperRef.value) as unknown as HTMLElement[]
 }
 
+const debug = ref({ x: 0, y: 0 })
 function mediaMove(e: MouseEvent, index: number) {
     const el = medias.value[index]
     if (breakpoint.value === "desktop") {
@@ -44,8 +46,8 @@ function mediaMove(e: MouseEvent, index: number) {
 
 useEventListeneer(wrapperRef, 'touchstart', (e: Event) => {
     const mouse = {
-        x: (e as TouchEvent).touches[0].clientX,
-        y: (e as TouchEvent).touches[0].clientY
+        x: (e as TouchEvent).touches[0].pageX,
+        y: (e as TouchEvent).touches[0].pageY
     }
     const a = Object.assign(e, { pageX: mouse.x, pageY: mouse.y }) as MouseEvent
     onTouch(mouse)
@@ -57,6 +59,7 @@ useEventListeneer(wrapperRef, 'touchmove', (e: Event) => {
         x: (e as TouchEvent).touches[0].pageX,
         y: (e as TouchEvent).touches[0].pageY
     }
+    debug.value = { ...mouse }
     const a = Object.assign(e, { pageX: mouse.x, pageY: mouse.y }) as MouseEvent
     onTouch(mouse)
     mediaMove(a, currentImage.value)
