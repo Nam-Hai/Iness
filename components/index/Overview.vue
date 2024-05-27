@@ -2,7 +2,8 @@
     {{ debug }}
     {{ currentImage }}
     {{ currentImageShow }}
-    {{ d }}
+    {{ d.pageX }}
+    {{ d.pageY }}
     <div class="project__wrapper" ref="wrapperRef" :class="{ desktop: !isMobile }">
         <div class="column__wrapper" v-for="(d, index) in data.slice(0, 9)" :key="d.image.name + '_' + index"
             @mouseenter="() => { currentImage = index; currentImageShow = index }" @mousemove="mediaMove($event, index)"
