@@ -49,6 +49,7 @@ function mute(e: Event) {
     isMuted.value = !isMuted.value
     // isPaused.value ? video.play() : video.pause()
     video.volume = +!isMuted.value
+    video.muted = isMuted.value
 
 }
 </script>
