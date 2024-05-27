@@ -4,7 +4,7 @@
     {{ currentImageShow }}
     <div class="project__wrapper" ref="wrapperRef" :class="{ desktop: !isMobile }">
         <div class="column__wrapper" v-for="(d, index) in data.slice(0, 9)" :key="d.image.name + '_' + index"
-            @mouseenter="() => { currentImage = index }" @mousemove="mediaMove($event, index)"
+            @mouseenter="() => { currentImage = index; currentImageShow = index }" @mousemove="mediaMove($event, index)"
             :class="{ show: currentImageShow === index, loaded: true }" ref="mediaWrapperRef">
             <IMediaOverview :props="d.image" v-if="breakpoint === 'desktop'"></IMediaOverview>
             <IMediaOverview :props="d.image_mobile" v-else></IMediaOverview>
@@ -46,6 +46,7 @@ function mediaMove(e: MouseEvent, index: number) {
     }
 }
 
+const d = ref()
 useEventListeneer(wrapperRef, 'touchstart', (e: Event) => {
     const mouse = {
         x: (e as TouchEvent).touches[0].pageX,
@@ -63,6 +64,7 @@ useEventListeneer(wrapperRef, 'touchmove', (e: Event) => {
     }
     debug.value = { ...mouse }
     const a = Object.assign(e, { pageX: mouse.x, pageY: mouse.y }) as MouseEvent
+    d.value = a
     onTouch(mouse)
     mediaMove(a, currentImage.value)
 })
@@ -71,6 +73,7 @@ function onTouch({ x, y }: { x: number, y: number }) {
     const r = N.Clamp((y - 16) / (vh.value - 32), 0, 1)
 
     currentImage.value = N.Clamp(Math.floor(r * 8), 0, Math.min(data.length - 1, 7))
+    currentImageShow.value = currentImage.value
 }
 
 const currentImage = ref(0)
@@ -79,11 +82,11 @@ const imageRef = ref() as Ref<HTMLElement[]>
 
 const currentImageShow = ref(0)
 
-watch(currentImage, index => {
-    if (index === -1) return
+// watch(currentImage, index => {
+//     if (index === -1) return
 
-    currentImageShow.value = index
-})
+//     currentImageShow.value = index
+// })
 </script>
 
 <style lang="scss" scoped>
