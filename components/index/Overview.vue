@@ -54,8 +54,8 @@ useEventListeneer(wrapperRef, 'touchstart', (e: Event) => {
 
 useEventListeneer(wrapperRef, 'touchmove', (e: Event) => {
     const mouse = {
-        x: (e as TouchEvent).touches[0].clientX,
-        y: (e as TouchEvent).touches[0].clientY
+        x: (e as TouchEvent).touches[0].pageX,
+        y: (e as TouchEvent).touches[0].pageY
     }
     const a = Object.assign(e, { pageX: mouse.x, pageY: mouse.y }) as MouseEvent
     onTouch(mouse)
@@ -138,6 +138,8 @@ watch(currentImage, index => {
 
     .lib-media {
         // background-color: $primary;
+
+        pointer-events: none;
 
         @include breakpoint(desktop) {
             width: 100%;
