@@ -370,8 +370,10 @@ function addHoverTouch(elRef: HTMLElement) {
 
 
             img {
-                width: 1.9388rem;
-                height: 1.8927rem;
+                // width: 1.9388rem;
+                // height: 1.8927rem;
+                width: 2.6rem;
+                height: 2.4rem;
                 flex-shrink: 0;
             }
 
@@ -385,15 +387,17 @@ function addHoverTouch(elRef: HTMLElement) {
             top: 0.38rem;
 
             img {
-                width: 14px;
-                height: 19.798px;
+                // width: 14px;
+                // height: 19.798px;
+                width: 1.736rem;
+                height: 2.45rem;
                 object-fit: unset;
             }
 
             @include breakpoint(mobile) {
                 img {
-                    width: 13.792px;
-                    height: 20.498px;
+                    // width: 13.792px;
+                    // height: 20.498px;
                 }
             }
         }
@@ -405,8 +409,10 @@ function addHoverTouch(elRef: HTMLElement) {
             top: 0.4rem;
 
             img {
-                width: 74.731px;
-                height: 19.999px;
+                // width: 74.731px;
+                // height: 19.999px;
+                width: 9.491rem;
+                height: 2.4rem;
             }
         }
     }
@@ -416,10 +422,11 @@ function addHoverTouch(elRef: HTMLElement) {
         opacity: 0;
         color: $neutral-text;
         // left: 1.9rem;
-        bottom: 1.75rem;
+        left: -0.1rem;
+        bottom: 2.08rem;
         position: fixed;
         width: max-content;
-        font-size: 2.6rem;
+        font-size: 3.4rem;
         z-index: -1;
     }
 }
