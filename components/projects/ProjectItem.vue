@@ -138,7 +138,7 @@ a {
         &.scroll-out {
             pointer-events: all;
             // pointer-events: none;
-            color: $discard-text;
+            color: $neutral-text;
         }
     }
 
