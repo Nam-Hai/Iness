@@ -2,8 +2,6 @@
     {{ debug }}
     {{ currentImage }}
     {{ currentImageShow }}
-    {{ d.pageX }}
-    {{ d.pageY }}
     <div class="project__wrapper" ref="wrapperRef" :class="{ desktop: !isMobile }">
         <div class="column__wrapper" v-for="(d, index) in data.slice(0, 9)" :key="d.image.name + '_' + index"
             @mouseenter="() => { currentImage = index; currentImageShow = index }" @mousemove="mediaMove($event, index)"
@@ -37,26 +35,24 @@ function getMedia() {
 }
 
 const debug = ref({ x: 0, y: 0 })
-function mediaMove(e: MouseEvent, index: number) {
+function mediaMove(e: { x: number, y: number }, index: number) {
     const el = medias.value[index]
     if (breakpoint.value === "desktop") {
         const h = el.offsetHeight
-        el.style.transform = `translate(0, calc(${N.Clamp(e.pageY, h / 2 + 20, vh.value - h / 2 - 10)}px - 50% - 2rem))`
+        el.style.transform = `translate(0, calc(${N.Clamp(e.y, h / 2 + 20, vh.value - h / 2 - 10)}px - 50% - 2rem))`
     } else {
         const w = el.offsetWidth
-        el.style.transform = `translate(calc(${N.Clamp(e.pageX - vw.value, -vw.value + w / 2 + 10, -w / 2 - 20,)}px + 50% + 2rem), 0)`
+        el.style.transform = `translate(calc(${N.Clamp(e.x - vw.value, -vw.value + w / 2 + 10, -w / 2 - 20,)}px + 50% + 2rem), 0)`
     }
 }
 
-const d = ref({ pageY: 0, pageX: 0 })
 useEventListeneer(wrapperRef, 'touchstart', (e: Event) => {
     const mouse = {
         x: (e as TouchEvent).touches[0].pageX,
         y: (e as TouchEvent).touches[0].pageY
     }
-    const a = Object.assign(e, { pageX: mouse.x, pageY: mouse.y }) as MouseEvent
     onTouch(mouse)
-    mediaMove(a, currentImage.value)
+    mediaMove(mouse, currentImage.value)
 })
 
 useEventListeneer(wrapperRef, 'touchmove', (e: Event) => {
@@ -65,10 +61,8 @@ useEventListeneer(wrapperRef, 'touchmove', (e: Event) => {
         y: (e as TouchEvent).touches[0].pageY
     }
     debug.value = { ...mouse }
-    const a = Object.assign(e, { pageX: mouse.x, pageY: mouse.y }) as MouseEvent
-    d.value = a
     onTouch(mouse)
-    mediaMove(a, currentImage.value)
+    mediaMove(mouse, currentImage.value)
 })
 
 function onTouch({ x, y }: { x: number, y: number }) {
@@ -79,8 +73,6 @@ function onTouch({ x, y }: { x: number, y: number }) {
 }
 
 const currentImage = ref(0)
-const imageRef = ref() as Ref<HTMLElement[]>
-
 
 const currentImageShow = ref(0)
 
