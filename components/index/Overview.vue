@@ -38,7 +38,6 @@ function mediaMove(e: MouseEvent, index: number) {
         el.style.transform = `translate(0, calc(${N.Clamp(e.pageY, h / 2 + 20, vh.value - h / 2 - 10)}px - 50% - 2rem))`
     } else {
         const w = el.offsetWidth
-        console.log(e.pageX - vw.value);
         el.style.transform = `translate(calc(${N.Clamp(e.pageX - vw.value, -vw.value + w / 2 + 10, -w / 2 - 20,)}px + 50% + 2rem), 0)`
     }
 }
