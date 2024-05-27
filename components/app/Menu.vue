@@ -412,7 +412,7 @@ function addHoverTouch(elRef: HTMLElement) {
                 // width: 74.731px;
                 // height: 19.999px;
                 width: 9.491rem;
-                height: 2.4rem;
+                height: 2.5rem;
             }
         }
     }
@@ -423,10 +423,10 @@ function addHoverTouch(elRef: HTMLElement) {
         color: $neutral-text;
         // left: 1.9rem;
         left: -0.1rem;
-        bottom: 2.08rem;
+        bottom: 2.05rem;
         position: fixed;
         width: max-content;
-        font-size: 3.4rem;
+        font-size: 3.3rem;
         z-index: -1;
     }
 }
