@@ -17,8 +17,7 @@
         </div>
 
         <div class="project-preview" v-if="routeTo.name !== 'projects-id'"
-            :class="{ 'scroll-show': previewShow, hide: routeTo.name === 'projects-id' && routeTo.fullPath === '/projects/' + props.route }"
-            >
+            :class="{ 'scroll-show': previewShow, hide: routeTo.name === 'projects-id' && routeTo.fullPath === '/projects/' + props.route }">
             <IMedia :props="props.cover" v-if="breakpoint === 'desktop'">
             </IMedia>
             <IMedia :props="props.cover_mobile" v-else></IMedia>
@@ -29,7 +28,7 @@
 import { vStreamedText, vStreamedText2, vStreamedTextProject } from '~/directives/streamedText';
 import { vLeave, vLeaveText, vLeaveTextProjectItem } from "~/directives/leave"
 import { useFlowProvider } from '~/waterflow/FlowProvider';
-import { onLeave } from '~/waterflow/composables/onFlow';
+import { onFlow, onLeave } from '~/waterflow/composables/onFlow';
 
 const { props, first = false } = defineProps<{ props: ProjectData, first?: boolean }>()
 

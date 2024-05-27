@@ -54,6 +54,7 @@ export const defaultFlowIn: FlowFunction<defaultTransitionProps> = async ({ wrap
     await getPromise()
 
     resolve()
+    console.log('flow in resovled');
 }
 export const projectProjectFlowIn: FlowFunction<defaultTransitionProps> = async ({ wrapperRef }, resolve, provider) => {
     const { resetCount, getPromise, getResolver, count } = useStoreTransition()

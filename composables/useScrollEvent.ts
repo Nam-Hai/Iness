@@ -112,17 +112,12 @@ export const onEnter = ({
 
   onFlow(async () => {
     await nextTick()
-    await nextTick()
     computeBounds()
 
     flow.value = true
     // lenis.run();
-    lenis.emit()
+    // lenis.emit()
   });
-  onSwap(async () => {
-    await nextTick()
-    computeBounds()
-  })
 
   const flow = ref(false)
 
