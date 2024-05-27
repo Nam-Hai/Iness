@@ -1,5 +1,5 @@
 <template>
-    {{ debug }}
+    {{ debug, currentImage, currentImageShow }}
     <div class="project__wrapper" ref="wrapperRef" :class="{ desktop: !isMobile }">
         <div class="column__wrapper" v-for="(d, index) in data.slice(0, 9)" :key="d.image.name + '_' + index"
             @mouseenter="() => { currentImage = index }" @mousemove="mediaMove($event, index)"
