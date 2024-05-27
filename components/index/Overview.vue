@@ -48,7 +48,7 @@ function mediaMove(e: MouseEvent, index: number) {
     }
 }
 
-const d = ref()
+const d = ref({ pageY: 0, pageX: 0 })
 useEventListeneer(wrapperRef, 'touchstart', (e: Event) => {
     const mouse = {
         x: (e as TouchEvent).touches[0].pageX,
