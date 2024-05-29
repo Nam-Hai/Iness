@@ -411,7 +411,7 @@ function addHoverTouch(elRef: HTMLElement) {
             img {
                 // width: 74.731px;
                 // height: 19.999px;
-                width: 9.491rem;
+                width: 9.32rem;
                 height: 2.4rem;
             }
         }
